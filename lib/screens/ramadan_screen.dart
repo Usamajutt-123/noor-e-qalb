@@ -136,33 +136,36 @@ class _RamadanScreenState extends State<RamadanScreen> {
   }
 
   Widget _buildCountdownPill(String val, String label) {
-    return Container(
-      width: 72,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
-      decoration: BoxDecoration(
-        color: Colors.black38,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.5)),
-      ),
-      child: Column(
-        children: [
-          Text(
-            val,
-            style: GoogleFonts.poppins(
-              color: const Color(0xFFD4AF37),
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+        decoration: BoxDecoration(
+          color: Colors.black38,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.5)),
+        ),
+        child: Column(
+          children: [
+            Text(
+              val,
+              style: GoogleFonts.poppins(
+                color: const Color(0xFFD4AF37),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            style: GoogleFonts.poppins(
-              color: Colors.white70,
-              fontSize: 11,
+            const SizedBox(height: 2),
+            Text(
+              label,
+              style: GoogleFonts.poppins(
+                color: Colors.white70,
+                fontSize: 10,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -224,33 +227,32 @@ class _RamadanScreenState extends State<RamadanScreen> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on, color: Color(0xFFD4AF37), size: 18),
-                          const SizedBox(width: 6),
-                          Text(
-                            isUrdu ? 'منڈی بہاءالدین / ملکوال (پاکستان)' : 'Mandi Bahauddin / Malakwal (Pakistan)',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                            ),
+                      const Icon(Icons.location_on, color: Color(0xFFD4AF37), size: 16),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          isUrdu ? 'منڈی بہاءالدین / ملکوال (پاکستان)' : 'Mandi Bahauddin / Malakwal',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
                           ),
-                        ],
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
+                      const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
                           color: const Color(0xFFD4AF37).withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
-                          isUrdu ? 'آمد کا کاؤنٹ ڈاؤن' : 'ARRIVAL COUNTDOWN',
+                          isUrdu ? 'آمد' : 'COUNTDOWN',
                           style: GoogleFonts.poppins(
                             color: const Color(0xFFD4AF37),
-                            fontSize: 11,
+                            fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -270,11 +272,13 @@ class _RamadanScreenState extends State<RamadanScreen> {
                   ),
                   const SizedBox(height: 14),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       _buildCountdownPill('06', isUrdu ? 'ماہ' : 'Months'),
+                      const SizedBox(width: 8),
                       _buildCountdownPill('03', isUrdu ? 'دن' : 'Days'),
+                      const SizedBox(width: 8),
                       _buildCountdownPill('14', isUrdu ? 'گھنٹے' : 'Hours'),
+                      const SizedBox(width: 8),
                       _buildCountdownPill('25', isUrdu ? 'منٹ' : 'Mins'),
                     ],
                   ),
@@ -395,23 +399,29 @@ class _RamadanScreenState extends State<RamadanScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '📚 ${isUrdu ? currentDua.refUr : currentDua.refEn}',
-                        style: GoogleFonts.poppins(
-                          color: const Color(0xFFD4AF37),
-                          fontSize: 11,
+                      Expanded(
+                        child: Text(
+                          '📚 ${isUrdu ? currentDua.refUr : currentDua.refEn}',
+                          style: GoogleFonts.poppins(
+                            color: const Color(0xFFD4AF37),
+                            fontSize: 11,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      const SizedBox(width: 8),
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFD4AF37),
                           foregroundColor: const Color(0xFF081B15),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          visualDensity: VisualDensity.compact,
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         ),
-                        icon: const Icon(Icons.volume_up, size: 16),
+                        icon: const Icon(Icons.volume_up, size: 14),
                         label: Text(
-                          isUrdu ? 'دعا سنیں' : 'Listen',
-                          style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 12),
+                          isUrdu ? 'سنیں' : 'Listen',
+                          style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 11),
                         ),
                         onPressed: () {},
                       ),
@@ -520,16 +530,15 @@ class _RamadanScreenState extends State<RamadanScreen> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: 80,
+                          width: 60,
                           child: Text(
-                            isUrdu ? '${i + 1} رمضان' : 'Ramadan ${i + 1}',
+                            isUrdu ? '${i + 1} رمضان' : '${i + 1} Ram',
                             style: GoogleFonts.poppins(
                               color: const Color(0xFFD4AF37),
                               fontWeight: FontWeight.bold,
-                              fontSize: 13,
+                              fontSize: 11,
                             ),
                           ),
                         ),
@@ -537,30 +546,41 @@ class _RamadanScreenState extends State<RamadanScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(suhoorStr, style: GoogleFonts.poppins(color: Colors.white, fontSize: 12)),
-                              Text(iftarStr, style: GoogleFonts.poppins(color: Colors.white, fontSize: 12)),
+                              Text(suhoorStr, style: GoogleFonts.poppins(color: Colors.white, fontSize: 11)),
+                              Text(iftarStr, style: GoogleFonts.poppins(color: Colors.white, fontSize: 11)),
                             ],
                           ),
                         ),
                         Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Checkbox(
-                              value: _fastsTracker[i],
-                              activeColor: const Color(0xFFD4AF37),
-                              checkColor: const Color(0xFF081B15),
-                              onChanged: (val) {
-                                setState(() => _fastsTracker[i] = val ?? false);
-                                _saveTrackerState();
-                              },
+                            SizedBox(
+                              width: 28,
+                              height: 28,
+                              child: Checkbox(
+                                value: _fastsTracker[i],
+                                activeColor: const Color(0xFFD4AF37),
+                                checkColor: const Color(0xFF081B15),
+                                onChanged: (val) {
+                                  setState(() => _fastsTracker[i] = val ?? false);
+                                  _saveTrackerState();
+                                },
+                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
                             ),
-                            Checkbox(
-                              value: _taraweehTracker[i],
-                              activeColor: const Color(0xFFD4AF37),
-                              checkColor: const Color(0xFF081B15),
-                              onChanged: (val) {
-                                setState(() => _taraweehTracker[i] = val ?? false);
-                                _saveTrackerState();
-                              },
+                            SizedBox(
+                              width: 28,
+                              height: 28,
+                              child: Checkbox(
+                                value: _taraweehTracker[i],
+                                activeColor: const Color(0xFFD4AF37),
+                                checkColor: const Color(0xFF081B15),
+                                onChanged: (val) {
+                                  setState(() => _taraweehTracker[i] = val ?? false);
+                                  _saveTrackerState();
+                                },
+                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
                             ),
                           ],
                         ),

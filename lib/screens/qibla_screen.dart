@@ -12,7 +12,6 @@ class QiblaScreen extends StatefulWidget {
 }
 
 class _QiblaScreenState extends State<QiblaScreen> {
-  // Mandi Bahauddin / Malakwal default coordinates
   final double _userLat = 32.5542;
   final double _userLng = 73.3134;
 
@@ -42,10 +41,10 @@ class _QiblaScreenState extends State<QiblaScreen> {
   }
 
   String _getCardinal(double angle, bool isUrdu) {
-    if (angle >= 240 && angle <= 280) return isUrdu ? "مغرب-جنوب مغرب (W-SW)" : "West-Southwest (W-SW)";
-    if (angle >= 220 && angle < 240) return isUrdu ? "جنوب مغرب (SW)" : "Southwest (SW)";
-    if (angle >= 280 && angle <= 310) return isUrdu ? "مغرب-شمال مغرب (W-NW)" : "West-Northwest (W-NW)";
-    return isUrdu ? "${angle.round()}° قبلہ سمت" : "${angle.round()}° Qibla Direction";
+    if (angle >= 240 && angle <= 280) return isUrdu ? "مغرب-جنوب مغرب" : "W-Southwest";
+    if (angle >= 220 && angle < 240) return isUrdu ? "جنوب مغرب" : "Southwest";
+    if (angle >= 280 && angle <= 310) return isUrdu ? "مغرب-شمال مغرب" : "W-Northwest";
+    return isUrdu ? "${angle.round()}°" : "${angle.round()}°";
   }
 
   @override
@@ -64,14 +63,14 @@ class _QiblaScreenState extends State<QiblaScreen> {
       backgroundColor: const Color(0xFF081B15),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Text(
-                isUrdu ? "قبلہ رخ کمپاس (Kaaba Finder)" : "Qibla Direction Compass",
+                isUrdu ? "قبلہ رخ کمپاس" : "Qibla Direction Compass",
                 style: GoogleFonts.inter(
                   color: Colors.white,
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
@@ -79,161 +78,174 @@ class _QiblaScreenState extends State<QiblaScreen> {
               const SizedBox(height: 4),
               Text(
                 isUrdu
-                    ? "آپ کے شہر اور لائیو لوکیشن سے کعبہ مکرمہ کی درست سمت اور زاویہ"
-                    : "Exact angle & distance to the Holy Kaaba from your live location",
+                    ? "کعبہ مکرمہ کی درست سمت اور زاویہ"
+                    : "Exact angle & distance to the Holy Kaaba",
                 style: GoogleFonts.inter(
                   color: Colors.white70,
-                  fontSize: 13,
+                  fontSize: 12,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
                 decoration: BoxDecoration(
                   color: Colors.black26,
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: Colors.white12),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Column(
-                      children: [
-                        Text(
-                          isUrdu ? "قبلہ کی سمت (زاویہ):" : "Qibla Direction:",
-                          style: const TextStyle(color: Colors.white70, fontSize: 12),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "${qiblaAngle.round()}° $cardinal",
-                          style: const TextStyle(
-                            color: Color(0xFFD4AF37),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            isUrdu ? "قبلہ کی سمت:" : "Qibla Angle:",
+                            style: const TextStyle(color: Colors.white70, fontSize: 11),
+                            textAlign: TextAlign.center,
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 4),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              "${qiblaAngle.round()}° $cardinal",
+                              style: const TextStyle(
+                                color: Color(0xFFD4AF37),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Container(width: 1, height: 35, color: Colors.white12),
-                    Column(
-                      children: [
-                        Text(
-                          isUrdu ? "مکہ مکرمہ سے فاصلہ:" : "Distance to Mecca:",
-                          style: const TextStyle(color: Colors.white70, fontSize: 12),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          isUrdu ? "$distance کلومیٹر" : "$distance km",
-                          style: const TextStyle(
-                            color: Color(0xFFD4AF37),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                    Container(width: 1, height: 30, color: Colors.white12),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            isUrdu ? "مکہ سے فاصلہ:" : "Distance:",
+                            style: const TextStyle(color: Colors.white70, fontSize: 11),
+                            textAlign: TextAlign.center,
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 4),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              isUrdu ? "$distance کلومیٹر" : "$distance km",
+                              style: const TextStyle(
+                                color: Color(0xFFD4AF37),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 22),
               // Visual Compass Dial
-              Center(
-                child: SizedBox(
-                  width: 260,
-                  height: 260,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Transform.rotate(
-                        angle: -_simulatedHeading * (math.pi / 180),
-                        child: Container(
-                          width: 260,
-                          height: 260,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: const Color(0xFF0D2C22),
-                            border: Border.all(
-                              color: isAligned ? const Color(0xFF4CAF50) : const Color(0xFFD4AF37),
-                              width: 3,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: isAligned
-                                    ? Colors.green.withOpacity(0.5)
-                                    : const Color(0xFFD4AF37).withOpacity(0.25),
-                                blurRadius: 30,
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final double compassSize = constraints.maxWidth > 260 ? 240 : constraints.maxWidth * 0.7;
+                  return Center(
+                    child: SizedBox(
+                      width: compassSize,
+                      height: compassSize,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Transform.rotate(
+                            angle: -_simulatedHeading * (math.pi / 180),
+                            child: Container(
+                              width: compassSize,
+                              height: compassSize,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: const Color(0xFF0D2C22),
+                                border: Border.all(
+                                  color: isAligned ? const Color(0xFF4CAF50) : const Color(0xFFD4AF37),
+                                  width: 3,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: isAligned
+                                        ? Colors.green.withOpacity(0.4)
+                                        : const Color(0xFFD4AF37).withOpacity(0.2),
+                                    blurRadius: 24,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Positioned(top: 14, child: Text("N", style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 16))),
-                              Positioned(right: 14, child: Text("E", style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14))),
-                              Positioned(bottom: 14, child: Text("S", style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14))),
-                              Positioned(left: 14, child: Text("W", style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14))),
-                              // Kaaba Pointer Icon
-                              Transform.rotate(
-                                angle: qiblaAngle * (math.pi / 180),
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 25),
-                                    child: Text(
-                                      "🕋",
-                                      style: TextStyle(fontSize: 32),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Positioned(top: 12, child: Text("N", style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 14))),
+                                  Positioned(right: 12, child: Text("E", style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12))),
+                                  Positioned(bottom: 12, child: Text("S", style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12))),
+                                  Positioned(left: 12, child: Text("W", style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12))),
+                                  Transform.rotate(
+                                    angle: qiblaAngle * (math.pi / 180),
+                                    child: Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 22),
+                                        child: Text("🕋", style: TextStyle(fontSize: 28)),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                          Container(
+                            width: 14,
+                            height: 14,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFFD4AF37),
+                            ),
+                          ),
+                        ],
                       ),
-                      Container(
-                        width: 16,
-                        height: 16,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFFD4AF37),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 22),
               // Status Badge
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
                 decoration: BoxDecoration(
-                  color: isAligned ? Colors.green.withOpacity(0.2) : const Color(0xFFD4AF37).withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(20),
+                  color: isAligned ? Colors.green.withOpacity(0.15) : const Color(0xFFD4AF37).withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: isAligned ? Colors.green : const Color(0xFFD4AF37),
                   ),
                 ),
                 child: Text(
                   isAligned
-                      ? (isUrdu ? "✨ الحمدللہ! آپ قبلہ کی درست سمت میں ہیں" : "✨ Alhamdulillah! You are facing the Holy Kaaba")
-                      : (isUrdu ? "اپنے فون کو گھمائیں تاکہ کعبہ کا نشان اوپر سیدھ میں آ جائے" : "Rotate your phone until Kaaba icon points straight UP"),
+                      ? (isUrdu ? "✨ آپ قبلہ کی درست سمت میں ہیں" : "✨ You are facing the Holy Kaaba")
+                      : (isUrdu ? "فون گھمائیں تاکہ کعبہ اوپر سیدھ میں آ جائے" : "Rotate phone until Kaaba icon points UP"),
                   style: GoogleFonts.inter(
                     color: isAligned ? Colors.greenAccent : Colors.white,
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               // Slider for Rotation Simulation
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    isUrdu ? "🔄 کمپاس ٹیسٹ کریں (فون گھمائیں):" : "🔄 Test Rotation:",
+                    isUrdu ? "🔄 کمپاس ٹیسٹ:" : "🔄 Test Rotation:",
                     style: const TextStyle(color: Colors.white70, fontSize: 12),
                   ),
                   Text(

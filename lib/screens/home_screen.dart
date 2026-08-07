@@ -50,33 +50,39 @@ class HomeScreen extends StatelessWidget {
           children: [
             // Header Bar with Settings Gear
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ',
-                        style: GoogleFonts.amiri(
-                          color: const Color(0xFFD4AF37),
-                          fontSize: 18,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ',
+                            style: GoogleFonts.amiri(
+                              color: const Color(0xFFD4AF37),
+                              fontSize: 17,
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                        langService.isUrdu ? 'نورِ قلب' : 'Noor-e-Qalb',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                        const SizedBox(height: 2),
+                        Text(
+                          langService.isUrdu ? 'نورِ قلب' : 'Noor-e-Qalb',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-
-                  // Actions: Streak Badge + Settings Icon + Pro
+                  const SizedBox(width: 8),
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       GestureDetector(
                         onTap: () {
@@ -86,7 +92,6 @@ class HomeScreen extends StatelessWidget {
                           );
                         },
                         child: Container(
-                          margin: const EdgeInsets.only(right: 8),
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           decoration: BoxDecoration(
                             color: const Color(0xFF194C3D),
@@ -94,8 +99,9 @@ class HomeScreen extends StatelessWidget {
                             border: Border.all(color: const Color(0xFFD4AF37)),
                           ),
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text('🔥', style: TextStyle(fontSize: 14)),
+                              const Text('🔥', style: TextStyle(fontSize: 13)),
                               const SizedBox(width: 4),
                               Text(
                                 '${taskService.streakCount}d',
@@ -109,16 +115,21 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-
-                      IconButton(
-                        icon: const Icon(Icons.settings, color: Color(0xFFD4AF37)),
-                        tooltip: 'Settings',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const SettingsScreen()),
-                          );
-                        },
+                      const SizedBox(width: 4),
+                      SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: const Icon(Icons.settings, color: Color(0xFFD4AF37), size: 22),
+                          tooltip: 'Settings',
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -128,7 +139,7 @@ class HomeScreen extends StatelessWidget {
 
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -141,25 +152,24 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(18),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
-                          borderRadius: BorderRadius.circular(22),
+                          borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFFD4AF37).withOpacity(0.2),
+                              color: const Color(0xFFD4AF37).withOpacity(0.15),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
                           ],
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
                               child: Column(
@@ -167,13 +177,16 @@ class HomeScreen extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      const Icon(Icons.location_on, color: Color(0xFFD4AF37), size: 16),
+                                      const Icon(Icons.location_on, color: Color(0xFFD4AF37), size: 14),
                                       const SizedBox(width: 4),
-                                      Text(
-                                        '${schedule.location.cityName}, ${schedule.location.countryName}',
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.white70,
-                                          fontSize: 12,
+                                      Flexible(
+                                        child: Text(
+                                          '${schedule.location.cityName}, ${schedule.location.countryName}',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white70,
+                                            fontSize: 11,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                     ],
@@ -181,19 +194,20 @@ class HomeScreen extends StatelessWidget {
                                   const SizedBox(height: 6),
                                   if (schedule.nextPrayer != null) ...[
                                     Text(
-                                      'Next: ${schedule.nextPrayer!.nameEnglish} (${schedule.nextPrayer!.timeString})',
+                                      'Next: ${schedule.nextPrayer!.nameEnglish}',
                                       style: GoogleFonts.poppins(
                                         color: Colors.white,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    const SizedBox(height: 4),
+                                    const SizedBox(height: 2),
                                     Text(
-                                      'Remaining: ${_formatDuration(schedule.remainingTimeToNext)}',
+                                      '${schedule.nextPrayer!.timeString} • ${_formatDuration(schedule.remainingTimeToNext)} left',
                                       style: GoogleFonts.poppins(
                                         color: const Color(0xFFD4AF37),
-                                        fontSize: 13,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -201,15 +215,16 @@ class HomeScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const Icon(Icons.mosque, color: Color(0xFFD4AF37), size: 38),
+                            const SizedBox(width: 10),
+                            const Icon(Icons.mosque, color: Color(0xFFD4AF37), size: 36),
                           ],
                         ),
                       ),
                     ),
 
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 14),
 
-                    // RAMADAN 1448 AH HERO BANNER (SCREEN 11 REFERENCE)
+                    // RAMADAN 1448 AH HERO BANNER
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -218,7 +233,7 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [Color(0xFF1A4638), Color(0xFF0C231B)],
@@ -226,187 +241,163 @@ class HomeScreen extends StatelessWidget {
                             end: Alignment.bottomRight,
                           ),
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                          border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.6), width: 1.2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFD4AF37).withOpacity(0.1),
+                              blurRadius: 10,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                const Text('🌙', style: TextStyle(fontSize: 32)),
-                                const SizedBox(width: 14),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      langService.isUrdu ? 'رمضان المبارک 1448 ہجری' : 'RAMADAN 1448 AH',
-                                      style: GoogleFonts.poppins(
-                                        color: const Color(0xFFD4AF37),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    Text(
-                                      langService.isUrdu ? 'آمد کا لائیو کاؤنٹ ڈاؤن، ٹائم ٹیبل اور دعائیں' : 'Live Arrival Countdown, Timetable & Duas',
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white70,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFD4AF37).withOpacity(0.15),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: const Text('🌙', style: TextStyle(fontSize: 24)),
                             ),
-                            const Icon(Icons.arrow_forward_ios, color: Color(0xFFD4AF37), size: 18),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    langService.isUrdu ? 'رمضان المبارک 1448 ہجری' : 'Ramadan 1448 AH Suite',
+                                    style: GoogleFonts.poppins(
+                                      color: const Color(0xFFD4AF37),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    langService.isUrdu
+                                        ? 'سحری، افطار، شبِ قدر اور 30 دن کا مکمل ٹائم ٹیبل'
+                                        : 'Suhoor, Iftar, Laylatul Qadr & full 30-day schedule',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white70,
+                                      fontSize: 11,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Icon(Icons.chevron_right, color: Color(0xFFD4AF37), size: 22),
                           ],
                         ),
                       ),
                     ),
 
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 14),
 
-                    // DAILY ISLAMIC ACTION PLAN & NAMAZ TRACKER HERO BUTTON
+                    // DAILY DUA CARD
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => const DailyActionPlanScreen()),
+                          MaterialPageRoute(builder: (_) => const DuasScreen()),
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF0F2C23),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF0F2C23), Color(0xFF091D17)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                           borderRadius: BorderRadius.circular(18),
-                          border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.4)),
+                          border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.3)),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                const Text('🌟', style: TextStyle(fontSize: 22)),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      langService.isUrdu ? 'آج کا اسلامی لائحہ عمل اور نماز ٹریکر' : 'Daily Action Plan & Namaz Tracker',
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    Text(
-                                      langService.isUrdu ? '5 فرض نمازیں • 4 روحانی اعمال • 🪙 +10 ٹوکنز' : '5 Daily Prayers • 4 Deeds • 🪙 +10 Tokens each',
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white60,
-                                        fontSize: 11,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFD4AF37).withOpacity(0.12),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Icon(Icons.menu_book, color: Color(0xFFD4AF37), size: 20),
                             ),
-                            const Icon(Icons.arrow_forward_ios, color: Color(0xFFD4AF37), size: 16),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    langService.isUrdu ? 'آج کی دعا' : 'Daily Dua',
+                                    style: GoogleFonts.poppins(
+                                      color: const Color(0xFFD4AF37),
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    dailyDua.arabicText,
+                                    style: GoogleFonts.amiri(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    textDirection: TextDirection.rtl,
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    dailyDua.title,
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white70,
+                                      fontSize: 11,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Icon(Icons.chevron_right, color: Colors.white38, size: 20),
                           ],
                         ),
                       ),
                     ),
 
                     const SizedBox(height: 18),
-
-                    // Daily Dua / Hadith Highlight Card
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF0F2C23),
-                        borderRadius: BorderRadius.circular(22),
-                        border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.3)),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFD4AF37).withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  'DAILY DUA HIGHLIGHT',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color(0xFFD4AF37),
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-                              ),
-                              const Icon(Icons.menu_book, color: Color(0xFFD4AF37), size: 20),
-                            ],
-                          ),
-                          const SizedBox(height: 14),
-                          Text(
-                            dailyDua.title,
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            dailyDua.arabicText,
-                            textAlign: TextAlign.right,
-                            style: GoogleFonts.amiri(
-                              color: const Color(0xFFD4AF37),
-                              fontSize: 24,
-                              height: 1.6,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            dailyDua.urduTranslation,
-                            style: GoogleFonts.poppins(
-                              color: Colors.white70,
-                              fontSize: 13,
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2),
+                      child: Text(
+                        'Islamic Companion Features',
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
+                    const SizedBox(height: 12),
 
-                    const SizedBox(height: 24),
-                    Text(
-                      'Islamic Companion Features',
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-
-                    // Feature Grid (Now includes Holy Quran / Surahs!)
+                    // Feature Grid
                     GridView.count(
                       crossAxisCount: 2,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      crossAxisSpacing: 14,
-                      mainAxisSpacing: 14,
-                      childAspectRatio: 1.05,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 1.0,
                       children: [
                         _buildFeatureCard(
                           context,
-                          title: 'Holy Quran Surahs',
-                          subtitle: 'Yaseen, Rahman, Mulk',
+                          title: 'Holy Quran',
+                          subtitle: 'Surahs & Recitation',
                           icon: Icons.auto_stories,
                           isHighlight: true,
                           onTap: () {
@@ -419,7 +410,7 @@ class HomeScreen extends StatelessWidget {
                         _buildFeatureCard(
                           context,
                           title: 'Daily Tasks',
-                          subtitle: 'Randomized daily streak',
+                          subtitle: 'Streak & Rewards',
                           icon: Icons.task_alt,
                           onTap: () {
                             Navigator.push(
@@ -430,8 +421,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                         _buildFeatureCard(
                           context,
-                          title: 'Namaz Timings',
-                          subtitle: 'Live countdown & alarms',
+                          title: 'Namaz Times',
+                          subtitle: 'Countdown & Alarms',
                           icon: Icons.access_time_filled,
                           onTap: () {
                             Navigator.push(
@@ -443,7 +434,7 @@ class HomeScreen extends StatelessWidget {
                         _buildFeatureCard(
                           context,
                           title: 'Qibla Compass',
-                          subtitle: 'Live Kaaba Direction',
+                          subtitle: 'Kaaba Direction',
                           icon: Icons.explore,
                           onTap: () {
                             Navigator.push(
@@ -454,8 +445,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                         _buildFeatureCard(
                           context,
-                          title: 'Hadith of the Day',
-                          subtitle: 'Viral WhatsApp Share Card',
+                          title: 'Hadith',
+                          subtitle: 'Prophetic Wisdom',
                           icon: Icons.brightness_3,
                           onTap: () {
                             Navigator.push(
@@ -466,8 +457,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                         _buildFeatureCard(
                           context,
-                          title: 'Qaza Prayer Log',
-                          subtitle: 'Missed Prayers Tracker',
+                          title: 'Qaza Tracker',
+                          subtitle: 'Missed Prayers Log',
                           icon: Icons.history_edu,
                           onTap: () {
                             Navigator.push(
@@ -478,8 +469,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                         _buildFeatureCard(
                           context,
-                          title: 'Zakat Calculator',
-                          subtitle: 'Shariah 2.5% Nisab',
+                          title: 'Zakat',
+                          subtitle: '2.5% Nisab Calc',
                           icon: Icons.calculate,
                           onTap: () {
                             Navigator.push(
@@ -490,8 +481,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                         _buildFeatureCard(
                           context,
-                          title: 'Digital Tasbeeh',
-                          subtitle: 'Vibration & custom count',
+                          title: 'Tasbeeh',
+                          subtitle: 'Digital Counter',
                           icon: Icons.track_changes,
                           onTap: () {
                             Navigator.push(
@@ -503,7 +494,7 @@ class HomeScreen extends StatelessWidget {
                         _buildFeatureCard(
                           context,
                           title: 'Masnoon Duas',
-                          subtitle: 'Subah, Sham & Azkar',
+                          subtitle: 'Morning & Evening',
                           icon: Icons.menu_book,
                           onTap: () {
                             Navigator.push(
@@ -515,7 +506,7 @@ class HomeScreen extends StatelessWidget {
                         _buildFeatureCard(
                           context,
                           title: '99 Names',
-                          subtitle: 'Asma-ul-Husna meanings',
+                          subtitle: 'Asma-ul-Husna',
                           icon: Icons.auto_awesome,
                           onTap: () {
                             Navigator.push(
@@ -526,8 +517,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                         _buildFeatureCard(
                           context,
-                          title: '6 Kalimas of Islam',
-                          subtitle: 'Arabic, Trans & Audio',
+                          title: '6 Kalimas',
+                          subtitle: 'Pillars of Faith',
                           icon: Icons.star_border,
                           onTap: () {
                             Navigator.push(
@@ -539,8 +530,8 @@ class HomeScreen extends StatelessWidget {
                         _buildFeatureCard(
                           context,
                           title: 'Namaz Guide',
-                          subtitle: 'Janazah, Eid & Nawafil',
-                          icon: Icons.menu_book,
+                          subtitle: 'Eid, Janazah',
+                          icon: Icons.book,
                           onTap: () {
                             Navigator.push(
                               context,
@@ -551,7 +542,7 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
 
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -576,21 +567,21 @@ class HomeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isHighlight ? const Color(0xFF194C3D) : const Color(0xFF0F2C23),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(18),
           border: Border.all(
             color: isHighlight
                 ? const Color(0xFFD4AF37)
-                : const Color(0xFFD4AF37).withOpacity(0.2),
+                : const Color(0xFFD4AF37).withOpacity(0.15),
             width: isHighlight ? 1.5 : 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 3),
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -599,33 +590,41 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: const Color(0xFF081B15),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(icon, color: const Color(0xFFD4AF37), size: 26),
+              child: Icon(icon, color: const Color(0xFFD4AF37), size: 22),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
+            const SizedBox(height: 6),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  style: GoogleFonts.poppins(
-                    color: Colors.white60,
-                    fontSize: 11,
+                  const SizedBox(height: 1),
+                  Text(
+                    subtitle,
+                    style: GoogleFonts.poppins(
+                      color: Colors.white60,
+                      fontSize: 10,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

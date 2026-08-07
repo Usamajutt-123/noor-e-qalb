@@ -176,14 +176,14 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
         backgroundColor: const Color(0xFF081B15),
         elevation: 0,
         title: Text(
-          isUrdu ? "قضا نمازوں کا ٹریکر (Qaza Prayer Log)" : "Qaza Prayer Log",
-          style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold),
+          isUrdu ? "قضا نمازوں کا ٹریکر" : "Qaza Prayer Log",
+          style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               // Stats Pills Row
@@ -191,24 +191,24 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                       decoration: BoxDecoration(
                         color: const Color(0xFFD4AF37).withOpacity(0.12),
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(14),
                         border: Border.all(color: const Color(0xFFD4AF37)),
                       ),
                       child: Column(
                         children: [
                           Text(
-                            isUrdu ? "کل باقی قضا نمازیں:" : "Total Remaining Qaza:",
-                            style: const TextStyle(color: Color(0xFFD4AF37), fontSize: 11),
+                            isUrdu ? "کل باقی:" : "Remaining:",
+                            style: const TextStyle(color: Color(0xFFD4AF37), fontSize: 10),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             "$_totalRemaining",
                             style: GoogleFonts.inter(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -216,27 +216,27 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                       decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.green.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(14),
                         border: Border.all(color: Colors.green),
                       ),
                       child: Column(
                         children: [
                           Text(
-                            isUrdu ? "الحمدللہ! ادا کیں:" : "Fulfilled Prayers:",
-                            style: const TextStyle(color: Colors.greenAccent, fontSize: 11),
+                            isUrdu ? "ادا کیں:" : "Fulfilled:",
+                            style: const TextStyle(color: Colors.greenAccent, fontSize: 10),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             "$_totalPrayed",
                             style: GoogleFonts.inter(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -246,62 +246,65 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               // Bulk Add Days Row
               Text(
-                isUrdu ? "⚡ فوری اضافہ کریں (Bulk Add Missed Days):" : "⚡ Bulk Add Missed Days:",
+                isUrdu ? "⚡ فوری اضافہ کریں:" : "⚡ Bulk Add Missed Days:",
                 style: const TextStyle(color: Colors.white70, fontSize: 12),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 alignment: WrapAlignment.center,
                 children: [
-                  _buildQuickBtn("+1 دن (1 Day)", () => _bulkAddDays(1, isUrdu)),
-                  _buildQuickBtn("+7 دن (1 Week)", () => _bulkAddDays(7, isUrdu)),
-                  _buildQuickBtn("+30 دن (1 Month)", () => _bulkAddDays(30, isUrdu)),
+                  _buildQuickBtn("+1 Day", () => _bulkAddDays(1, isUrdu)),
+                  _buildQuickBtn("+7 Days", () => _bulkAddDays(7, isUrdu)),
+                  _buildQuickBtn("+30 Days", () => _bulkAddDays(30, isUrdu)),
                   _buildQuickBtn(
-                    isUrdu ? "ری سیٹ کریں" : "Reset All",
+                    isUrdu ? "ری سیٹ" : "Reset",
                     () => _resetAll(isUrdu),
                     color: Colors.redAccent,
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 18),
               // The 6 Prayer Rows
               ..._prayers.map((item) {
                 final int count = _counts[item.keyName] ?? 0;
                 return Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(14),
                     border: Border.all(color: Colors.white12),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            isUrdu ? item.titleUr : item.titleEn,
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              isUrdu ? item.titleUr : item.titleEn,
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            "$count ${isUrdu ? 'باقی' : 'left'}",
-                            style: const TextStyle(color: Color(0xFFD4AF37), fontSize: 12),
-                          ),
-                        ],
+                            const SizedBox(height: 2),
+                            Text(
+                              "$count ${isUrdu ? 'باقی' : 'left'}",
+                              style: const TextStyle(color: Color(0xFFD4AF37), fontSize: 11),
+                            ),
+                          ],
+                        ),
                       ),
+                      const SizedBox(width: 8),
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           ElevatedButton(
                             onPressed: count > 0 ? () => _decrement(item.keyName, isUrdu) : null,
@@ -309,24 +312,25 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                               backgroundColor: Colors.green.shade700,
                               foregroundColor: Colors.white,
                               disabledBackgroundColor: Colors.white12,
-                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              visualDensity: VisualDensity.compact,
                             ),
-                            child: Text(isUrdu ? "ادا کی -1" : "Prayed -1"),
+                            child: Text(isUrdu ? "ادا -1" : "Prayed", style: const TextStyle(fontSize: 11)),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 6),
                           InkWell(
                             onTap: () => _increment(item.keyName, 1),
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(8),
                             child: Container(
-                              width: 36,
-                              height: 36,
+                              width: 32,
+                              height: 32,
                               decoration: BoxDecoration(
                                 color: const Color(0xFFD4AF37).withOpacity(0.15),
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(8),
                                 border: Border.all(color: const Color(0xFFD4AF37)),
                               ),
-                              child: const Icon(Icons.add, color: Color(0xFFD4AF37), size: 18),
+                              child: const Icon(Icons.add, color: Color(0xFFD4AF37), size: 16),
                             ),
                           ),
                         ],
@@ -335,12 +339,12 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                   ),
                 );
               }),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
                   color: Colors.black26,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(14),
                 ),
                 child: Text(
                   isUrdu
@@ -349,7 +353,7 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                   style: GoogleFonts.inter(
                     color: const Color(0xFFD4AF37),
                     fontStyle: FontStyle.italic,
-                    fontSize: 13,
+                    fontSize: 12,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -367,7 +371,9 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
       style: OutlinedButton.styleFrom(
         foregroundColor: color ?? Colors.white70,
         side: BorderSide(color: color ?? Colors.white24),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        visualDensity: VisualDensity.compact,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       ),
       child: Text(text, style: const TextStyle(fontSize: 11)),
     );

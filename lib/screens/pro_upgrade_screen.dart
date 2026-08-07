@@ -149,13 +149,13 @@ class ProUpgradeScreen extends StatelessWidget {
               icon: Icon(
                 premiumService.isProUser ? Icons.toggle_on : Icons.toggle_off,
                 color: const Color(0xFFD4AF37),
-                size: 28,
+                size: 24,
               ),
               label: Text(
                 premiumService.isProUser
-                    ? '[Tester] Switch back to Free Mode (Show Ads)'
-                    : '[Tester] Simulate Pro Purchase (Hide Ads)',
-                style: GoogleFonts.poppins(color: Colors.white60, fontSize: 13),
+                    ? 'Switch to Free Mode'
+                    : 'Simulate Pro Purchase',
+                style: GoogleFonts.poppins(color: Colors.white60, fontSize: 12),
               ),
             ),
             if (premiumService.statusMessage.isNotEmpty)
