@@ -7,6 +7,7 @@ import 'services/prayer_service.dart';
 import 'services/daily_task_service.dart';
 import 'services/language_service.dart';
 import 'services/settings_service.dart';
+import 'services/quran_api_service.dart';
 import 'screens/home_screen.dart';
 import 'screens/onboarding_screen.dart';
 
@@ -24,6 +25,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => DailyTaskService()),
         ChangeNotifierProvider(create: (_) => LanguageService()),
         ChangeNotifierProvider(create: (_) => SettingsService()),
+        ChangeNotifierProvider(create: (_) => QuranApiService()),
       ],
       child: const NoorEQalbApp(),
     ),

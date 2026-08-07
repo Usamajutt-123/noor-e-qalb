@@ -63,10 +63,15 @@ class _SurahsScreenState extends State<SurahsScreen> {
 
   void _openSurahDetail(BuildContext context, SurahModel surah) {
     _saveRecentlyRead(surah);
+    // FIX: Preserve QuranApiService provider across navigation to avoid ProviderNotFoundException
+    final quranService = Provider.of<QuranApiService>(context, listen: false);
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => SurahDetailScreen(surah: surah),
+        builder: (ctx) => ChangeNotifierProvider<QuranApiService>.value(
+          value: quranService,
+          child: SurahDetailScreen(surah: surah),
+        ),
       ),
     );
   }
@@ -363,22 +368,38 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
   @override
   void initState() {
     super.initState();
-    _loadVerses(forceRefresh: false);
+    // FIX: Use post frame callback to ensure Provider context is ready and SurahDetailsScreen is inside provider tree
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _loadVerses(forceRefresh: false);
+      }
+    });
   }
 
-  void _loadVerses({bool forceRefresh = false}) async {
+  Future<void> _loadVerses({bool forceRefresh = false}) async {
+    if (!mounted) return;
     setState(() {
       _isLoadingApi = true;
     });
-    final api = Provider.of<QuranApiService>(context, listen: false);
-    final fetched = await api.fetchSurahVerses(widget.surah.number, forceRefresh: forceRefresh);
-    if (mounted) {
+    try {
+      // Provider is now guaranteed to exist because QuranApiService is registered in MultiProvider at app root
+      final api = Provider.of<QuranApiService>(context, listen: false);
+      final fetched = await api.fetchSurahVerses(widget.surah.number, forceRefresh: forceRefresh);
+      if (!mounted) return;
       setState(() {
         if (fetched.isNotEmpty) {
           _apiVerses = fetched;
         } else {
+          // Fallback to embedded local verses if API fails - keeps Surah list, translation, tafseer working
           _apiVerses = widget.surah.verses;
         }
+        _isLoadingApi = false;
+      });
+    } catch (e) {
+      // Graceful fallback: if provider still not found or network fails, use local embedded data
+      if (!mounted) return;
+      setState(() {
+        _apiVerses = widget.surah.verses;
         _isLoadingApi = false;
       });
     }
