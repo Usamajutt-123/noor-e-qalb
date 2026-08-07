@@ -1,0 +1,55 @@
+name: islamic_companion_flutter
+description: A complete, production-ready Islamic Companion & Tasbeeh app for Google Play Store with AdMob and In-App Purchase (Pro version) support.
+version: 1.0.0+1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Google AdMob for monetizing free users
+  google_mobile_ads: ^9.0.0
+  
+  # In-App Purchases for Pro / Ad-Free upgrade
+  in_app_purchase: ^3.1.13
+  
+  # Live GPS location detection for Namaz times
+  geolocator: ^13.0.1
+  
+  # HTTP & JSON for Al-Quran API verses fetching
+  http: ^1.2.2
+  
+  # State management & Local storage
+  provider: ^6.1.2
+  shared_preferences: ^2.2.3
+  
+  # Haptic feedback & sharing
+  vibration: ^2.0.0
+  share_plus: ^10.0.0
+  
+  # Typography & UI styling
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.10
+  intl: ^0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: false
+  image_path: "assets/app_icon.png"
+  min_sdk_android: 21

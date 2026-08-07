@@ -1,0 +1,347 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '../models/prayer_times_model.dart';
+import '../services/prayer_service.dart';
+import '../services/language_service.dart';
+import '../widgets/ad_banner_widget.dart';
+
+class PrayerTimesScreen extends StatefulWidget {
+  const PrayerTimesScreen({super.key});
+
+  @override
+  State<PrayerTimesScreen> createState() => _PrayerTimesScreenState();
+}
+
+class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
+  Timer? _ticker;
+  late PrayerSchedule _schedule;
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshSchedule();
+    _ticker = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() {
+          _refreshSchedule();
+        });
+      }
+    });
+  }
+
+  void _refreshSchedule() {
+    final prayerService = Provider.of<PrayerService>(context, listen: false);
+    _schedule = prayerService.getSchedule(DateTime.now());
+  }
+
+  @override
+  void dispose() {
+    _ticker?.cancel();
+    super.dispose();
+  }
+
+  String _formatDuration(Duration d, bool isUrdu) {
+    if (d.isNegative) return isUrdu ? '00 گھنٹے 00 منٹ' : '00h 00m 00s';
+    final int hours = d.inHours;
+    final int mins = d.inMinutes.remainder(60);
+    final int secs = d.inSeconds.remainder(60);
+    if (isUrdu) {
+      return 'باقی وقت: ${hours.toString().padLeft(2, '0')} گھنٹے ${mins.toString().padLeft(2, '0')} منٹ ${secs.toString().padLeft(2, '0')} سیکنڈ';
+    }
+    return '${hours.toString().padLeft(2, '0')}h ${mins.toString().padLeft(2, '0')}m ${secs.toString().padLeft(2, '0')}s remaining';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final prayerService = Provider.of<PrayerService>(context);
+    final lang = Provider.of<LanguageService>(context);
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF081B15),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF0F2C23),
+        elevation: 0,
+        title: Text(
+          lang.isUrdu ? 'نماز کے اوقات اور قبلہ' : 'Namaz Timings & Location',
+          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      body: Column(
+        children: [
+          // LOCATION SELECTOR & METHOD BAR
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            color: const Color(0xFF0F2C23),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.location_on, color: Color(0xFFD4AF37), size: 22),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        '${prayerService.selectedLocation.cityName}, ${prayerService.selectedLocation.countryName}',
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      lang.isUrdu ? 'عصر کا فقہی طریقہ:' : 'Asr Calculation Method:',
+                      style: GoogleFonts.poppins(color: Colors.white70, fontSize: 13),
+                    ),
+                    Row(
+                      children: [
+                        ChoiceChip(
+                          label: Text(lang.isUrdu ? 'حنفی' : 'Hanafi', style: const TextStyle(fontSize: 12)),
+                          selected: prayerService.isHanafi,
+                          selectedColor: const Color(0xFFD4AF37),
+                          onSelected: (val) {
+                            if (val) prayerService.setAsrMethod(true);
+                          },
+                        ),
+                        const SizedBox(width: 8),
+                        ChoiceChip(
+                          label: Text(lang.isUrdu ? 'شافعی' : 'Shafi\'i', style: const TextStyle(fontSize: 12)),
+                          selected: !prayerService.isHanafi,
+                          selectedColor: const Color(0xFFD4AF37),
+                          onSelected: (val) {
+                            if (val) prayerService.setAsrMethod(false);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  // HERO NEXT PRAYER CARD (REFRESHED PREMIUM DESIGN)
+                  if (_schedule.nextPrayer != null)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(26),
+                        border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFFD4AF37).withOpacity(0.25),
+                            blurRadius: 20,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF081B15),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              lang.isUrdu ? 'اگلی نماز کا وقت' : 'UPCOMING NAMAZ',
+                              style: GoogleFonts.poppins(
+                                color: const Color(0xFFD4AF37),
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.5,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            lang.isUrdu ? _schedule.nextPrayer!.nameUrdu : _schedule.nextPrayer!.nameEnglish,
+                            style: GoogleFonts.amiri(
+                              color: Colors.white,
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            _schedule.nextPrayer!.timeString,
+                            style: GoogleFonts.poppins(
+                              color: const Color(0xFFD4AF37),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF081B15),
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(color: Colors.white12),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.timer, color: Color(0xFFD4AF37), size: 18),
+                                const SizedBox(width: 8),
+                                Text(
+                                  _formatDuration(_schedule.remainingTimeToNext, lang.isUrdu),
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  const SizedBox(height: 22),
+
+                  // PRAYER SCHEDULE CARDS (REFRESHED STYLING)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _schedule.prayers.length,
+                    itemBuilder: (ctx, idx) {
+                      final p = _schedule.prayers[idx];
+                      final isNext = _schedule.nextPrayer?.id == p.id;
+                      final isSunrise = p.id == 'sunrise';
+
+                      final nameDisplay = lang.isUrdu ? p.nameUrdu : p.nameEnglish;
+
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                        decoration: BoxDecoration(
+                          color: isNext
+                              ? const Color(0xFF194C3D)
+                              : const Color(0xFF0F2C23),
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: isNext
+                                ? const Color(0xFFD4AF37)
+                                : Colors.white10,
+                            width: isNext ? 2 : 1,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF081B15),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Icon(
+                                    isSunrise
+                                        ? Icons.wb_sunny
+                                        : (isNext ? Icons.notifications_active : Icons.mosque),
+                                    color: isNext || isSunrise
+                                        ? const Color(0xFFD4AF37)
+                                        : Colors.white60,
+                                    size: 22,
+                                  ),
+                                ),
+                                const SizedBox(width: 14),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      nameDisplay,
+                                      style: GoogleFonts.amiri(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    if (isNext)
+                                      Text(
+                                        lang.isUrdu ? 'اگلی نماز' : 'Next Prayer',
+                                        style: GoogleFonts.poppins(
+                                          color: const Color(0xFFD4AF37),
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  p.timeString,
+                                  style: GoogleFonts.poppins(
+                                    color: isNext ? const Color(0xFFD4AF37) : Colors.white,
+                                    fontSize: 17,
+                                    fontWeight: isNext ? FontWeight.bold : FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.notifications,
+                                    color: p.isAlarmEnabled ? const Color(0xFFD4AF37) : Colors.white30,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      p.isAlarmEnabled = !p.isAlarmEnabled;
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          p.isAlarmEnabled
+                                              ? (lang.isUrdu ? '🕌 اذان الارم فعال: ${p.nameUrdu}' : '🕌 Azan Alarm Enabled: ${p.nameEnglish}')
+                                              : (lang.isUrdu ? '🔕 اذان الارم بند کر دیا گیا' : '🔕 Azan Alarm Disabled'),
+                                        ),
+                                        backgroundColor: const Color(0xFF0F2C23),
+                                        duration: const Duration(seconds: 2),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          const AdBannerWidget(),
+        ],
+      ),
+    );
+  }
+}
