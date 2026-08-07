@@ -81,8 +81,8 @@ class _SurahsScreenState extends State<SurahsScreen> {
         backgroundColor: const Color(0xFF0F2C23),
         elevation: 0,
         title: Text(
-          lang.isUrdu ? 'قرآن مجید کی سورتیں (#1 سے #114)' : 'Holy Quran Surahs (#1 to #114)',
-          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600),
+          lang.isUrdu ? 'قرآن مجید (114 سورتیں)' : 'Holy Quran Surahs',
+          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -112,49 +112,50 @@ class _SurahsScreenState extends State<SurahsScreen> {
                   ],
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.history_edu, color: Color(0xFFD4AF37), size: 30),
-                        const SizedBox(width: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              lang.isUrdu ? 'آخری بار تلاوت کی گئی' : 'RECENTLY READ SURAH',
-                              style: GoogleFonts.poppins(
-                                color: const Color(0xFFD4AF37),
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.2,
-                              ),
+                    const Icon(Icons.history_edu, color: Color(0xFFD4AF37), size: 28),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            lang.isUrdu ? 'آخری بار تلاوت کی گئی' : 'RECENTLY READ SURAH',
+                            style: GoogleFonts.poppins(
+                              color: const Color(0xFFD4AF37),
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
                             ),
-                            const SizedBox(height: 2),
-                            Text(
-                              lang.isUrdu ? _recentlyReadSurah!.nameUrdu : _recentlyReadSurah!.nameEnglish,
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            lang.isUrdu ? _recentlyReadSurah!.nameUrdu : _recentlyReadSurah!.nameEnglish,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
-                          ],
-                        ),
-                      ],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
+                    const SizedBox(width: 8),
                     Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           _recentlyReadSurah!.nameArabic,
                           style: GoogleFonts.amiri(
                             color: const Color(0xFFD4AF37),
-                            fontSize: 22,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        const Icon(Icons.arrow_forward_ios, color: Color(0xFFD4AF37), size: 14),
+                        const SizedBox(width: 6),
+                        const Icon(Icons.arrow_forward_ios, color: Color(0xFFD4AF37), size: 12),
                       ],
                     ),
                   ],
@@ -217,62 +218,59 @@ class _SurahsScreenState extends State<SurahsScreen> {
                             border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.25)),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF081B15),
-                                      shape: BoxShape.circle,
-                                      border: Border.all(color: const Color(0xFFD4AF37)),
-                                    ),
-                                    child: Text(
-                                      '#${surah.number}',
-                                      style: GoogleFonts.poppins(
-                                        color: const Color(0xFFD4AF37),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    ),
+                              Container(
+                                width: 38,
+                                height: 38,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF081B15),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: const Color(0xFFD4AF37)),
+                                ),
+                                child: Text(
+                                  '#${surah.number}',
+                                  style: GoogleFonts.poppins(
+                                    color: const Color(0xFFD4AF37),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 11,
                                   ),
-                                  const SizedBox(width: 14),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        titleText,
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      SizedBox(
-                                        width: 175,
-                                        child: Text(
-                                          virtueText,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.poppins(
-                                            color: Colors.white60,
-                                            fontSize: 11,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                ),
                               ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      titleText,
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 3),
+                                    Text(
+                                      virtueText,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.white60,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 8),
                               Text(
                                 surah.nameArabic,
                                 style: GoogleFonts.amiri(
                                   color: const Color(0xFFD4AF37),
-                                  fontSize: 24,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -454,21 +452,26 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
             ),
             child: Column(
               children: [
-                Text(
-                  widget.surah.nameArabic,
-                  style: GoogleFonts.amiri(
-                    color: const Color(0xFFD4AF37),
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    widget.surah.nameArabic,
+                    style: GoogleFonts.amiri(
+                      color: const Color(0xFFD4AF37),
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      '${widget.surah.revelationType} • ${widget.surah.versesCount} ${lang.isUrdu ? 'آیات' : 'Verses'}',
-                      style: GoogleFonts.poppins(color: Colors.white70, fontSize: 12),
+                    Flexible(
+                      child: Text(
+                        '${widget.surah.revelationType} • ${widget.surah.versesCount} ${lang.isUrdu ? 'آیات' : 'Verses'}',
+                        style: GoogleFonts.poppins(color: Colors.white70, fontSize: 12),
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Container(

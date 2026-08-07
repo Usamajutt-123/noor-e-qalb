@@ -149,22 +149,21 @@ class _HadithScreenState extends State<HadithScreen> {
   void _shareHadith(bool isUrdu) {
     final h = _ahadith[_currentIndex];
     final String text = isUrdu
-        ? "*آج کی حدیثِ نبوی ﷺ*\n\n\"${h.arabic}\"\n\n*ترجمہ:* ${h.urdu}\n\n_${h.refUr}_\n\n📲 *نورِ قلب (Noor-e-Qalb)* اسلامی ایپ سے شیئر کیا گیا • گوگل پلے اسٹور سے ڈاؤن لوڈ کریں:"
-        : "*Hadith of the Day (Hadith-e-Nabawi ﷺ)*\n\n\"${h.arabic}\"\n\n*Translation:* ${h.eng}\n\n_${h.refEn}_\n\n📲 Shared via *Noor-e-Qalb* Islamic App • Free Download on Google Play Store:";
-
+        ? "*آج کی حدیثِ نبوی ﷺ*\n\n\"${h.arabic}\"\n\n*ترجمہ:* ${h.urdu}\n\n_${h.refUr}_\n\n📲 *نورِ قلب (Noor-e-Qalb)* اسلامی ایپ سے شیئر کیا گیا:"
+        : "*Hadith of the Day*\n\n\"${h.arabic}\"\n\n*Translation:* ${h.eng}\n\n_${h.refEn}_\n\n📲 Shared via *Noor-e-Qalb* Islamic App:";
     Share.share(text, subject: isUrdu ? 'آج کی حدیثِ نبوی ﷺ' : 'Hadith of the Day');
   }
 
   void _copyHadith(bool isUrdu) {
     final h = _ahadith[_currentIndex];
     final String text = isUrdu
-        ? "${h.arabic}\n\nترجمہ: ${h.urdu}\n${h.refUr}\n\n— نورِ قلب (Noor-e-Qalb) ایپ"
-        : "${h.arabic}\n\nTranslation: ${h.eng}\n${h.refEn}\n\n— Noor-e-Qalb App";
+        ? "${h.arabic}\n\nترجمہ: ${h.urdu}\n${h.refUr}\n\n— نورِ قلب"
+        : "${h.arabic}\n\nTranslation: ${h.eng}\n${h.refEn}\n\n— Noor-e-Qalb";
 
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(isUrdu ? '✅ حدیث کا متن کاپی ہو گیا!' : '✅ Hadith text copied to clipboard!'),
+        content: Text(isUrdu ? '✅ حدیث کاپی ہو گئی!' : '✅ Hadith copied!'),
         backgroundColor: const Color(0xFF0F2C23),
       ),
     );
@@ -182,33 +181,33 @@ class _HadithScreenState extends State<HadithScreen> {
         backgroundColor: const Color(0xFF081B15),
         elevation: 0,
         title: Text(
-          isUrdu ? "آج کی حدیثِ نبوی ﷺ" : "Hadith of the Day",
-          style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold),
+          isUrdu ? "آج کی حدیث" : "Hadith of the Day",
+          style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              // Viral Share Preview Card
+              // Share Card
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [Color(0xFF0F2C23), Color(0xFF091D17)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      blurRadius: 20,
-                      offset: const Offset(0, 8),
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 16,
+                      offset: const Offset(0, 6),
                     ),
                   ],
                 ),
@@ -216,10 +215,9 @@ class _HadithScreenState extends State<HadithScreen> {
                   children: [
                     Text(
                       "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
-                      style: const TextStyle(
-                        fontFamily: 'Amiri',
-                        color: Color(0xFFD4AF37),
-                        fontSize: 18,
+                      style: GoogleFonts.amiri(
+                        color: const Color(0xFFD4AF37),
+                        fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -227,71 +225,70 @@ class _HadithScreenState extends State<HadithScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
                             color: const Color(0xFFD4AF37).withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
                             isUrdu ? h.catUr : h.catEn,
                             style: const TextStyle(
                               color: Color(0xFFD4AF37),
-                              fontSize: 12,
+                              fontSize: 11,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          isUrdu ? "آج کی حدیثِ نبوی ﷺ" : "Hadith of the Day",
-                          style: const TextStyle(color: Colors.white70, fontSize: 13),
+                          isUrdu ? "حدیثِ نبوی ﷺ" : "Hadith of the Day",
+                          style: const TextStyle(color: Colors.white70, fontSize: 12),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 14),
                     Text(
                       h.arabic,
-                      style: const TextStyle(
-                        fontFamily: 'Amiri',
-                        color: Color(0xFFD4AF37),
-                        fontSize: 26,
+                      style: GoogleFonts.amiri(
+                        color: const Color(0xFFD4AF37),
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                         height: 1.7,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 14),
                     Text(
                       isUrdu ? h.urdu : h.eng,
                       style: GoogleFonts.inter(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 14,
                         height: 1.7,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 14),
                     Text(
                       "📚 ${isUrdu ? h.refUr : h.refEn}",
                       style: const TextStyle(
                         color: Color(0xFFD4AF37),
-                        fontSize: 13,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     const Divider(color: Colors.white12),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                     Text(
                       isUrdu
-                          ? "🌙 نورِ قلب • گوگل پلے اسٹور سے مفت ڈاؤن لوڈ کریں"
-                          : "🌙 Noor-e-Qalb App • Free on Google Play Store",
-                      style: const TextStyle(color: Colors.white38, fontSize: 11),
+                          ? "🌙 نورِ قلب • مفت ڈاؤن لوڈ کریں"
+                          : "🌙 Noor-e-Qalb • Free on Play Store",
+                      style: const TextStyle(color: Colors.white38, fontSize: 10),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 18),
               // Action Buttons
               Row(
                 children: [
@@ -300,29 +297,32 @@ class _HadithScreenState extends State<HadithScreen> {
                       onPressed: () => _shareHadith(isUrdu),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF25D366),
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                       ),
-                      icon: const Icon(Icons.share, color: Colors.white),
+                      icon: const Icon(Icons.share, color: Colors.white, size: 16),
                       label: Text(
-                        isUrdu ? "واٹس ایپ شیئر" : "Share WhatsApp",
-                        style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold),
+                        isUrdu ? "شیئر کریں" : "Share",
+                        style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  ElevatedButton(
-                    onPressed: () => _copyHadith(isUrdu),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white12,
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    height: 44,
+                    child: ElevatedButton(
+                      onPressed: () => _copyHadith(isUrdu),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white12,
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      ),
+                      child: const Icon(Icons.copy, color: Colors.white, size: 16),
                     ),
-                    child: const Icon(Icons.copy, color: Colors.white),
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton.icon(
@@ -330,13 +330,13 @@ class _HadithScreenState extends State<HadithScreen> {
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFFD4AF37),
                     side: const BorderSide(color: Color(0xFFD4AF37)),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                   ),
-                  icon: const Icon(Icons.shuffle),
+                  icon: const Icon(Icons.shuffle, size: 16),
                   label: Text(
-                    isUrdu ? "اگلی حدیث (نئی حدیث دیکھیں)" : "Next Hadith (Shuffle New)",
-                    style: GoogleFonts.inter(fontWeight: FontWeight.bold),
+                    isUrdu ? "اگلی حدیث" : "Next Hadith",
+                    style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13),
                   ),
                 ),
               ),

@@ -23,7 +23,7 @@ class NamesScreen extends StatelessWidget {
               name.arabic,
               style: GoogleFonts.amiri(
                 color: const Color(0xFFD4AF37),
-                fontSize: 42,
+                fontSize: 38,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -32,23 +32,23 @@ class NamesScreen extends StatelessWidget {
               name.transliteration,
               style: GoogleFonts.poppins(
                 color: Colors.white,
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
             Text(
               'Urdu Meaning: ${name.urduMeaning}',
               textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(color: Colors.white70, fontSize: 15),
+              style: GoogleFonts.poppins(color: Colors.white70, fontSize: 14),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
             Text(
               'English: ${name.englishMeaning}',
               textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(color: Colors.white54, fontSize: 14),
+              style: GoogleFonts.poppins(color: Colors.white54, fontSize: 13),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class NamesScreen extends StatelessWidget {
               child: Text(
                 '✨ Benefit of Recitation:\n${name.benefit}',
                 textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(color: const Color(0xFFD4AF37), fontSize: 13),
+                style: GoogleFonts.poppins(color: const Color(0xFFD4AF37), fontSize: 12),
               ),
             ),
             const SizedBox(height: 20),
@@ -76,8 +76,8 @@ class NamesScreen extends StatelessWidget {
         backgroundColor: const Color(0xFF0F2C23),
         elevation: 0,
         title: Text(
-          '99 Names of Allah (Asma-ul-Husna)',
-          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600),
+          '99 Names of Allah',
+          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -85,12 +85,12 @@ class NamesScreen extends StatelessWidget {
         children: [
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(14),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.95,
-                crossAxisSpacing: 14,
-                mainAxisSpacing: 14,
+                childAspectRatio: 0.9,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
               ),
               itemCount: IslamicData.asmaUlHusnaList.length,
               itemBuilder: (ctx, idx) {
@@ -104,14 +104,14 @@ class NamesScreen extends StatelessWidget {
                       border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.25)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -122,7 +122,7 @@ class NamesScreen extends StatelessWidget {
                                 '#${name.number}',
                                 style: GoogleFonts.poppins(
                                   color: Colors.white30,
-                                  fontSize: 12,
+                                  fontSize: 11,
                                 ),
                               ),
                             ],
@@ -131,28 +131,30 @@ class NamesScreen extends StatelessWidget {
                             name.arabic,
                             style: GoogleFonts.amiri(
                               color: const Color(0xFFD4AF37),
-                              fontSize: 30,
+                              fontSize: 26,
                               fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            name.transliteration,
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
+                            name.transliteration,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
                             name.englishMeaning,
                             textAlign: TextAlign.center,
-                            maxLines: 1,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
                               color: Colors.white54,
-                              fontSize: 11,
+                              fontSize: 10,
                             ),
                           ),
                         ],

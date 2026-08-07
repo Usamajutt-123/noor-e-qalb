@@ -58,8 +58,6 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
 
   void _showLapCompletedDialog() {
     final premiumService = Provider.of<PremiumService>(context, listen: false);
-    
-    // Trigger AdMob interstitial if not a Pro user
     AdMobService().showInterstitialAfterTasbeeh(premiumService);
 
     showDialog(
@@ -69,7 +67,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Row(
           children: [
-            const Icon(Icons.stars, color: Color(0xFFD4AF37), size: 30),
+            const Icon(Icons.stars, color: Color(0xFFD4AF37), size: 28),
             const SizedBox(width: 10),
             Text(
               'MashaAllah!',
@@ -122,12 +120,14 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Select Dhikr / Tasbeeh',
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                  Expanded(
+                    child: Text(
+                      'Select Dhikr / Tasbeeh',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                   IconButton(
@@ -137,8 +137,9 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                 ],
               ),
               const SizedBox(height: 10),
-              Expanded(
+              Flexible(
                 child: ListView.builder(
+                  shrinkWrap: true,
                   itemCount: IslamicData.defaultTasbeehs.length,
                   itemBuilder: (ctx, idx) {
                     final t = IslamicData.defaultTasbeehs[idx];
@@ -153,7 +154,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                       },
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 10),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                         decoration: BoxDecoration(
                           color: isSelected ? const Color(0xFF194C3D) : const Color(0xFF081B15),
                           borderRadius: BorderRadius.circular(14),
@@ -162,35 +163,41 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  t.title,
-                                  style: GoogleFonts.poppins(
-                                    color: isSelected ? const Color(0xFFD4AF37) : Colors.white,
-                                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-                                    fontSize: 15,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    t.title,
+                                    style: GoogleFonts.poppins(
+                                      color: isSelected ? const Color(0xFFD4AF37) : Colors.white,
+                                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                                      fontSize: 14,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Target: ${t.targetCount}x',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white60,
-                                    fontSize: 12,
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Target: ${t.targetCount}x',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white60,
+                                      fontSize: 11,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+                            const SizedBox(width: 10),
                             Text(
                               t.arabicText,
                               style: GoogleFonts.amiri(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 20,
                               ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
@@ -222,8 +229,8 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
         backgroundColor: const Color(0xFF0F2C23),
         elevation: 0,
         title: Text(
-          'Digital Tasbeeh Counter',
-          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600),
+          'Digital Tasbeeh',
+          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
@@ -231,6 +238,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
             icon: Icon(
               _vibrationEnabled ? Icons.vibration : Icons.mobile_off,
               color: _vibrationEnabled ? const Color(0xFFD4AF37) : Colors.grey,
+              size: 20,
             ),
             tooltip: 'Toggle Vibration',
             onPressed: () {
@@ -240,7 +248,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
             },
           ),
           IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.white70),
+            icon: const Icon(Icons.refresh, color: Colors.white70, size: 20),
             tooltip: 'Reset Count',
             onPressed: _resetCounter,
           ),
@@ -248,55 +256,55 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
       ),
       body: Column(
         children: [
-          // CUSTOM DHIKR SELECTOR (Replaces ugly default dropdown)
+          // CUSTOM DHIKR SELECTOR
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             color: const Color(0xFF0F2C23),
             child: GestureDetector(
               onTap: () => _showDhikrPickerModal(context),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                 decoration: BoxDecoration(
                   color: const Color(0xFF081B15),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.4)),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.menu_book, color: Color(0xFFD4AF37), size: 20),
-                        const SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _selectedTasbeeh.title,
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                              ),
+                    const Icon(Icons.menu_book, color: Color(0xFFD4AF37), size: 18),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _selectedTasbeeh.title,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
                             ),
-                            Text(
-                              'Target: ${_selectedTasbeeh.targetCount}x',
-                              style: GoogleFonts.poppins(
-                                color: Colors.white60,
-                                fontSize: 11,
-                              ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            'Target: ${_selectedTasbeeh.targetCount}x',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white60,
+                              fontSize: 10,
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
+                    const SizedBox(width: 8),
                     Container(
-                      padding: const EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         color: const Color(0xFF0F2C23),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(Icons.keyboard_arrow_down, color: Color(0xFFD4AF37), size: 20),
+                      child: const Icon(Icons.keyboard_arrow_down, color: Color(0xFFD4AF37), size: 18),
                     ),
                   ],
                 ),
@@ -306,17 +314,17 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
 
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Arabic Display Card
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
                     decoration: BoxDecoration(
                       color: const Color(0xFF13382D),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(18),
                       border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.3)),
                     ),
                     child: Column(
@@ -326,17 +334,17 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                           textAlign: TextAlign.center,
                           style: GoogleFonts.amiri(
                             color: const Color(0xFFD4AF37),
-                            fontSize: 34,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 8),
                         Text(
                           _selectedTasbeeh.translation,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(
                             color: Colors.white70,
-                            fontSize: 13,
+                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -346,82 +354,87 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                   const Spacer(),
 
                   // Giant Circular Counter Button with Progress Ring
-                  GestureDetector(
-                    onTap: _onTapCount,
-                    child: ScaleTransition(
-                      scale: _scaleAnimation,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                            width: 240,
-                            height: 240,
-                            child: CircularProgressIndicator(
-                              value: progress,
-                              strokeWidth: 10,
-                              backgroundColor: const Color(0xFF13382D),
-                              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFD4AF37)),
-                            ),
-                          ),
-                          Container(
-                            width: 210,
-                            height: 210,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final double size = constraints.maxWidth > 240 ? 220 : constraints.maxWidth * 0.7;
+                      return GestureDetector(
+                        onTap: _onTapCount,
+                        child: ScaleTransition(
+                          scale: _scaleAnimation,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              SizedBox(
+                                width: size,
+                                height: size,
+                                child: CircularProgressIndicator(
+                                  value: progress,
+                                  strokeWidth: 8,
+                                  backgroundColor: const Color(0xFF13382D),
+                                  valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFD4AF37)),
+                                ),
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFFD4AF37).withOpacity(0.25),
-                                  blurRadius: 20,
-                                  spreadRadius: 2,
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '${_selectedTasbeeh.currentCount}',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 54,
-                                    fontWeight: FontWeight.bold,
+                              Container(
+                                width: size - 24,
+                                height: size - 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: const LinearGradient(
+                                    colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
                                   ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFFD4AF37).withOpacity(0.2),
+                                      blurRadius: 16,
+                                      spreadRadius: 1,
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  '/ ${_selectedTasbeeh.targetCount}',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color(0xFFD4AF37),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '${_selectedTasbeeh.currentCount}',
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontSize: 46,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      '/ ${_selectedTasbeeh.targetCount}',
+                                      style: GoogleFonts.poppins(
+                                        color: const Color(0xFFD4AF37),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'TAP TO COUNT',
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.white38,
+                                        fontSize: 10,
+                                        letterSpacing: 2,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(height: 6),
-                                Text(
-                                  'TAP TO COUNT',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white38,
-                                    fontSize: 11,
-                                    letterSpacing: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
 
                   const Spacer(),
 
                   // Completed Laps Badge
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                     decoration: BoxDecoration(
                       color: const Color(0xFF0F2C23),
                       borderRadius: BorderRadius.circular(30),
@@ -430,11 +443,11 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.history, color: Color(0xFFD4AF37), size: 18),
+                        const Icon(Icons.history, color: Color(0xFFD4AF37), size: 16),
                         const SizedBox(width: 8),
                         Text(
                           'Completed Laps: ${_selectedTasbeeh.completedLaps}',
-                          style: GoogleFonts.poppins(color: Colors.white, fontSize: 13),
+                          style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),
                         ),
                       ],
                     ),
@@ -444,7 +457,6 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
             ),
           ),
 
-          // Google AdMob Banner at bottom for Free Users
           const AdBannerWidget(),
         ],
       ),
