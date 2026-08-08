@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       body: IndexedStack(
         index: _bottomNavIndex,
         children: pages,
@@ -67,8 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
             _bottomNavIndex = idx;
           });
         },
-        backgroundColor: const Color(0xFF0F2C23),
-        selectedItemColor: const Color(0xFFD4AF37),
+        backgroundColor: const Color(0xFF163024),
+        selectedItemColor: const Color(0xFFCCA236),
         unselectedItemColor: Colors.white54,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: true,
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           'بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ',
                           style: GoogleFonts.amiri(
-                            color: const Color(0xFFD4AF37),
+                            color: const Color(0xFFCCA236),
                             fontSize: 17,
                           ),
                         ),
@@ -163,9 +163,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF194C3D),
+                          color: const Color(0xFF1E4A39),
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: const Color(0xFFD4AF37)),
+                          border: Border.all(color: const Color(0xFFCCA236)),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               '${taskService.streakCount}d',
                               style: GoogleFonts.poppins(
-                                color: const Color(0xFFD4AF37),
+                                color: const Color(0xFFCCA236),
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -190,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 40,
                       child: IconButton(
                         padding: EdgeInsets.zero,
-                        icon: const Icon(Icons.settings, color: Color(0xFFD4AF37), size: 22),
+                        icon: const Icon(Icons.settings, color: Color(0xFFCCA236), size: 22),
                         tooltip: 'Settings',
                         onPressed: () {
                           Navigator.push(
@@ -227,15 +227,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
+                          colors: [Color(0xFF1E4A39), Color(0xFF163024)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                        border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFFD4AF37).withOpacity(0.15),
+                            color: const Color(0xFFCCA236).withOpacity(0.15),
                             blurRadius: 12,
                             offset: const Offset(0, 4),
                           ),
@@ -249,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(Icons.location_on, color: Color(0xFFD4AF37), size: 14),
+                                    const Icon(Icons.location_on, color: Color(0xFFCCA236), size: 14),
                                     const SizedBox(width: 4),
                                     Flexible(
                                       child: Text(
@@ -278,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Text(
                                     '${schedule.nextPrayer!.timeString} • ${_formatDuration(schedule.remainingTimeToNext)} left',
                                     style: GoogleFonts.poppins(
-                                      color: const Color(0xFFD4AF37),
+                                      color: const Color(0xFFCCA236),
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -288,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          const Icon(Icons.mosque, color: Color(0xFFD4AF37), size: 36),
+                          const Icon(Icons.mosque, color: Color(0xFFCCA236), size: 36),
                         ],
                       ),
                     ),
@@ -308,15 +308,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFF1A4638), Color(0xFF0C231B)],
+                          colors: [Color(0xFF1E4A3C), Color(0xFF0E241C)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.6), width: 1.2),
+                        border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.6), width: 1.2),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFFD4AF37).withOpacity(0.1),
+                            color: const Color(0xFFCCA236).withOpacity(0.1),
                             blurRadius: 10,
                             offset: const Offset(0, 3),
                           ),
@@ -327,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFD4AF37).withOpacity(0.15),
+                              color: const Color(0xFFCCA236).withOpacity(0.15),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: const Text('🌙', style: TextStyle(fontSize: 24)),
@@ -340,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(
                                   langService.isUrdu ? 'رمضان المبارک 1448 ہجری' : 'Ramadan 1448 AH Suite',
                                   style: GoogleFonts.poppins(
-                                    color: const Color(0xFFD4AF37),
+                                    color: const Color(0xFFCCA236),
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -361,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          const Icon(Icons.chevron_right, color: Color(0xFFD4AF37), size: 22),
+                          const Icon(Icons.chevron_right, color: Color(0xFFCCA236), size: 22),
                         ],
                       ),
                     ),
@@ -381,22 +381,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFF0F2C23), Color(0xFF091D17)],
+                          colors: [Color(0xFF163024), Color(0xFF0A201A)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.3)),
+                        border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.3)),
                       ),
                       child: Row(
                         children: [
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFD4AF37).withOpacity(0.12),
+                              color: const Color(0xFFCCA236).withOpacity(0.12),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Icon(Icons.menu_book, color: Color(0xFFD4AF37), size: 20),
+                            child: const Icon(Icons.menu_book, color: Color(0xFFCCA236), size: 20),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
@@ -406,7 +406,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(
                                   langService.isUrdu ? 'آج کی دعا' : 'Daily Dua',
                                   style: GoogleFonts.poppins(
-                                    color: const Color(0xFFD4AF37),
+                                    color: const Color(0xFFCCA236),
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -639,12 +639,12 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isHighlight ? const Color(0xFF194C3D) : const Color(0xFF0F2C23),
+          color: isHighlight ? const Color(0xFF1E4A39) : const Color(0xFF163024),
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
             color: isHighlight
-                ? const Color(0xFFD4AF37)
-                : const Color(0xFFD4AF37).withOpacity(0.15),
+                ? const Color(0xFFCCA236)
+                : const Color(0xFFCCA236).withOpacity(0.15),
             width: isHighlight ? 1.5 : 1,
           ),
           boxShadow: [
@@ -662,10 +662,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: const Color(0xFF081B15),
+                color: const Color(0xFF082017),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(icon, color: const Color(0xFFD4AF37), size: 22),
+              child: Icon(icon, color: const Color(0xFFCCA236), size: 22),
             ),
             const SizedBox(height: 6),
             Expanded(

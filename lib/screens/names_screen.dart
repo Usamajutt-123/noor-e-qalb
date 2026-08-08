@@ -10,7 +10,7 @@ class NamesScreen extends StatelessWidget {
   void _showNameDetail(BuildContext context, AsmaUlHusnaModel name) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: const Color(0xFF0F2C23),
+      backgroundColor: const Color(0xFF163024),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -22,7 +22,7 @@ class NamesScreen extends StatelessWidget {
             Text(
               name.arabic,
               style: GoogleFonts.amiri(
-                color: const Color(0xFFD4AF37),
+                color: const Color(0xFFCCA236),
                 fontSize: 38,
                 fontWeight: FontWeight.bold,
               ),
@@ -52,13 +52,13 @@ class NamesScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFF13382D),
+                color: const Color(0xFF1B382C),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 '✨ Benefit of Recitation:\n${name.benefit}',
                 textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(color: const Color(0xFFD4AF37), fontSize: 12),
+                style: GoogleFonts.poppins(color: const Color(0xFFCCA236), fontSize: 12),
               ),
             ),
             const SizedBox(height: 20),
@@ -71,9 +71,9 @@ class NamesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         elevation: 0,
         title: Text(
           '99 Names of Allah',
@@ -99,9 +99,9 @@ class NamesScreen extends StatelessWidget {
                   onTap: () => _showNameDetail(context, name),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0F2C23),
+                      color: const Color(0xFF163024),
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.25)),
+                      border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.25)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.15),
@@ -130,7 +130,7 @@ class NamesScreen extends StatelessWidget {
                           Text(
                             name.arabic,
                             style: GoogleFonts.amiri(
-                              color: const Color(0xFFD4AF37),
+                              color: const Color(0xFFCCA236),
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
                             ),

@@ -142,14 +142,14 @@ class _RamadanScreenState extends State<RamadanScreen> {
         decoration: BoxDecoration(
           color: Colors.black38,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.5)),
+          border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.5)),
         ),
         child: Column(
           children: [
             Text(
               val,
               style: GoogleFonts.poppins(
-                color: const Color(0xFFD4AF37),
+                color: const Color(0xFFCCA236),
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -180,9 +180,9 @@ class _RamadanScreenState extends State<RamadanScreen> {
     int taraweehCompleted = _taraweehTracker.where((e) => e).length;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0C231B),
+        backgroundColor: const Color(0xFF0E241C),
         elevation: 0,
         title: Text(
           isUrdu ? 'رمضان المبارک 1448 ہجری' : 'Ramadan 1448 AH Suite',
@@ -195,7 +195,7 @@ class _RamadanScreenState extends State<RamadanScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh, color: Color(0xFFD4AF37)),
+            icon: const Icon(Icons.refresh, color: Color(0xFFCCA236)),
             tooltip: isUrdu ? 'ری سیٹ کریں' : 'Reset Tracker',
             onPressed: () {
               setState(() {
@@ -217,18 +217,18 @@ class _RamadanScreenState extends State<RamadanScreen> {
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF1A4638), Color(0xFF0C231B)],
+                  colors: [Color(0xFF1E4A3C), Color(0xFF0E241C)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.circular(22),
-                border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
               ),
               child: Column(
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.location_on, color: Color(0xFFD4AF37), size: 16),
+                      const Icon(Icons.location_on, color: Color(0xFFCCA236), size: 16),
                       const SizedBox(width: 4),
                       Expanded(
                         child: Text(
@@ -245,13 +245,13 @@ class _RamadanScreenState extends State<RamadanScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFD4AF37).withOpacity(0.2),
+                          color: const Color(0xFFCCA236).withOpacity(0.2),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
                           isUrdu ? 'آمد' : 'COUNTDOWN',
                           style: GoogleFonts.poppins(
-                            color: const Color(0xFFD4AF37),
+                            color: const Color(0xFFCCA236),
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
@@ -265,7 +265,7 @@ class _RamadanScreenState extends State<RamadanScreen> {
                         ? 'متوقع آغاز: 09 فروری 2027 (1 رمضان المبارک 1448 ہجری)'
                         : 'Expected Start: 09 February 2027 (1st Ramadan 1448 AH)',
                     style: GoogleFonts.poppins(
-                      color: const Color(0xFFD4AF37),
+                      color: const Color(0xFFCCA236),
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     ),
@@ -288,14 +288,14 @@ class _RamadanScreenState extends State<RamadanScreen> {
                     decoration: BoxDecoration(
                       color: Colors.black26,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.5)),
+                      border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.5)),
                     ),
                     child: Column(
                       children: [
                         Text(
                           "اللَّهُمَّ بَارِكْ لَنَا فِي رَجَبٍ وَشَعْبَانَ وَبَلِّغْنَا رَمَضَانَ",
                           style: GoogleFonts.amiri(
-                            color: const Color(0xFFD4AF37),
+                            color: const Color(0xFFCCA236),
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -343,14 +343,14 @@ class _RamadanScreenState extends State<RamadanScreen> {
                       label: Text(
                         isUrdu ? d.titleUr.split(' ')[0] : d.titleEn.split(' ')[0],
                         style: GoogleFonts.poppins(
-                          color: isSelected ? const Color(0xFF081B15) : Colors.white,
+                          color: isSelected ? const Color(0xFF082017) : Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
                       ),
                       selected: isSelected,
-                      selectedColor: const Color(0xFFD4AF37),
-                      backgroundColor: const Color(0xFF0C231B),
+                      selectedColor: const Color(0xFFCCA236),
+                      backgroundColor: const Color(0xFF0E241C),
                       onSelected: (_) => setState(() => _selectedDuaIndex = idx),
                     ),
                   );
@@ -361,16 +361,16 @@ class _RamadanScreenState extends State<RamadanScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFF0C231B),
+                color: const Color(0xFF0E241C),
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.3)),
+                border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.3)),
               ),
               child: Column(
                 children: [
                   Text(
                     isUrdu ? currentDua.titleUr : currentDua.titleEn,
                     style: GoogleFonts.poppins(
-                      color: const Color(0xFFD4AF37),
+                      color: const Color(0xFFCCA236),
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                     ),
@@ -403,7 +403,7 @@ class _RamadanScreenState extends State<RamadanScreen> {
                         child: Text(
                           '📚 ${isUrdu ? currentDua.refUr : currentDua.refEn}',
                           style: GoogleFonts.poppins(
-                            color: const Color(0xFFD4AF37),
+                            color: const Color(0xFFCCA236),
                             fontSize: 11,
                           ),
                           overflow: TextOverflow.ellipsis,
@@ -412,8 +412,8 @@ class _RamadanScreenState extends State<RamadanScreen> {
                       const SizedBox(width: 8),
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFD4AF37),
-                          foregroundColor: const Color(0xFF081B15),
+                          backgroundColor: const Color(0xFFCCA236),
+                          foregroundColor: const Color(0xFF082017),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           visualDensity: VisualDensity.compact,
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -449,9 +449,9 @@ class _RamadanScreenState extends State<RamadanScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0C231B),
+                      color: const Color(0xFF0E241C),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.4)),
+                      border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.4)),
                     ),
                     child: Column(
                       children: [
@@ -463,7 +463,7 @@ class _RamadanScreenState extends State<RamadanScreen> {
                         Text(
                           '$fastsCompleted / 30',
                           style: GoogleFonts.poppins(
-                            color: const Color(0xFFD4AF37),
+                            color: const Color(0xFFCCA236),
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
@@ -477,9 +477,9 @@ class _RamadanScreenState extends State<RamadanScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0C231B),
+                      color: const Color(0xFF0E241C),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.4)),
+                      border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.4)),
                     ),
                     child: Column(
                       children: [
@@ -491,7 +491,7 @@ class _RamadanScreenState extends State<RamadanScreen> {
                         Text(
                           '$taraweehCompleted / 30',
                           style: GoogleFonts.poppins(
-                            color: const Color(0xFFD4AF37),
+                            color: const Color(0xFFCCA236),
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
@@ -507,7 +507,7 @@ class _RamadanScreenState extends State<RamadanScreen> {
             // 30-DAY LIST
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF0C231B),
+                color: const Color(0xFF0E241C),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: Colors.white10),
               ),
@@ -536,7 +536,7 @@ class _RamadanScreenState extends State<RamadanScreen> {
                           child: Text(
                             isUrdu ? '${i + 1} رمضان' : '${i + 1} Ram',
                             style: GoogleFonts.poppins(
-                              color: const Color(0xFFD4AF37),
+                              color: const Color(0xFFCCA236),
                               fontWeight: FontWeight.bold,
                               fontSize: 11,
                             ),
@@ -559,8 +559,8 @@ class _RamadanScreenState extends State<RamadanScreen> {
                               height: 28,
                               child: Checkbox(
                                 value: _fastsTracker[i],
-                                activeColor: const Color(0xFFD4AF37),
-                                checkColor: const Color(0xFF081B15),
+                                activeColor: const Color(0xFFCCA236),
+                                checkColor: const Color(0xFF082017),
                                 onChanged: (val) {
                                   setState(() => _fastsTracker[i] = val ?? false);
                                   _saveTrackerState();
@@ -573,8 +573,8 @@ class _RamadanScreenState extends State<RamadanScreen> {
                               height: 28,
                               child: Checkbox(
                                 value: _taraweehTracker[i],
-                                activeColor: const Color(0xFFD4AF37),
-                                checkColor: const Color(0xFF081B15),
+                                activeColor: const Color(0xFFCCA236),
+                                checkColor: const Color(0xFF082017),
                                 onChanged: (val) {
                                   setState(() => _taraweehTracker[i] = val ?? false);
                                   _saveTrackerState();
@@ -597,16 +597,16 @@ class _RamadanScreenState extends State<RamadanScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFF0C231B).withOpacity(0.6),
+                color: const Color(0xFF0E241C).withOpacity(0.6),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFD4AF37), style: BorderStyle.solid),
+                border: Border.all(color: const Color(0xFFCCA236), style: BorderStyle.solid),
               ),
               child: Column(
                 children: [
                   Text(
                     isUrdu ? '💰 صدقہ فطر (فطرانہ) اور زکوٰۃ کا حساب' : '💰 Fitrana (Sadaqah al-Fitr) & Zakat Calculation',
                     style: GoogleFonts.poppins(
-                      color: const Color(0xFFD4AF37),
+                      color: const Color(0xFFCCA236),
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                     ),
@@ -626,8 +626,8 @@ class _RamadanScreenState extends State<RamadanScreen> {
                   const SizedBox(height: 12),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFD4AF37),
-                      foregroundColor: const Color(0xFF081B15),
+                      backgroundColor: const Color(0xFFCCA236),
+                      foregroundColor: const Color(0xFF082017),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     onPressed: () {

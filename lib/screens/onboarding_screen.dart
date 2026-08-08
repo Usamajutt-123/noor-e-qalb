@@ -75,7 +75,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       body: SafeArea(
         child: Column(
           children: [
@@ -91,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   width: active ? 28 : 10,
                   height: 10,
                   decoration: BoxDecoration(
-                    color: active ? const Color(0xFFD4AF37) : Colors.white24,
+                    color: active ? const Color(0xFFCCA236) : Colors.white24,
                     borderRadius: BorderRadius.circular(10),
                   ),
                 );
@@ -129,17 +129,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: const Color(0xFF0F2C23),
+              color: const Color(0xFF163024),
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFFD4AF37), width: 2),
+              border: Border.all(color: const Color(0xFFCCA236), width: 2),
             ),
-            child: const Icon(Icons.language, size: 48, color: Color(0xFFD4AF37)),
+            child: const Icon(Icons.language, size: 48, color: Color(0xFFCCA236)),
           ),
           const SizedBox(height: 16),
           Text(
             "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
             style: GoogleFonts.amiri(
-              color: const Color(0xFFD4AF37),
+              color: const Color(0xFFCCA236),
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -181,8 +181,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: ElevatedButton(
               onPressed: _nextStep,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFD4AF37),
-                foregroundColor: const Color(0xFF081B15),
+                backgroundColor: const Color(0xFFCCA236),
+                foregroundColor: const Color(0xFF082017),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
@@ -211,10 +211,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF13382D) : const Color(0xFF0F2C23),
+          color: isSelected ? const Color(0xFF1B382C) : const Color(0xFF163024),
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: isSelected ? const Color(0xFFD4AF37) : Colors.white12,
+            color: isSelected ? const Color(0xFFCCA236) : Colors.white12,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -229,7 +229,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Text(
                     title,
                     style: GoogleFonts.inter(
-                      color: isSelected ? const Color(0xFFD4AF37) : Colors.white,
+                      color: isSelected ? const Color(0xFFCCA236) : Colors.white,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
@@ -241,7 +241,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             Icon(
               isSelected ? Icons.check_circle : Icons.circle_outlined,
-              color: isSelected ? const Color(0xFFD4AF37) : Colors.white30,
+              color: isSelected ? const Color(0xFFCCA236) : Colors.white30,
             ),
           ],
         ),
@@ -279,7 +279,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ? '✨ الحمدللہ! مقام تلاش کر لیا گیا: منڈی بہاءالدین / ملکوال (32.55°N, 73.31°E)'
                         : '✨ Alhamdulillah! Location detected: Mandi Bahauddin / Malakwal (32.55°N, 73.31°E)',
                   ),
-                  backgroundColor: const Color(0xFF0F2C23),
+                  backgroundColor: const Color(0xFF163024),
                 ),
               );
             },
@@ -288,11 +288,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               width: double.infinity,
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [Color(0xFF0F2C23), Color(0xFF14382B)]),
+                gradient: const LinearGradient(colors: [Color(0xFF163024), Color(0xFF173026)]),
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFD4AF37), width: 2),
+                border: Border.all(color: const Color(0xFFCCA236), width: 2),
                 boxShadow: [
-                  BoxShadow(color: const Color(0xFFD4AF37).withOpacity(0.25), blurRadius: 20),
+                  BoxShadow(color: const Color(0xFFCCA236).withOpacity(0.25), blurRadius: 20),
                 ],
               ),
               child: Column(
@@ -300,7 +300,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.my_location, color: Color(0xFFD4AF37), size: 20),
+                      const Icon(Icons.my_location, color: Color(0xFFCCA236), size: 20),
                       const SizedBox(width: 10),
                       Flexible(
                         child: Text(
@@ -332,7 +332,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           const SizedBox(height: 24),
           Text(
             _selectedUrdu ? "عصر کا طریقہ:" : "Asr Method:",
-            style: const TextStyle(color: Color(0xFFD4AF37), fontWeight: FontWeight.bold, fontSize: 12),
+            style: const TextStyle(color: Color(0xFFCCA236), fontWeight: FontWeight.bold, fontSize: 12),
           ),
           const SizedBox(height: 10),
           Row(
@@ -358,14 +358,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: active ? const Color(0xFFD4AF37).withOpacity(0.2) : const Color(0xFF0F2C23),
+          color: active ? const Color(0xFFCCA236).withOpacity(0.2) : const Color(0xFF163024),
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: active ? const Color(0xFFD4AF37) : Colors.white12),
+          border: Border.all(color: active ? const Color(0xFFCCA236) : Colors.white12),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: active ? const Color(0xFFD4AF37) : Colors.white,
+            color: active ? const Color(0xFFCCA236) : Colors.white,
             fontWeight: active ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -397,7 +397,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           const SizedBox(height: 28),
           SwitchListTile(
             value: _remindersEnabled,
-            activeColor: const Color(0xFFD4AF37),
+            activeColor: const Color(0xFFCCA236),
             title: Text(
               _selectedUrdu ? "روزانہ نمازِ فجر اور مغرب کی یاد دہانی" : "Daily Fajr & Maghrib Notifications",
               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -411,7 +411,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           const SizedBox(height: 12),
           SwitchListTile(
             value: _vibrationEnabled,
-            activeColor: const Color(0xFFD4AF37),
+            activeColor: const Color(0xFFCCA236),
             title: Text(
               _selectedUrdu ? "تسبیح کاؤنٹر پر وائبریشن (Haptic Feedback)" : "Tasbeeh Haptic Feedback",
               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -451,9 +451,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: [Color(0xFF0F2C23), Color(0xFF091D17)]),
+              gradient: const LinearGradient(colors: [Color(0xFF163024), Color(0xFF0A201A)]),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFFD4AF37)),
+              border: Border.all(color: const Color(0xFFCCA236)),
             ),
             child: Column(
               children: [
@@ -462,7 +462,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ? "زبان: اردو • شہر: منڈی بہاءالدین • عصر: حنفی"
                       : "Language: English • City: Mandi Bahauddin • Asr: Hanafi",
                   style: const TextStyle(
-                    color: Color(0xFFD4AF37),
+                    color: Color(0xFFCCA236),
                     fontWeight: FontWeight.bold,
                     fontSize: 13,
                   ),
@@ -493,8 +493,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: ElevatedButton(
                   onPressed: _finishOnboarding,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFD4AF37),
-                    foregroundColor: const Color(0xFF081B15),
+                    backgroundColor: const Color(0xFFCCA236),
+                    foregroundColor: const Color(0xFF082017),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   ),
@@ -516,7 +516,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          const Icon(Icons.check_circle, color: Color(0xFFD4AF37), size: 16),
+          const Icon(Icons.check_circle, color: Color(0xFFCCA236), size: 16),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
@@ -547,8 +547,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: ElevatedButton(
             onPressed: _nextStep,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFD4AF37),
-              foregroundColor: const Color(0xFF081B15),
+              backgroundColor: const Color(0xFFCCA236),
+              foregroundColor: const Color(0xFF082017),
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             ),

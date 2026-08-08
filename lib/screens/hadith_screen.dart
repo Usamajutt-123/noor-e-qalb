@@ -146,12 +146,12 @@ class _HadithScreenState extends State<HadithScreen> {
     });
   }
 
-  void _shareHadith(bool isUrdu) {
+  Future<void> _shareHadith(bool isUrdu) async {
     final h = _ahadith[_currentIndex];
     final String text = isUrdu
         ? "*آج کی حدیثِ نبوی ﷺ*\n\n\"${h.arabic}\"\n\n*ترجمہ:* ${h.urdu}\n\n_${h.refUr}_\n\n📲 *نورِ قلب (Noor-e-Qalb)* اسلامی ایپ سے شیئر کیا گیا:"
         : "*Hadith of the Day*\n\n\"${h.arabic}\"\n\n*Translation:* ${h.eng}\n\n_${h.refEn}_\n\n📲 Shared via *Noor-e-Qalb* Islamic App:";
-    Share.share(text, subject: isUrdu ? 'آج کی حدیثِ نبوی ﷺ' : 'Hadith of the Day');
+    await SharePlus.instance.share(ShareParams(text: text));
   }
 
   void _copyHadith(bool isUrdu) {
@@ -164,7 +164,7 @@ class _HadithScreenState extends State<HadithScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(isUrdu ? '✅ حدیث کاپی ہو گئی!' : '✅ Hadith copied!'),
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
       ),
     );
   }
@@ -176,9 +176,9 @@ class _HadithScreenState extends State<HadithScreen> {
     final h = _ahadith[_currentIndex];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF081B15),
+        backgroundColor: const Color(0xFF082017),
         elevation: 0,
         title: Text(
           isUrdu ? "آج کی حدیث" : "Hadith of the Day",
@@ -197,12 +197,12 @@ class _HadithScreenState extends State<HadithScreen> {
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF0F2C23), Color(0xFF091D17)],
+                    colors: [Color(0xFF163024), Color(0xFF0A201A)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                  border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.3),
@@ -216,7 +216,7 @@ class _HadithScreenState extends State<HadithScreen> {
                     Text(
                       "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
                       style: GoogleFonts.amiri(
-                        color: const Color(0xFFD4AF37),
+                        color: const Color(0xFFCCA236),
                         fontSize: 16,
                       ),
                     ),
@@ -227,13 +227,13 @@ class _HadithScreenState extends State<HadithScreen> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFD4AF37).withOpacity(0.2),
+                            color: const Color(0xFFCCA236).withOpacity(0.2),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
                             isUrdu ? h.catUr : h.catEn,
                             style: const TextStyle(
-                              color: Color(0xFFD4AF37),
+                              color: Color(0xFFCCA236),
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
                             ),
@@ -250,7 +250,7 @@ class _HadithScreenState extends State<HadithScreen> {
                     Text(
                       h.arabic,
                       style: GoogleFonts.amiri(
-                        color: const Color(0xFFD4AF37),
+                        color: const Color(0xFFCCA236),
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         height: 1.7,
@@ -271,7 +271,7 @@ class _HadithScreenState extends State<HadithScreen> {
                     Text(
                       "📚 ${isUrdu ? h.refUr : h.refEn}",
                       style: const TextStyle(
-                        color: Color(0xFFD4AF37),
+                        color: Color(0xFFCCA236),
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
@@ -328,8 +328,8 @@ class _HadithScreenState extends State<HadithScreen> {
                 child: OutlinedButton.icon(
                   onPressed: _nextHadith,
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color(0xFFD4AF37),
-                    side: const BorderSide(color: Color(0xFFD4AF37)),
+                    foregroundColor: const Color(0xFFCCA236),
+                    side: const BorderSide(color: Color(0xFFCCA236)),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                   ),

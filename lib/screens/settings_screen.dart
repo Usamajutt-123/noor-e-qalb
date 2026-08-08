@@ -11,11 +11,11 @@ import 'pro_upgrade_screen.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  void _shareApp(LanguageService lang) {
+  Future<void> _shareApp(LanguageService lang) async {
     final text = lang.isUrdu
         ? 'نورِ قلب (Noor-e-Qalb) ڈاؤن لوڈ کریں: نماز، تسبیح، دعائیں اور 99 اسماء الحسنیٰ کی بہترین اسلامی ایپ!'
         : 'Download Noor-e-Qalb: The best Islamic companion app for Namaz timings, Tasbeeh counter, Duas, and 99 Names of Allah!';
-    Share.share(text);
+    await SharePlus.instance.share(ShareParams(text: text));
   }
 
   @override
@@ -26,9 +26,9 @@ class SettingsScreen extends StatelessWidget {
     final premium = Provider.of<PremiumService>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         elevation: 0,
         title: Text(
           lang.isUrdu ? 'سیٹنگز' : 'Settings',
@@ -43,7 +43,7 @@ class SettingsScreen extends StatelessWidget {
           _buildSectionHeader(lang.isUrdu ? 'زبان / Language' : 'Language Selection'),
           _buildCard(
             child: ListTile(
-              leading: const Icon(Icons.language, color: Color(0xFFD4AF37)),
+              leading: const Icon(Icons.language, color: Color(0xFFCCA236)),
               title: Text(
                 lang.isUrdu ? 'اردو زبان (Urdu)' : 'English Language',
                 style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 14),
@@ -54,8 +54,8 @@ class SettingsScreen extends StatelessWidget {
               ),
               trailing: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFD4AF37),
-                  foregroundColor: const Color(0xFF081B15),
+                  backgroundColor: const Color(0xFFCCA236),
+                  foregroundColor: const Color(0xFF082017),
                   visualDensity: VisualDensity.compact,
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 ),
@@ -83,7 +83,7 @@ class SettingsScreen extends StatelessWidget {
                   value: 'emerald',
                   titleUrdu: 'سبز اور سنہری (Default)',
                   titleEnglish: 'Emerald Gold (Default)',
-                  colorDemo: const Color(0xFF0F2C23),
+                  colorDemo: const Color(0xFF163024),
                 ),
                 const Divider(color: Colors.white10),
                 _buildThemeRadio(
@@ -124,7 +124,7 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               children: [
                 SwitchListTile(
-                  activeColor: const Color(0xFFD4AF37),
+                  activeColor: const Color(0xFFCCA236),
                   title: Text(
                     lang.isUrdu ? 'روزانہ نماز کی یاد دہانی' : 'Daily Namaz Reminders',
                     style: GoogleFonts.poppins(color: Colors.white, fontSize: 13),
@@ -138,7 +138,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const Divider(color: Colors.white10),
                 SwitchListTile(
-                  activeColor: const Color(0xFFD4AF37),
+                  activeColor: const Color(0xFFCCA236),
                   title: Text(
                     lang.isUrdu ? 'تسبیح وائبریشن' : 'Tasbeeh Haptic',
                     style: GoogleFonts.poppins(color: Colors.white, fontSize: 13),
@@ -152,7 +152,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const Divider(color: Colors.white10),
                 ListTile(
-                  leading: const Icon(Icons.mosque, color: Color(0xFFD4AF37)),
+                  leading: const Icon(Icons.mosque, color: Color(0xFFCCA236)),
                   title: Text(
                     lang.isUrdu ? 'اذان کی آواز منتخب کریں' : 'Adhan Audio (Muezzin)',
                     style: GoogleFonts.poppins(color: Colors.white, fontSize: 13),
@@ -161,7 +161,7 @@ class SettingsScreen extends StatelessWidget {
                     lang.isUrdu ? 'اذانِ مسجد نبوی (مدینہ)' : 'Masjid an-Nabawi (Medina)',
                     style: GoogleFonts.poppins(color: Colors.white60, fontSize: 11),
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios, color: Color(0xFFD4AF37), size: 14),
+                  trailing: const Icon(Icons.arrow_forward_ios, color: Color(0xFFCCA236), size: 14),
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -170,7 +170,7 @@ class SettingsScreen extends StatelessWidget {
                               ? '🕌 مؤذنِ مسجد نبوی (مدینہ منورہ) کی آواز منتخب ہے'
                               : '🕌 Masjid an-Nabawi Adhan (Medina) selected',
                         ),
-                        backgroundColor: const Color(0xFF0F2C23),
+                        backgroundColor: const Color(0xFF163024),
                       ),
                     );
                   },
@@ -185,7 +185,7 @@ class SettingsScreen extends StatelessWidget {
           _buildSectionHeader(lang.isUrdu ? 'نماز کا حساب' : 'Prayer Calculation'),
           _buildCard(
             child: ListTile(
-              leading: const Icon(Icons.access_time_filled, color: Color(0xFFD4AF37)),
+              leading: const Icon(Icons.access_time_filled, color: Color(0xFFCCA236)),
               title: Text(
                 lang.isUrdu ? 'عصر کا فقہی طریقہ' : 'Asr Method',
                 style: GoogleFonts.poppins(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
@@ -198,8 +198,8 @@ class SettingsScreen extends StatelessWidget {
               ),
               trailing: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF194C3D),
-                  foregroundColor: const Color(0xFFD4AF37),
+                  backgroundColor: const Color(0xFF1E4A39),
+                  foregroundColor: const Color(0xFFCCA236),
                   visualDensity: VisualDensity.compact,
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 ),
@@ -222,7 +222,7 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
-                  leading: const Icon(Icons.workspace_premium, color: Color(0xFFD4AF37)),
+                  leading: const Icon(Icons.workspace_premium, color: Color(0xFFCCA236)),
                   title: Text(
                     premium.isProUser
                         ? (lang.isUrdu ? 'پرو ممبرشپ فعال' : 'Pro Active')
@@ -235,14 +235,14 @@ class SettingsScreen extends StatelessWidget {
                         : (lang.isUrdu ? 'ایک بار کی ادائیگی' : 'One-time upgrade'),
                     style: GoogleFonts.poppins(color: Colors.white60, fontSize: 11),
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios, color: Color(0xFFD4AF37), size: 14),
+                  trailing: const Icon(Icons.arrow_forward_ios, color: Color(0xFFCCA236), size: 14),
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) => const ProUpgradeScreen()));
                   },
                 ),
                 const Divider(color: Colors.white10),
                 ListTile(
-                  leading: const Icon(Icons.share, color: Color(0xFFD4AF37)),
+                  leading: const Icon(Icons.share, color: Color(0xFFCCA236)),
                   title: Text(
                     lang.isUrdu ? 'ایپ شیئر کریں' : 'Share App',
                     style: GoogleFonts.poppins(color: Colors.white, fontSize: 13),
@@ -274,7 +274,7 @@ class SettingsScreen extends StatelessWidget {
       child: Text(
         title,
         style: GoogleFonts.poppins(
-          color: const Color(0xFFD4AF37),
+          color: const Color(0xFFCCA236),
           fontSize: 11,
           fontWeight: FontWeight.w700,
           letterSpacing: 1,
@@ -286,9 +286,9 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildCard({required Widget child}) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF0F2C23),
+        color: const Color(0xFF163024),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.2)),
+        border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.2)),
       ),
       child: child,
     );
@@ -310,20 +310,20 @@ class SettingsScreen extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorDemo,
           shape: BoxShape.circle,
-          border: Border.all(color: const Color(0xFFD4AF37), width: 2),
+          border: Border.all(color: const Color(0xFFCCA236), width: 2),
         ),
       ),
       title: Text(
         lang.isUrdu ? titleUrdu : titleEnglish,
         style: GoogleFonts.poppins(
-          color: isSelected ? const Color(0xFFD4AF37) : Colors.white,
+          color: isSelected ? const Color(0xFFCCA236) : Colors.white,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           fontSize: 13,
         ),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      trailing: isSelected ? const Icon(Icons.check_circle, color: Color(0xFFD4AF37), size: 18) : null,
+      trailing: isSelected ? const Icon(Icons.check_circle, color: Color(0xFFCCA236), size: 18) : null,
       onTap: () {
         settings.setThemeStyle(value);
       },

@@ -59,9 +59,9 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
     final lang = Provider.of<LanguageService>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         elevation: 0,
         title: Text(
           lang.isUrdu ? 'نماز کے اوقات' : 'Namaz Timings',
@@ -74,13 +74,13 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
           // LOCATION SELECTOR & METHOD BAR
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            color: const Color(0xFF0F2C23),
+            color: const Color(0xFF163024),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.location_on, color: Color(0xFFD4AF37), size: 18),
+                    const Icon(Icons.location_on, color: Color(0xFFCCA236), size: 18),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -112,7 +112,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                         ChoiceChip(
                           label: Text(lang.isUrdu ? 'حنفی' : 'Hanafi', style: const TextStyle(fontSize: 11)),
                           selected: prayerService.isHanafi,
-                          selectedColor: const Color(0xFFD4AF37),
+                          selectedColor: const Color(0xFFCCA236),
                           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           visualDensity: VisualDensity.compact,
                           onSelected: (val) {
@@ -123,7 +123,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                         ChoiceChip(
                           label: Text(lang.isUrdu ? 'شافعی' : 'Shafi\'i', style: const TextStyle(fontSize: 11)),
                           selected: !prayerService.isHanafi,
-                          selectedColor: const Color(0xFFD4AF37),
+                          selectedColor: const Color(0xFFCCA236),
                           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           visualDensity: VisualDensity.compact,
                           onSelected: (val) {
@@ -150,15 +150,15 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
+                          colors: [Color(0xFF1E4A39), Color(0xFF163024)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(22),
-                        border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                        border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFFD4AF37).withOpacity(0.2),
+                            color: const Color(0xFFCCA236).withOpacity(0.2),
                             blurRadius: 16,
                             spreadRadius: 1,
                           ),
@@ -169,13 +169,13 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF081B15),
+                              color: const Color(0xFF082017),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
                               lang.isUrdu ? 'اگلی نماز کا وقت' : 'UPCOMING NAMAZ',
                               style: GoogleFonts.poppins(
-                                color: const Color(0xFFD4AF37),
+                                color: const Color(0xFFCCA236),
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 1.5,
@@ -198,7 +198,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                           Text(
                             _schedule.nextPrayer!.timeString,
                             style: GoogleFonts.poppins(
-                              color: const Color(0xFFD4AF37),
+                              color: const Color(0xFFCCA236),
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
@@ -209,14 +209,14 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF081B15),
+                                color: const Color(0xFF082017),
                                 borderRadius: BorderRadius.circular(25),
                                 border: Border.all(color: Colors.white12),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(Icons.timer, color: Color(0xFFD4AF37), size: 16),
+                                  const Icon(Icons.timer, color: Color(0xFFCCA236), size: 16),
                                   const SizedBox(width: 8),
                                   Text(
                                     _formatDuration(_schedule.remainingTimeToNext, lang.isUrdu),
@@ -252,11 +252,11 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                         decoration: BoxDecoration(
                           color: isNext
-                              ? const Color(0xFF194C3D)
-                              : const Color(0xFF0F2C23),
+                              ? const Color(0xFF1E4A39)
+                              : const Color(0xFF163024),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: isNext ? const Color(0xFFD4AF37) : Colors.white10,
+                            color: isNext ? const Color(0xFFCCA236) : Colors.white10,
                             width: isNext ? 2 : 1,
                           ),
                         ),
@@ -265,7 +265,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                             Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF081B15),
+                                color: const Color(0xFF082017),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Icon(
@@ -273,7 +273,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                                     ? Icons.wb_sunny
                                     : (isNext ? Icons.notifications_active : Icons.mosque),
                                 color: isNext || isSunrise
-                                    ? const Color(0xFFD4AF37)
+                                    ? const Color(0xFFCCA236)
                                     : Colors.white60,
                                 size: 20,
                               ),
@@ -295,7 +295,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                                     Text(
                                       lang.isUrdu ? 'اگلی نماز' : 'Next Prayer',
                                       style: GoogleFonts.poppins(
-                                        color: const Color(0xFFD4AF37),
+                                        color: const Color(0xFFCCA236),
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -309,7 +309,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                                 Text(
                                   p.timeString,
                                   style: GoogleFonts.poppins(
-                                    color: isNext ? const Color(0xFFD4AF37) : Colors.white,
+                                    color: isNext ? const Color(0xFFCCA236) : Colors.white,
                                     fontSize: 15,
                                     fontWeight: isNext ? FontWeight.bold : FontWeight.w600,
                                   ),
@@ -321,7 +321,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                                     padding: EdgeInsets.zero,
                                     icon: Icon(
                                       Icons.notifications,
-                                      color: p.isAlarmEnabled ? const Color(0xFFD4AF37) : Colors.white30,
+                                      color: p.isAlarmEnabled ? const Color(0xFFCCA236) : Colors.white30,
                                       size: 18,
                                     ),
                                     onPressed: () {
@@ -335,7 +335,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                                                 ? (lang.isUrdu ? '🕌 اذان الارم فعال: ${p.nameUrdu}' : '🕌 Azan Alarm Enabled: ${p.nameEnglish}')
                                                 : (lang.isUrdu ? '🔕 اذان الارم بند کر دیا گیا' : '🔕 Azan Alarm Disabled'),
                                           ),
-                                          backgroundColor: const Color(0xFF0F2C23),
+                                          backgroundColor: const Color(0xFF163024),
                                           duration: const Duration(seconds: 2),
                                         ),
                                       );

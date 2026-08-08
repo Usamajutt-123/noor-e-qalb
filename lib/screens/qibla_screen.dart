@@ -60,7 +60,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
     final bool isAligned = shortestDiff <= 6.0;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -111,7 +111,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                             child: Text(
                               "${qiblaAngle.round()}° $cardinal",
                               style: const TextStyle(
-                                color: Color(0xFFD4AF37),
+                                color: Color(0xFFCCA236),
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -135,7 +135,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                             child: Text(
                               isUrdu ? "$distance کلومیٹر" : "$distance km",
                               style: const TextStyle(
-                                color: Color(0xFFD4AF37),
+                                color: Color(0xFFCCA236),
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -166,16 +166,16 @@ class _QiblaScreenState extends State<QiblaScreen> {
                               height: compassSize,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: const Color(0xFF0D2C22),
+                                color: const Color(0xFF0F261E),
                                 border: Border.all(
-                                  color: isAligned ? const Color(0xFF4CAF50) : const Color(0xFFD4AF37),
+                                  color: isAligned ? const Color(0xFF4CAF50) : const Color(0xFFCCA236),
                                   width: 3,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
                                     color: isAligned
                                         ? Colors.green.withOpacity(0.4)
-                                        : const Color(0xFFD4AF37).withOpacity(0.2),
+                                        : const Color(0xFFCCA236).withOpacity(0.2),
                                     blurRadius: 24,
                                   ),
                                 ],
@@ -206,7 +206,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                             height: 14,
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Color(0xFFD4AF37),
+                              color: Color(0xFFCCA236),
                             ),
                           ),
                         ],
@@ -221,10 +221,10 @@ class _QiblaScreenState extends State<QiblaScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
                 decoration: BoxDecoration(
-                  color: isAligned ? Colors.green.withOpacity(0.15) : const Color(0xFFD4AF37).withOpacity(0.12),
+                  color: isAligned ? Colors.green.withOpacity(0.15) : const Color(0xFFCCA236).withOpacity(0.12),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: isAligned ? Colors.green : const Color(0xFFD4AF37),
+                    color: isAligned ? Colors.green : const Color(0xFFCCA236),
                   ),
                 ),
                 child: Text(
@@ -250,7 +250,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                   ),
                   Text(
                     "${_simulatedHeading.round()}°",
-                    style: const TextStyle(color: Color(0xFFD4AF37), fontWeight: FontWeight.bold),
+                    style: const TextStyle(color: Color(0xFFCCA236), fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -258,7 +258,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                 value: _simulatedHeading,
                 min: 0,
                 max: 360,
-                activeColor: const Color(0xFFD4AF37),
+                activeColor: const Color(0xFFCCA236),
                 onChanged: (val) {
                   setState(() {
                     _simulatedHeading = val;

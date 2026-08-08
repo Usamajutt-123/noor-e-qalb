@@ -25,7 +25,7 @@ class _DuasScreenState extends State<DuasScreen> {
     return IslamicData.defaultDuas.where((d) => d.category == _selectedCategory).toList();
   }
 
-  void _shareDua(DuaModel dua) {
+  Future<void> _shareDua(DuaModel dua) async {
     final text = '''
 🌟 ${dua.title} 🌟
 
@@ -38,15 +38,15 @@ Reference: ${dua.reference}
 ---
 Shared from Noor-e-Qalb Islamic App
 ''';
-    Share.share(text);
+    await SharePlus.instance.share(ShareParams(text: text));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         elevation: 0,
         title: Text(
           'Masnoon Duas & Azkar',
@@ -71,14 +71,14 @@ Shared from Noor-e-Qalb Islamic App
                       label: Text(
                         cat,
                         style: GoogleFonts.poppins(
-                          color: isSelected ? const Color(0xFF081B15) : Colors.white,
+                          color: isSelected ? const Color(0xFF082017) : Colors.white,
                           fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                           fontSize: 11,
                         ),
                       ),
                       selected: isSelected,
-                      selectedColor: const Color(0xFFD4AF37),
-                      backgroundColor: const Color(0xFF0F2C23),
+                      selectedColor: const Color(0xFFCCA236),
+                      backgroundColor: const Color(0xFF163024),
                       visualDensity: VisualDensity.compact,
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       onSelected: (selected) {
@@ -105,9 +105,9 @@ Shared from Noor-e-Qalb Islamic App
                 return Container(
                   margin: const EdgeInsets.only(bottom: 14),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF0F2C23),
+                    color: const Color(0xFF163024),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.2)),
+                    border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.2)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
@@ -122,7 +122,7 @@ Shared from Noor-e-Qalb Islamic App
                               child: Text(
                                 dua.title,
                                 style: GoogleFonts.poppins(
-                                  color: const Color(0xFFD4AF37),
+                                  color: const Color(0xFFCCA236),
                                   fontWeight: FontWeight.w600,
                                   fontSize: 15,
                                 ),
@@ -147,7 +147,7 @@ Shared from Noor-e-Qalb Islamic App
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF13382D),
+                            color: const Color(0xFF1B382C),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -194,7 +194,7 @@ Shared from Noor-e-Qalb Islamic App
                               child: Text(
                                 dua.reference,
                                 style: GoogleFonts.poppins(
-                                  color: const Color(0xFFD4AF37),
+                                  color: const Color(0xFFCCA236),
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500,
                                 ),

@@ -92,9 +92,9 @@ class _ZakatScreenState extends State<ZakatScreen> {
     final double nisabVal = _nisabBasis == 'gold' ? (currRate['gold'] as double) : (currRate['silver'] as double);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF081B15),
+        backgroundColor: const Color(0xFF082017),
         elevation: 0,
         title: Text(
           isUrdu ? "زکوٰۃ کیلکولیٹر" : "Zakat Calculator",
@@ -121,14 +121,14 @@ class _ZakatScreenState extends State<ZakatScreen> {
                         label: Text(
                           '${rate['flag']} $code',
                           style: TextStyle(
-                            color: isSel ? const Color(0xFF081B15) : Colors.white,
+                            color: isSel ? const Color(0xFF082017) : Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 11,
                           ),
                         ),
                         selected: isSel,
-                        selectedColor: const Color(0xFFD4AF37),
-                        backgroundColor: const Color(0xFF0C231B),
+                        selectedColor: const Color(0xFFCCA236),
+                        backgroundColor: const Color(0xFF0E241C),
                         visualDensity: VisualDensity.compact,
                         onSelected: (_) {
                           setState(() => _selectedCurr = code);
@@ -147,9 +147,9 @@ class _ZakatScreenState extends State<ZakatScreen> {
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: _nisabBasis == 'silver' ? const Color(0xFFD4AF37) : const Color(0xFF0C231B),
-                        foregroundColor: _nisabBasis == 'silver' ? const Color(0xFF081B15) : Colors.white,
-                        side: const BorderSide(color: Color(0xFFD4AF37)),
+                        backgroundColor: _nisabBasis == 'silver' ? const Color(0xFFCCA236) : const Color(0xFF0E241C),
+                        foregroundColor: _nisabBasis == 'silver' ? const Color(0xFF082017) : Colors.white,
+                        side: const BorderSide(color: Color(0xFFCCA236)),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         visualDensity: VisualDensity.compact,
                         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -173,9 +173,9 @@ class _ZakatScreenState extends State<ZakatScreen> {
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: _nisabBasis == 'gold' ? const Color(0xFFD4AF37) : const Color(0xFF0C231B),
-                        foregroundColor: _nisabBasis == 'gold' ? const Color(0xFF081B15) : Colors.white,
-                        side: const BorderSide(color: Color(0xFFD4AF37)),
+                        backgroundColor: _nisabBasis == 'gold' ? const Color(0xFFCCA236) : const Color(0xFF0E241C),
+                        foregroundColor: _nisabBasis == 'gold' ? const Color(0xFF082017) : Colors.white,
+                        side: const BorderSide(color: Color(0xFFCCA236)),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         visualDensity: VisualDensity.compact,
                         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -202,9 +202,9 @@ class _ZakatScreenState extends State<ZakatScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [Color(0xFF0F2C23), Color(0xFF091D17)]),
+                  gradient: const LinearGradient(colors: [Color(0xFF163024), Color(0xFF0A201A)]),
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                  border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
                   boxShadow: [
                     BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 16),
                   ],
@@ -221,7 +221,7 @@ class _ZakatScreenState extends State<ZakatScreen> {
                       "${nisabVal.round().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} $_selectedCurr",
                     ),
                     const SizedBox(height: 10),
-                    const Divider(color: Color(0xFFD4AF37)),
+                    const Divider(color: Color(0xFFCCA236)),
                     const SizedBox(height: 6),
                     Row(
                       children: [
@@ -229,7 +229,7 @@ class _ZakatScreenState extends State<ZakatScreen> {
                           child: Text(
                             isUrdu ? "واجب الزکوٰۃ (2.5%):" : "Zakat Payable (2.5%):",
                             style: GoogleFonts.inter(
-                              color: const Color(0xFFD4AF37),
+                              color: const Color(0xFFCCA236),
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                             ),
@@ -239,7 +239,7 @@ class _ZakatScreenState extends State<ZakatScreen> {
                           child: Text(
                             "${_payableZakat.round().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} $_selectedCurr",
                             style: GoogleFonts.inter(
-                              color: const Color(0xFFD4AF37),
+                              color: const Color(0xFFCCA236),
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -255,7 +255,7 @@ class _ZakatScreenState extends State<ZakatScreen> {
               // Zakatable Assets
               Text(
                 isUrdu ? "زکوٰۃ کے قابل اثاثے:" : "Zakatable Assets:",
-                style: const TextStyle(color: Color(0xFFD4AF37), fontWeight: FontWeight.bold, fontSize: 13),
+                style: const TextStyle(color: Color(0xFFCCA236), fontWeight: FontWeight.bold, fontSize: 13),
               ),
               const SizedBox(height: 8),
               _buildInputRow(
@@ -317,13 +317,13 @@ class _ZakatScreenState extends State<ZakatScreen> {
                                   ? "✨ الحمدللہ! واجب الزکوٰۃ: ${_payableZakat.round()} PKR"
                                   : "✨ Zakat Payable: ${_payableZakat.round()} PKR",
                             ),
-                            backgroundColor: const Color(0xFF0F2C23),
+                            backgroundColor: const Color(0xFF163024),
                           ),
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFD4AF37),
-                        foregroundColor: const Color(0xFF081B15),
+                        backgroundColor: const Color(0xFFCCA236),
+                        foregroundColor: const Color(0xFF082017),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                       ),

@@ -15,9 +15,9 @@ class DailyTasksScreen extends StatelessWidget {
     final progress = totalCount > 0 ? completedCount / totalCount : 0.0;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         elevation: 0,
         title: Text(
           'Daily Tasks & Streak',
@@ -26,7 +26,7 @@ class DailyTasksScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shuffle, color: Color(0xFFD4AF37), size: 20),
+            icon: const Icon(Icons.shuffle, color: Color(0xFFCCA236), size: 20),
             tooltip: 'Shuffle Tasks',
             onPressed: () {
               taskService.shuffleRandomTasks();
@@ -42,15 +42,15 @@ class DailyTasksScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
+                colors: [Color(0xFF1E4A39), Color(0xFF163024)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+              border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFFD4AF37).withOpacity(0.15),
+                  color: const Color(0xFFCCA236).withOpacity(0.15),
                   blurRadius: 12,
                   spreadRadius: 1,
                 ),
@@ -69,7 +69,7 @@ class DailyTasksScreen extends StatelessWidget {
                           Text(
                             'DAILY STREAK',
                             style: GoogleFonts.poppins(
-                              color: const Color(0xFFD4AF37),
+                              color: const Color(0xFFCCA236),
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.5,
@@ -89,14 +89,14 @@ class DailyTasksScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF081B15),
+                        color: const Color(0xFF082017),
                         borderRadius: BorderRadius.circular(18),
                         border: Border.all(color: Colors.white12),
                       ),
                       child: Text(
                         '$completedCount / $totalCount',
                         style: GoogleFonts.poppins(
-                          color: const Color(0xFFD4AF37),
+                          color: const Color(0xFFCCA236),
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
@@ -110,8 +110,8 @@ class DailyTasksScreen extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: 8,
-                    backgroundColor: const Color(0xFF081B15),
-                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFD4AF37)),
+                    backgroundColor: const Color(0xFF082017),
+                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFCCA236)),
                   ),
                 ),
               ],
@@ -136,11 +136,11 @@ class DailyTasksScreen extends StatelessWidget {
                 ),
                 TextButton.icon(
                   onPressed: () => taskService.shuffleRandomTasks(),
-                  icon: const Icon(Icons.refresh, size: 14, color: Color(0xFFD4AF37)),
+                  icon: const Icon(Icons.refresh, size: 14, color: Color(0xFFCCA236)),
                   label: Text(
                     'Shuffle',
                     style: GoogleFonts.poppins(
-                      color: const Color(0xFFD4AF37),
+                      color: const Color(0xFFCCA236),
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),
@@ -164,10 +164,10 @@ class DailyTasksScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 10),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: task.isCompleted ? const Color(0xFF13382D) : const Color(0xFF0F2C23),
+                      color: task.isCompleted ? const Color(0xFF1B382C) : const Color(0xFF163024),
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
-                        color: task.isCompleted ? const Color(0xFFD4AF37) : Colors.white12,
+                        color: task.isCompleted ? const Color(0xFFCCA236) : Colors.white12,
                         width: task.isCompleted ? 1.5 : 1,
                       ),
                     ),
@@ -179,8 +179,8 @@ class DailyTasksScreen extends StatelessWidget {
                           height: 32,
                           child: Checkbox(
                             value: task.isCompleted,
-                            activeColor: const Color(0xFFD4AF37),
-                            checkColor: const Color(0xFF081B15),
+                            activeColor: const Color(0xFFCCA236),
+                            checkColor: const Color(0xFF082017),
                             onChanged: (val) => taskService.toggleTask(task.id),
                             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
@@ -196,7 +196,7 @@ class DailyTasksScreen extends StatelessWidget {
                                     child: Text(
                                       task.titleUrdu,
                                       style: GoogleFonts.notoNastaliqUrdu(
-                                        color: task.isCompleted ? const Color(0xFFD4AF37) : Colors.white,
+                                        color: task.isCompleted ? const Color(0xFFCCA236) : Colors.white,
                                         fontSize: 14,
                                         height: 1.8,
                                         fontWeight: FontWeight.w600,
@@ -207,13 +207,13 @@ class DailyTasksScreen extends StatelessWidget {
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFF081B15),
+                                      color: const Color(0xFF082017),
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Text(
                                       task.category,
                                       style: GoogleFonts.poppins(
-                                        color: const Color(0xFFD4AF37),
+                                        color: const Color(0xFFCCA236),
                                         fontSize: 9,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -232,13 +232,13 @@ class DailyTasksScreen extends StatelessWidget {
                               const SizedBox(height: 4),
                               Row(
                                 children: [
-                                  const Icon(Icons.stars, color: Color(0xFFD4AF37), size: 12),
+                                  const Icon(Icons.stars, color: Color(0xFFCCA236), size: 12),
                                   const SizedBox(width: 4),
                                   Expanded(
                                     child: Text(
                                       'Virtue: ${task.rewardVirtue}',
                                       style: GoogleFonts.poppins(
-                                        color: const Color(0xFFD4AF37),
+                                        color: const Color(0xFFCCA236),
                                         fontSize: 10,
                                       ),
                                       maxLines: 2,

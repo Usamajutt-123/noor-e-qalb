@@ -114,7 +114,7 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
               ? '✨ الحمدللہ! $days دن کی قضا نمازوں کا ریکارڈ درج کر دیا گیا ہے۔'
               : '✨ Alhamdulillah! $days day(s) of missed prayers added.',
         ),
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
       ),
     );
   }
@@ -123,7 +123,7 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         title: Text(
           isUrdu ? 'ری سیٹ کریں' : 'Reset Tracker',
           style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -171,9 +171,9 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
     final bool isUrdu = langService.isUrdu;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF081B15),
+        backgroundColor: const Color(0xFF082017),
         elevation: 0,
         title: Text(
           isUrdu ? "قضا نمازوں کا ٹریکر" : "Qaza Prayer Log",
@@ -193,15 +193,15 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFD4AF37).withOpacity(0.12),
+                        color: const Color(0xFFCCA236).withOpacity(0.12),
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: const Color(0xFFD4AF37)),
+                        border: Border.all(color: const Color(0xFFCCA236)),
                       ),
                       child: Column(
                         children: [
                           Text(
                             isUrdu ? "کل باقی:" : "Remaining:",
-                            style: const TextStyle(color: Color(0xFFD4AF37), fontSize: 10),
+                            style: const TextStyle(color: Color(0xFFCCA236), fontSize: 10),
                           ),
                           const SizedBox(height: 4),
                           Text(
@@ -297,7 +297,7 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                             const SizedBox(height: 2),
                             Text(
                               "$count ${isUrdu ? 'باقی' : 'left'}",
-                              style: const TextStyle(color: Color(0xFFD4AF37), fontSize: 11),
+                              style: const TextStyle(color: Color(0xFFCCA236), fontSize: 11),
                             ),
                           ],
                         ),
@@ -326,11 +326,11 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                               width: 32,
                               height: 32,
                               decoration: BoxDecoration(
-                                color: const Color(0xFFD4AF37).withOpacity(0.15),
+                                color: const Color(0xFFCCA236).withOpacity(0.15),
                                 borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: const Color(0xFFD4AF37)),
+                                border: Border.all(color: const Color(0xFFCCA236)),
                               ),
-                              child: const Icon(Icons.add, color: Color(0xFFD4AF37), size: 16),
+                              child: const Icon(Icons.add, color: Color(0xFFCCA236), size: 16),
                             ),
                           ),
                         ],
@@ -351,7 +351,7 @@ class _QazaTrackerScreenState extends State<QazaTrackerScreen> {
                       ? "\"اللہ تعالیٰ توبہ کرنے والوں اور اپنی قضا نمازیں ادا کرنے والوں سے بے حد محبت فرماتا ہے۔\""
                       : "\"Allah loves those who turn to Him in repentance and fulfill their missed prayers.\"",
                   style: GoogleFonts.inter(
-                    color: const Color(0xFFD4AF37),
+                    color: const Color(0xFFCCA236),
                     fontStyle: FontStyle.italic,
                     fontSize: 12,
                   ),

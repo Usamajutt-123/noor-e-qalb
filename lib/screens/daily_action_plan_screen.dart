@@ -70,7 +70,7 @@ class _DailyActionPlanScreenState extends State<DailyActionPlanScreen> {
                   ? '✨ الحمدللہ! +2 نور ٹوکنز شامل!'
                   : '✨ Alhamdulillah! +2 Noor Tokens added!',
             ),
-            backgroundColor: const Color(0xFF0F2C23),
+            backgroundColor: const Color(0xFF163024),
           ),
         );
       }
@@ -84,9 +84,9 @@ class _DailyActionPlanScreenState extends State<DailyActionPlanScreen> {
     final isUrdu = langService.isUrdu;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0C231B),
+        backgroundColor: const Color(0xFF0E241C),
         elevation: 0,
         title: Text(
           isUrdu ? 'نور ٹوکن والٹ' : 'Noor Token Wallet',
@@ -98,13 +98,13 @@ class _DailyActionPlanScreenState extends State<DailyActionPlanScreen> {
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFFD4AF37),
+              color: const Color(0xFFCCA236),
               borderRadius: BorderRadius.circular(14),
             ),
             alignment: Alignment.center,
             child: Text(
               '🪙 $_tokenBalance',
-              style: GoogleFonts.poppins(color: const Color(0xFF081B15), fontWeight: FontWeight.bold, fontSize: 12),
+              style: GoogleFonts.poppins(color: const Color(0xFF082017), fontWeight: FontWeight.bold, fontSize: 12),
             ),
           ),
         ],
@@ -118,9 +118,9 @@ class _DailyActionPlanScreenState extends State<DailyActionPlanScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [Color(0xFF1A4638), Color(0xFF0C231B)]),
+                gradient: const LinearGradient(colors: [Color(0xFF1E4A3C), Color(0xFF0E241C)]),
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
                 boxShadow: [
                   BoxShadow(color: Colors.black.withOpacity(0.25), blurRadius: 12),
                 ],
@@ -134,7 +134,7 @@ class _DailyActionPlanScreenState extends State<DailyActionPlanScreen> {
                   const SizedBox(height: 4),
                   Text(
                     '$_tokenBalance 🪙',
-                    style: GoogleFonts.poppins(color: const Color(0xFFD4AF37), fontSize: 32, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(color: const Color(0xFFCCA236), fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -151,9 +151,9 @@ class _DailyActionPlanScreenState extends State<DailyActionPlanScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [Color(0xFF13382D), Color(0xFF081B15)]),
+                gradient: const LinearGradient(colors: [Color(0xFF1B382C), Color(0xFF082017)]),
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
               ),
               child: Column(
                 children: [
@@ -164,7 +164,7 @@ class _DailyActionPlanScreenState extends State<DailyActionPlanScreen> {
                         ? 'عالمی لیڈر بورڈ (جلد آ رہا ہے!)'
                         : 'Global Leaderboard (Coming Soon!)',
                     style: GoogleFonts.poppins(
-                      color: const Color(0xFFD4AF37),
+                      color: const Color(0xFFCCA236),
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
@@ -201,9 +201,9 @@ class _DailyActionPlanScreenState extends State<DailyActionPlanScreen> {
                 margin: const EdgeInsets.only(bottom: 8),
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                 decoration: BoxDecoration(
-                  color: task.completed ? const Color(0xFF13382D) : Colors.white.withOpacity(0.06),
+                  color: task.completed ? const Color(0xFF1B382C) : Colors.white.withOpacity(0.06),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: task.completed ? const Color(0xFFD4AF37) : Colors.white12),
+                  border: Border.all(color: task.completed ? const Color(0xFFCCA236) : Colors.white12),
                 ),
                 child: Row(
                   children: [
@@ -223,18 +223,18 @@ class _DailyActionPlanScreenState extends State<DailyActionPlanScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFD4AF37).withOpacity(0.2),
+                        color: const Color(0xFFCCA236).withOpacity(0.2),
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: const Text('🪙 +2', style: TextStyle(color: Color(0xFFD4AF37), fontSize: 10, fontWeight: FontWeight.bold)),
+                      child: const Text('🪙 +2', style: TextStyle(color: Color(0xFFCCA236), fontSize: 10, fontWeight: FontWeight.bold)),
                     ),
                     SizedBox(
                       width: 32,
                       height: 32,
                       child: Checkbox(
                         value: task.completed,
-                        activeColor: const Color(0xFFD4AF37),
-                        checkColor: const Color(0xFF081B15),
+                        activeColor: const Color(0xFFCCA236),
+                        checkColor: const Color(0xFF082017),
                         onChanged: (_) => _toggleNamaz(idx),
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
