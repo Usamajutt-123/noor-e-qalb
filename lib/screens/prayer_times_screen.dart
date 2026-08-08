@@ -6,6 +6,8 @@ import '../models/prayer_times_model.dart';
 import '../services/prayer_service.dart';
 import '../services/language_service.dart';
 import '../widgets/ad_banner_widget.dart';
+import '../theme/noor_theme.dart';
+import '../widgets/noor_ui.dart';
 
 class PrayerTimesScreen extends StatefulWidget {
   const PrayerTimesScreen({super.key});
@@ -59,15 +61,11 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
     final lang = Provider.of<LanguageService>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF082017),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF163024),
-        elevation: 0,
-        title: Text(
-          lang.isUrdu ? 'نماز کے اوقات' : 'Namaz Timings',
-          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
+      backgroundColor: NoorColors.background,
+      appBar: NoorPageHeader(
+        title: lang.isUrdu ? 'نماز کے اوقات' : 'Prayer Times',
+        subtitle: '${prayerService.selectedLocation.cityName}, ${prayerService.selectedLocation.countryName}',
+        actions: const [NoorIconButton(icon: Icons.more_vert_rounded), SizedBox(width: 5)],
       ),
       body: Column(
         children: [

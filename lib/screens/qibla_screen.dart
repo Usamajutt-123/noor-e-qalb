@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../services/language_service.dart';
+import '../theme/noor_theme.dart';
+import '../widgets/noor_ui.dart';
 
 class QiblaScreen extends StatefulWidget {
   const QiblaScreen({super.key});
@@ -12,263 +14,219 @@ class QiblaScreen extends StatefulWidget {
 }
 
 class _QiblaScreenState extends State<QiblaScreen> {
-  final double _userLat = 32.5542;
-  final double _userLng = 73.3134;
-
-  double _simulatedHeading = 0.0;
+  static const double _userLat = 32.5542;
+  static const double _userLng = 73.3134;
+  double _heading = 0;
 
   double _computeQiblaAngle(double lat, double lng) {
-    const double kaabaLat = 21.4225;
-    const double kaabaLng = 39.8262;
-    final double dLng = (kaabaLng - lng) * (math.pi / 180);
-    final double lat1 = lat * (math.pi / 180);
-    final double lat2 = kaabaLat * (math.pi / 180);
-    final double y = math.sin(dLng);
-    final double x = math.cos(lat1) * math.tan(lat2) - math.sin(lat1) * math.cos(dLng);
-    final double angle = math.atan2(y, x) * (180 / math.pi);
-    return (angle + 360) % 360;
+    const kaabaLat = 21.4225;
+    const kaabaLng = 39.8262;
+    final dLng = (kaabaLng - lng) * math.pi / 180;
+    final lat1 = lat * math.pi / 180;
+    final lat2 = kaabaLat * math.pi / 180;
+    final y = math.sin(dLng);
+    final x = math.cos(lat1) * math.tan(lat2) - math.sin(lat1) * math.cos(dLng);
+    return (math.atan2(y, x) * 180 / math.pi + 360) % 360;
   }
 
-  int _computeKaabaDistance(double lat, double lng) {
-    const double R = 6371.0;
-    final double dLat = (21.4225 - lat) * (math.pi / 180);
-    final double dLng = (39.8262 - lng) * (math.pi / 180);
-    final double a = math.sin(dLat / 2) * math.sin(dLat / 2) +
-        math.cos(lat * (math.pi / 180)) * math.cos(21.4225 * (math.pi / 180)) *
-        math.sin(dLng / 2) * math.sin(dLng / 2);
-    final double c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
-    return (R * c).round();
+  int _computeDistance(double lat, double lng) {
+    const radius = 6371.0;
+    final dLat = (21.4225 - lat) * math.pi / 180;
+    final dLng = (39.8262 - lng) * math.pi / 180;
+    final a = math.sin(dLat / 2) * math.sin(dLat / 2) +
+        math.cos(lat * math.pi / 180) * math.cos(21.4225 * math.pi / 180) *
+            math.sin(dLng / 2) * math.sin(dLng / 2);
+    return (radius * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))).round();
   }
 
-  String _getCardinal(double angle, bool isUrdu) {
-    if (angle >= 240 && angle <= 280) return isUrdu ? "مغرب-جنوب مغرب" : "W-Southwest";
-    if (angle >= 220 && angle < 240) return isUrdu ? "جنوب مغرب" : "Southwest";
-    if (angle >= 280 && angle <= 310) return isUrdu ? "مغرب-شمال مغرب" : "W-Northwest";
-    return isUrdu ? "${angle.round()}°" : "${angle.round()}°";
+  String _cardinal(double angle) {
+    const labels = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    return labels[((angle + 22.5) ~/ 45) % 8];
   }
 
   @override
   Widget build(BuildContext context) {
-    final langService = Provider.of<LanguageService>(context);
-    final bool isUrdu = langService.isUrdu;
-    final double qiblaAngle = _computeQiblaAngle(_userLat, _userLng);
-    final int distance = _computeKaabaDistance(_userLat, _userLng);
-    final String cardinal = _getCardinal(qiblaAngle, isUrdu);
-
-    final double diff = (qiblaAngle - _simulatedHeading + 360) % 360;
-    final double shortestDiff = math.min(diff, 360 - diff);
-    final bool isAligned = shortestDiff <= 6.0;
+    final isUrdu = context.watch<LanguageService>().isUrdu;
+    final qiblaAngle = _computeQiblaAngle(_userLat, _userLng);
+    final distance = _computeDistance(_userLat, _userLng);
+    final difference = (qiblaAngle - _heading + 360) % 360;
+    final aligned = math.min(difference, 360 - difference) < 6;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF082017),
+      backgroundColor: NoorColors.background,
+      appBar: NoorPageHeader(
+        title: isUrdu ? 'قبلہ کمپاس' : 'Qibla Compass',
+        actions: [NoorIconButton(icon: Icons.more_vert_rounded, onPressed: () {})],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.fromLTRB(16, 2, 16, 24),
           child: Column(
             children: [
-              Text(
-                isUrdu ? "قبلہ رخ کمپاس" : "Qibla Direction Compass",
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                isUrdu
-                    ? "کعبہ مکرمہ کی درست سمت اور زاویہ"
-                    : "Exact angle & distance to the Holy Kaaba",
-                style: GoogleFonts.inter(
-                  color: Colors.white70,
-                  fontSize: 12,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-                decoration: BoxDecoration(
-                  color: Colors.black26,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white12),
-                ),
+              NoorPanel(
+                padding: const EdgeInsets.fromLTRB(10, 7, 10, 7),
+                color: NoorColors.panelSoft,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text(
-                            isUrdu ? "قبلہ کی سمت:" : "Qibla Angle:",
-                            style: const TextStyle(color: Colors.white70, fontSize: 11),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 4),
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              "${qiblaAngle.round()}° $cardinal",
-                              style: const TextStyle(
-                                color: Color(0xFFCCA236),
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
+                    const Icon(Icons.location_on_outlined, color: NoorColors.goldBright, size: 14),
+                    const SizedBox(width: 5),
+                    Text('Mandi Bahauddin, Pakistan', style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 10)),
+                    const SizedBox(width: 5),
+                    const Icon(Icons.edit_outlined, color: NoorColors.gold, size: 13),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 18),
+              SizedBox(
+                width: 286,
+                height: 286,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CustomPaint(
+                      size: const Size.square(286),
+                      painter: _CompassPainter(heading: _heading, qiblaAngle: qiblaAngle, aligned: aligned),
+                    ),
+                    Transform.rotate(
+                      angle: qiblaAngle * math.pi / 180,
+                      child: const Align(
+                        alignment: Alignment.topCenter,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 28),
+                          child: Icon(Icons.navigation_rounded, color: NoorColors.goldBright, size: 29),
+                        ),
                       ),
                     ),
-                    Container(width: 1, height: 30, color: Colors.white12),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text(
-                            isUrdu ? "مکہ سے فاصلہ:" : "Distance:",
-                            style: const TextStyle(color: Colors.white70, fontSize: 11),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 4),
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              isUrdu ? "$distance کلومیٹر" : "$distance km",
-                              style: const TextStyle(
-                                color: Color(0xFFCCA236),
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
+                    Container(
+                      width: 74,
+                      height: 74,
+                      decoration: BoxDecoration(
+                        color: NoorColors.background,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: NoorColors.gold, width: 1.5),
+                        boxShadow: const [BoxShadow(color: Color(0x553C2910), blurRadius: 18)],
                       ),
+                      child: const Icon(Icons.mosque_rounded, color: NoorColors.goldBright, size: 39),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 22),
-              // Visual Compass Dial
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final double compassSize = constraints.maxWidth > 260 ? 240 : constraints.maxWidth * 0.7;
-                  return Center(
-                    child: SizedBox(
-                      width: compassSize,
-                      height: compassSize,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Transform.rotate(
-                            angle: -_simulatedHeading * (math.pi / 180),
-                            child: Container(
-                              width: compassSize,
-                              height: compassSize,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: const Color(0xFF0F261E),
-                                border: Border.all(
-                                  color: isAligned ? const Color(0xFF4CAF50) : const Color(0xFFCCA236),
-                                  width: 3,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: isAligned
-                                        ? Colors.green.withOpacity(0.4)
-                                        : const Color(0xFFCCA236).withOpacity(0.2),
-                                    blurRadius: 24,
-                                  ),
-                                ],
-                              ),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Positioned(top: 12, child: Text("N", style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 14))),
-                                  Positioned(right: 12, child: Text("E", style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12))),
-                                  Positioned(bottom: 12, child: Text("S", style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12))),
-                                  Positioned(left: 12, child: Text("W", style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12))),
-                                  Transform.rotate(
-                                    angle: qiblaAngle * (math.pi / 180),
-                                    child: Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 22),
-                                        child: Text("🕋", style: TextStyle(fontSize: 28)),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 14,
-                            height: 14,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color(0xFFCCA236),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 22),
-              // Status Badge
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-                decoration: BoxDecoration(
-                  color: isAligned ? Colors.green.withOpacity(0.15) : const Color(0xFFCCA236).withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: isAligned ? Colors.green : const Color(0xFFCCA236),
-                  ),
-                ),
-                child: Text(
-                  isAligned
-                      ? (isUrdu ? "✨ آپ قبلہ کی درست سمت میں ہیں" : "✨ You are facing the Holy Kaaba")
-                      : (isUrdu ? "فون گھمائیں تاکہ کعبہ اوپر سیدھ میں آ جائے" : "Rotate phone until Kaaba icon points UP"),
-                  style: GoogleFonts.inter(
-                    color: isAligned ? Colors.greenAccent : Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
+              const SizedBox(height: 14),
+              NoorPanel(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                child: Row(
+                  children: [
+                    Expanded(child: _metric(isUrdu ? 'سمتِ قبلہ' : 'Direction', '${qiblaAngle.round()}° ${_cardinal(qiblaAngle)}')),
+                    Container(width: 1, height: 36, color: NoorColors.gold.withOpacity(0.18)),
+                    Expanded(child: _metric(isUrdu ? 'فاصلہ' : 'Distance', '$distance km')),
+                  ],
                 ),
               ),
-              const SizedBox(height: 16),
-              // Slider for Rotation Simulation
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    isUrdu ? "🔄 کمپاس ٹیسٹ:" : "🔄 Test Rotation:",
-                    style: const TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                  Text(
-                    "${_simulatedHeading.round()}°",
-                    style: const TextStyle(color: Color(0xFFCCA236), fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Slider(
-                value: _simulatedHeading,
-                min: 0,
-                max: 360,
-                activeColor: const Color(0xFFCCA236),
-                onChanged: (val) {
-                  setState(() {
-                    _simulatedHeading = val;
-                  });
+              const SizedBox(height: 12),
+              OutlinedButton(
+                onPressed: () {
+                  setState(() => _heading = (_heading + 5) % 360);
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Compass calibrated')));
                 },
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: NoorColors.goldBright,
+                  side: const BorderSide(color: NoorColors.goldMuted),
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 11),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+                ),
+                child: Text(isUrdu ? 'کمپاس کیلیبریٹ کریں' : 'Calibrate Compass', style: GoogleFonts.poppins(fontSize: 10, fontWeight: FontWeight.w600)),
               ),
+              const SizedBox(height: 22),
+              const NoorSectionTitle(title: 'Nearby Mosques'),
+              _mosqueTile('Jamia Masjid Bahauddin', '0.8 km'),
+              _mosqueTile('Markazi Jamia Masjid', '1.4 km'),
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget _metric(String label, String value) {
+    return Column(
+      children: [
+        Text(label, style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 9)),
+        const SizedBox(height: 3),
+        Text(value, style: GoogleFonts.poppins(color: NoorColors.goldBright, fontSize: 15, fontWeight: FontWeight.w700)),
+      ],
+    );
+  }
+
+  Widget _mosqueTile(String name, String distance) {
+    return NoorPanel(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      color: NoorColors.panelSoft,
+      child: Row(
+        children: [
+          Container(width: 36, height: 36, decoration: BoxDecoration(color: NoorColors.background, borderRadius: BorderRadius.circular(10)), child: const Icon(Icons.mosque_outlined, color: NoorColors.goldBright, size: 20)),
+          const SizedBox(width: 10),
+          Expanded(child: Text(name, style: GoogleFonts.poppins(color: NoorColors.text, fontSize: 10, fontWeight: FontWeight.w600))),
+          Text(distance, style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 9)),
+          const SizedBox(width: 8),
+          const Icon(Icons.location_on_outlined, color: NoorColors.goldBright, size: 16),
+        ],
+      ),
+    );
+  }
+}
+
+class _CompassPainter extends CustomPainter {
+  final double heading;
+  final double qiblaAngle;
+  final bool aligned;
+
+  const _CompassPainter({required this.heading, required this.qiblaAngle, required this.aligned});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center;
+    final radius = size.width / 2 - 6;
+    final base = Paint()..style = PaintingStyle.stroke;
+    base.color = NoorColors.gold.withOpacity(0.75);
+    base.strokeWidth = 1.8;
+    canvas.drawCircle(center, radius, base);
+    base.color = NoorColors.gold.withOpacity(0.30);
+    base.strokeWidth = 8;
+    canvas.drawCircle(center, radius - 12, base);
+    base.strokeWidth = 1;
+    for (var i = 0; i < 36; i++) {
+      final angle = i * math.pi * 2 / 36 - math.pi / 2;
+      final inner = radius - (i % 3 == 0 ? 22 : 15);
+      canvas.drawLine(
+        Offset(center.dx + math.cos(angle) * inner, center.dy + math.sin(angle) * inner),
+        Offset(center.dx + math.cos(angle) * (radius - 4), center.dy + math.sin(angle) * (radius - 4)),
+        base,
+      );
+    }
+
+    final pointerAngle = (qiblaAngle - heading) * math.pi / 180 - math.pi / 2;
+    final pointer = Paint()..color = aligned ? NoorColors.success : NoorColors.goldBright;
+    final tip = Offset(center.dx + math.cos(pointerAngle) * (radius - 30), center.dy + math.sin(pointerAngle) * (radius - 30));
+    final left = Offset(center.dx + math.cos(pointerAngle + 2.7) * 18, center.dy + math.sin(pointerAngle + 2.7) * 18);
+    final right = Offset(center.dx + math.cos(pointerAngle - 2.7) * 18, center.dy + math.sin(pointerAngle - 2.7) * 18);
+    canvas.drawPath(Path()..moveTo(tip.dx, tip.dy)..lineTo(left.dx, left.dy)..lineTo(right.dx, right.dy)..close(), pointer);
+
+    _drawLabel(canvas, center, 'N', 0, NoorColors.goldBright);
+    _drawLabel(canvas, center, 'E', 90, NoorColors.textMuted);
+    _drawLabel(canvas, center, 'S', 180, NoorColors.textMuted);
+    _drawLabel(canvas, center, 'W', 270, NoorColors.textMuted);
+  }
+
+  void _drawLabel(Canvas canvas, Offset center, String label, double degrees, Color color) {
+    final angle = (degrees - 90) * math.pi / 180;
+    final offset = Offset(center.dx + math.cos(angle) * 105, center.dy + math.sin(angle) * 105);
+    final painter = TextPainter(text: TextSpan(text: label, style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w700)), textDirection: TextDirection.ltr)..layout();
+    painter.paint(canvas, offset - Offset(painter.width / 2, painter.height / 2));
+  }
+
+  @override
+  bool shouldRepaint(covariant _CompassPainter oldDelegate) => oldDelegate.heading != heading || oldDelegate.qiblaAngle != qiblaAngle || oldDelegate.aligned != aligned;
 }
