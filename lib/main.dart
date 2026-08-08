@@ -10,6 +10,7 @@ import 'services/settings_service.dart';
 import 'services/quran_api_service.dart';
 import 'screens/home_screen.dart';
 import 'screens/onboarding_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,16 +46,16 @@ class NoorEQalbApp extends StatelessWidget {
           themeMode: ThemeMode.dark,
           darkTheme: ThemeData(
             brightness: Brightness.dark,
-            scaffoldBackgroundColor: const Color(0xFF081B15),
-            primaryColor: const Color(0xFF0F2C23),
+            scaffoldBackgroundColor: const Color(0xFF082017),
+            primaryColor: const Color(0xFF163024),
             colorScheme: const ColorScheme.dark(
-              primary: Color(0xFFD4AF37),
-              secondary: Color(0xFF13382D),
-              surface: Color(0xFF0F2C23),
+              primary: Color(0xFFCCA236),
+              secondary: Color(0xFF1B382C),
+              surface: Color(0xFF163024),
             ),
             textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
           ),
-          home: langService.isOnboardingCompleted ? const HomeScreen() : const OnboardingScreen(),
+          home: const SplashScreen(),
         );
       },
     );
