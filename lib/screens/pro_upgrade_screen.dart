@@ -11,7 +11,7 @@ class ProUpgradeScreen extends StatelessWidget {
     final premiumService = Provider.of<PremiumService>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -25,18 +25,18 @@ class ProUpgradeScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: const Color(0xFF0F2C23),
+                color: const Color(0xFF163024),
                 shape: BoxShape.circle,
-                border: Border.all(color: const Color(0xFFD4AF37), width: 2),
+                border: Border.all(color: const Color(0xFFCCA236), width: 2),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFD4AF37).withOpacity(0.3),
+                    color: const Color(0xFFCCA236).withOpacity(0.3),
                     blurRadius: 30,
                     spreadRadius: 4,
                   ),
                 ],
               ),
-              child: const Icon(Icons.workspace_premium, color: Color(0xFFD4AF37), size: 70),
+              child: const Icon(Icons.workspace_premium, color: Color(0xFFCCA236), size: 70),
             ),
             const SizedBox(height: 24),
 
@@ -88,16 +88,16 @@ class ProUpgradeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
+                  colors: [Color(0xFF1E4A39), Color(0xFF163024)],
                 ),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFD4AF37)),
+                border: Border.all(color: const Color(0xFFCCA236)),
               ),
               child: Column(
                 children: [
                   Text(
                     'Lifetime Access (One-Time Payment)',
-                    style: GoogleFonts.poppins(color: const Color(0xFFD4AF37), fontSize: 13),
+                    style: GoogleFonts.poppins(color: const Color(0xFFCCA236), fontSize: 13),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -114,8 +114,8 @@ class ProUpgradeScreen extends StatelessWidget {
                     height: 54,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFD4AF37),
-                        foregroundColor: const Color(0xFF081B15),
+                        backgroundColor: const Color(0xFFCCA236),
+                        foregroundColor: const Color(0xFF082017),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                         elevation: 4,
                       ),
@@ -125,7 +125,7 @@ class ProUpgradeScreen extends StatelessWidget {
                               premiumService.buyProUpgrade();
                             },
                       child: premiumService.isLoading
-                          ? const CircularProgressIndicator(color: Color(0xFF081B15))
+                          ? const CircularProgressIndicator(color: Color(0xFF082017))
                           : Text(
                               premiumService.isProUser ? 'ALREADY UNLOCKED (PRO)' : 'UPGRADE TO PRO NOW',
                               style: GoogleFonts.poppins(
@@ -148,7 +148,7 @@ class ProUpgradeScreen extends StatelessWidget {
               },
               icon: Icon(
                 premiumService.isProUser ? Icons.toggle_on : Icons.toggle_off,
-                color: const Color(0xFFD4AF37),
+                color: const Color(0xFFCCA236),
                 size: 24,
               ),
               label: Text(
@@ -163,7 +163,7 @@ class ProUpgradeScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10),
                 child: Text(
                   premiumService.statusMessage,
-                  style: GoogleFonts.poppins(color: const Color(0xFFD4AF37), fontSize: 12),
+                  style: GoogleFonts.poppins(color: const Color(0xFFCCA236), fontSize: 12),
                 ),
               ),
             const SizedBox(height: 30),
@@ -180,10 +180,10 @@ class ProUpgradeScreen extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: const Color(0xFF0F2C23),
+            color: const Color(0xFF163024),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(icon, color: const Color(0xFFD4AF37), size: 24),
+          child: Icon(icon, color: const Color(0xFFCCA236), size: 24),
         ),
         const SizedBox(width: 16),
         Expanded(

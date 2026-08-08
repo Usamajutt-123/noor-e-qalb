@@ -81,9 +81,9 @@ class _SurahsScreenState extends State<SurahsScreen> {
     final lang = Provider.of<LanguageService>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         elevation: 0,
         title: Text(
           lang.isUrdu ? 'قرآن مجید (114 سورتیں)' : 'Holy Quran Surahs',
@@ -102,15 +102,15 @@ class _SurahsScreenState extends State<SurahsScreen> {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
+                    colors: [Color(0xFF1E4A39), Color(0xFF163024)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
+                  border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFD4AF37).withOpacity(0.2),
+                      color: const Color(0xFFCCA236).withOpacity(0.2),
                       blurRadius: 10,
                       offset: const Offset(0, 3),
                     ),
@@ -118,7 +118,7 @@ class _SurahsScreenState extends State<SurahsScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.history_edu, color: Color(0xFFD4AF37), size: 28),
+                    const Icon(Icons.history_edu, color: Color(0xFFCCA236), size: 28),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
@@ -127,7 +127,7 @@ class _SurahsScreenState extends State<SurahsScreen> {
                           Text(
                             lang.isUrdu ? 'آخری بار تلاوت کی گئی' : 'RECENTLY READ SURAH',
                             style: GoogleFonts.poppins(
-                              color: const Color(0xFFD4AF37),
+                              color: const Color(0xFFCCA236),
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.2,
@@ -154,13 +154,13 @@ class _SurahsScreenState extends State<SurahsScreen> {
                         Text(
                           _recentlyReadSurah!.nameArabic,
                           style: GoogleFonts.amiri(
-                            color: const Color(0xFFD4AF37),
+                            color: const Color(0xFFCCA236),
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(width: 6),
-                        const Icon(Icons.arrow_forward_ios, color: Color(0xFFD4AF37), size: 12),
+                        const Icon(Icons.arrow_forward_ios, color: Color(0xFFCCA236), size: 12),
                       ],
                     ),
                   ],
@@ -173,14 +173,14 @@ class _SurahsScreenState extends State<SurahsScreen> {
             margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             padding: const EdgeInsets.symmetric(horizontal: 14),
             decoration: BoxDecoration(
-              color: const Color(0xFF0F2C23),
+              color: const Color(0xFF163024),
               borderRadius: BorderRadius.circular(14),
               border: Border.all(color: Colors.white12),
             ),
             child: TextField(
               style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
               decoration: InputDecoration(
-                icon: const Icon(Icons.search, color: Color(0xFFD4AF37), size: 20),
+                icon: const Icon(Icons.search, color: Color(0xFFCCA236), size: 20),
                 hintText: lang.isUrdu
                     ? 'سورۃ کا نام یا نمبر تلاش کریں (1 سے 114)...'
                     : 'Search Surah by name or number (1 to 114)...',
@@ -218,9 +218,9 @@ class _SurahsScreenState extends State<SurahsScreen> {
                           margin: const EdgeInsets.only(bottom: 12),
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF0F2C23),
+                            color: const Color(0xFF163024),
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.25)),
+                            border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.25)),
                           ),
                           child: Row(
                             children: [
@@ -229,14 +229,14 @@ class _SurahsScreenState extends State<SurahsScreen> {
                                 height: 38,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF081B15),
+                                  color: const Color(0xFF082017),
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: const Color(0xFFD4AF37)),
+                                  border: Border.all(color: const Color(0xFFCCA236)),
                                 ),
                                 child: Text(
                                   '#${surah.number}',
                                   style: GoogleFonts.poppins(
-                                    color: const Color(0xFFD4AF37),
+                                    color: const Color(0xFFCCA236),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 11,
                                   ),
@@ -274,7 +274,7 @@ class _SurahsScreenState extends State<SurahsScreen> {
                               Text(
                                 surah.nameArabic,
                                 style: GoogleFonts.amiri(
-                                  color: const Color(0xFFD4AF37),
+                                  color: const Color(0xFFCCA236),
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -319,7 +319,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
   void _showReciterPicker(BuildContext context, bool isUrdu) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: const Color(0xFF0F2C23),
+      backgroundColor: const Color(0xFF163024),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -340,7 +340,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                   title: Text(
                     isUrdu ? e.value['ur']! : e.value['en']!,
                     style: TextStyle(
-                      color: isSelected ? const Color(0xFFD4AF37) : Colors.white,
+                      color: isSelected ? const Color(0xFFCCA236) : Colors.white,
                       fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                     ),
                   ),
@@ -348,7 +348,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                     isUrdu ? '128kbps اعلیٰ معیار MP3' : '128kbps High Quality MP3',
                     style: const TextStyle(color: Colors.white54, fontSize: 11),
                   ),
-                  trailing: isSelected ? const Icon(Icons.check_circle, color: Color(0xFFD4AF37)) : null,
+                  trailing: isSelected ? const Icon(Icons.check_circle, color: Color(0xFFCCA236)) : null,
                   onTap: () {
                     setState(() {
                       _selectedQariKey = e.key;
@@ -413,9 +413,9 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
     final virtueText = lang.isUrdu ? widget.surah.virtueUrdu : widget.surah.virtueEnglish;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         elevation: 0,
         title: Text(
           titleText,
@@ -424,12 +424,12 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
-            icon: const Icon(Icons.sync, color: Color(0xFFD4AF37)),
+            icon: const Icon(Icons.sync, color: Color(0xFFCCA236)),
             tooltip: 'Re-sync with Al-Quran Cloud API',
             onPressed: () => _loadVerses(forceRefresh: true),
           ),
           IconButton(
-            icon: Icon(_showTafseer ? Icons.menu_book : Icons.book, color: const Color(0xFFD4AF37)),
+            icon: Icon(_showTafseer ? Icons.menu_book : Icons.book, color: const Color(0xFFCCA236)),
             tooltip: 'Toggle Tafseer / Commentary',
             onPressed: () {
               setState(() {
@@ -438,7 +438,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.zoom_in, color: Color(0xFFD4AF37)),
+            icon: const Icon(Icons.zoom_in, color: Color(0xFFCCA236)),
             tooltip: 'Increase Font',
             onPressed: () {
               setState(() {
@@ -466,10 +466,10 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
+                colors: [Color(0xFF1E4A39), Color(0xFF163024)],
               ),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFFD4AF37)),
+              border: Border.all(color: const Color(0xFFCCA236)),
             ),
             child: Column(
               children: [
@@ -478,7 +478,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                   child: Text(
                     widget.surah.nameArabic,
                     style: GoogleFonts.amiri(
-                      color: const Color(0xFFD4AF37),
+                      color: const Color(0xFFCCA236),
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                     ),
@@ -498,20 +498,20 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF081B15),
+                        color: const Color(0xFF082017),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
                         children: [
                           Icon(
                             api.isOnlineSynced ? Icons.cloud_done : Icons.cloud_off,
-                            color: const Color(0xFFD4AF37),
+                            color: const Color(0xFFCCA236),
                             size: 14,
                           ),
                           const SizedBox(width: 4),
                           Text(
                             api.isOnlineSynced ? 'API Synced' : 'Cached',
-                            style: GoogleFonts.poppins(color: const Color(0xFFD4AF37), fontSize: 10),
+                            style: GoogleFonts.poppins(color: const Color(0xFFCCA236), fontSize: 10),
                           ),
                         ],
                       ),
@@ -534,12 +534,12 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                       _showTafseer = !_showTafseer;
                     });
                   },
-                  icon: Icon(_showTafseer ? Icons.visibility_off : Icons.visibility, color: const Color(0xFFD4AF37), size: 16),
+                  icon: Icon(_showTafseer ? Icons.visibility_off : Icons.visibility, color: const Color(0xFFCCA236), size: 16),
                   label: Text(
                     _showTafseer
                         ? (lang.isUrdu ? 'تفسیر چھپائیں' : 'Hide Tafseer Notes')
                         : (lang.isUrdu ? '📖 ہر آیت کی تفسیر و تشریح دیکھیں' : '📖 Show Verse Tafseer Commentary'),
-                    style: GoogleFonts.poppins(color: const Color(0xFFD4AF37), fontSize: 12, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(color: const Color(0xFFCCA236), fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -551,9 +551,9 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFF0F2C23),
+              color: const Color(0xFF163024),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFD4AF37)),
+              border: Border.all(color: const Color(0xFFCCA236)),
             ),
             child: Row(
               children: [
@@ -571,7 +571,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                               ? (lang.isUrdu ? '🔊 تلاوت پلے ہو رہی ہے: $qariName (128kbps MP3)' : '🔊 Streaming MP3 Recitation: $qariName')
                               : (lang.isUrdu ? '⏸️ تلاوت روک دی گئی ہے' : '⏸️ Recitation Paused'),
                         ),
-                        backgroundColor: const Color(0xFF0F2C23),
+                        backgroundColor: const Color(0xFF163024),
                         duration: const Duration(seconds: 2),
                       ),
                     );
@@ -581,11 +581,11 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                     height: 42,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _isPlayingAudio ? const Color(0xFF25D366) : const Color(0xFFD4AF37),
+                      color: _isPlayingAudio ? const Color(0xFF25D366) : const Color(0xFFCCA236),
                     ),
                     child: Icon(
                       _isPlayingAudio ? Icons.pause : Icons.play_arrow,
-                      color: const Color(0xFF081B15),
+                      color: const Color(0xFF082017),
                     ),
                   ),
                 ),
@@ -599,12 +599,12 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFD4AF37).withOpacity(0.2),
+                              color: const Color(0xFFCCA236).withOpacity(0.2),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
                               lang.isUrdu ? 'آڈیو تلاوت' : 'AUDIO QURAN',
-                              style: const TextStyle(color: Color(0xFFD4AF37), fontSize: 9, fontWeight: FontWeight.bold),
+                              style: const TextStyle(color: Color(0xFFCCA236), fontSize: 9, fontWeight: FontWeight.bold),
                             ),
                           ),
                           const SizedBox(width: 6),
@@ -630,7 +630,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                 TextButton.icon(
                   onPressed: () => _showReciterPicker(context, lang.isUrdu),
                   style: TextButton.styleFrom(
-                    foregroundColor: const Color(0xFFD4AF37),
+                    foregroundColor: const Color(0xFFCCA236),
                     backgroundColor: Colors.black26,
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -652,7 +652,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CircularProgressIndicator(color: Color(0xFFD4AF37)),
+                        const CircularProgressIndicator(color: Color(0xFFCCA236)),
                         const SizedBox(height: 14),
                         Text(
                           lang.isUrdu
@@ -679,7 +679,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                         margin: const EdgeInsets.only(bottom: 16),
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF0F2C23),
+                          color: const Color(0xFF163024),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: Colors.white10),
                         ),
@@ -692,14 +692,14 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF081B15),
+                                    color: const Color(0xFF082017),
                                     borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: const Color(0xFFD4AF37)),
+                                    border: Border.all(color: const Color(0xFFCCA236)),
                                   ),
                                   child: Text(
                                     lang.isUrdu ? 'آیت #${verse.number}' : 'Verse ${verse.number}',
                                     style: GoogleFonts.poppins(
-                                      color: const Color(0xFFD4AF37),
+                                      color: const Color(0xFFCCA236),
                                       fontSize: 11,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -715,7 +715,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                                               ? '🔊 آیت #${verse.number} تلاوت: $qariName (128kbps MP3)'
                                               : '🔊 Streaming Ayah #${verse.number}: $qariName (128kbps MP3)',
                                         ),
-                                        backgroundColor: const Color(0xFF0F2C23),
+                                        backgroundColor: const Color(0xFF163024),
                                         duration: const Duration(seconds: 2),
                                       ),
                                     );
@@ -724,19 +724,19 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFFD4AF37).withOpacity(0.15),
+                                      color: const Color(0xFFCCA236).withOpacity(0.15),
                                       borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(color: const Color(0xFFD4AF37)),
+                                      border: Border.all(color: const Color(0xFFCCA236)),
                                     ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Icon(Icons.play_arrow, color: Color(0xFFD4AF37), size: 14),
+                                        const Icon(Icons.play_arrow, color: Color(0xFFCCA236), size: 14),
                                         const SizedBox(width: 4),
                                         Text(
                                           lang.isUrdu ? 'آیت سنیں' : 'Play Ayah',
                                           style: const TextStyle(
-                                            color: Color(0xFFD4AF37),
+                                            color: Color(0xFFCCA236),
                                             fontSize: 11,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -781,9 +781,9 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                               Container(
                                 padding: const EdgeInsets.all(14),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF13382D),
+                                  color: const Color(0xFF1B382C),
                                   borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.3)),
+                                  border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.3)),
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -791,12 +791,12 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                                     Row(
                                       mainAxisAlignment: lang.isUrdu ? MainAxisAlignment.end : MainAxisAlignment.start,
                                       children: [
-                                        const Icon(Icons.menu_book, color: Color(0xFFD4AF37), size: 14),
+                                        const Icon(Icons.menu_book, color: Color(0xFFCCA236), size: 14),
                                         const SizedBox(width: 6),
                                         Text(
                                           lang.isUrdu ? 'تفسیر و تشریح (Tafseer Commentary)' : 'Tafseer Commentary & Notes',
                                           style: GoogleFonts.poppins(
-                                            color: const Color(0xFFD4AF37),
+                                            color: const Color(0xFFCCA236),
                                             fontSize: 11,
                                             fontWeight: FontWeight.bold,
                                           ),

@@ -63,11 +63,11 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Row(
           children: [
-            const Icon(Icons.stars, color: Color(0xFFD4AF37), size: 28),
+            const Icon(Icons.stars, color: Color(0xFFCCA236), size: 28),
             const SizedBox(width: 10),
             Text(
               'MashaAllah!',
@@ -88,7 +88,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
             child: Text(
               'JazakAllah Khair',
               style: GoogleFonts.poppins(
-                color: const Color(0xFFD4AF37),
+                color: const Color(0xFFCCA236),
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -107,7 +107,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
   void _showDhikrPickerModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: const Color(0xFF0F2C23),
+      backgroundColor: const Color(0xFF163024),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -156,10 +156,10 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                         margin: const EdgeInsets.only(bottom: 10),
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                         decoration: BoxDecoration(
-                          color: isSelected ? const Color(0xFF194C3D) : const Color(0xFF081B15),
+                          color: isSelected ? const Color(0xFF1E4A39) : const Color(0xFF082017),
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: isSelected ? const Color(0xFFD4AF37) : Colors.white12,
+                            color: isSelected ? const Color(0xFFCCA236) : Colors.white12,
                           ),
                         ),
                         child: Row(
@@ -171,7 +171,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                                   Text(
                                     t.title,
                                     style: GoogleFonts.poppins(
-                                      color: isSelected ? const Color(0xFFD4AF37) : Colors.white,
+                                      color: isSelected ? const Color(0xFFCCA236) : Colors.white,
                                       fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
                                       fontSize: 14,
                                     ),
@@ -224,9 +224,9 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
     final progress = _selectedTasbeeh.currentCount / _selectedTasbeeh.targetCount;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF081B15),
+      backgroundColor: const Color(0xFF082017),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F2C23),
+        backgroundColor: const Color(0xFF163024),
         elevation: 0,
         title: Text(
           'Digital Tasbeeh',
@@ -237,7 +237,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
           IconButton(
             icon: Icon(
               _vibrationEnabled ? Icons.vibration : Icons.mobile_off,
-              color: _vibrationEnabled ? const Color(0xFFD4AF37) : Colors.grey,
+              color: _vibrationEnabled ? const Color(0xFFCCA236) : Colors.grey,
               size: 20,
             ),
             tooltip: 'Toggle Vibration',
@@ -259,19 +259,19 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
           // CUSTOM DHIKR SELECTOR
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            color: const Color(0xFF0F2C23),
+            color: const Color(0xFF163024),
             child: GestureDetector(
               onTap: () => _showDhikrPickerModal(context),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF081B15),
+                  color: const Color(0xFF082017),
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.4)),
+                  border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.4)),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.menu_book, color: Color(0xFFD4AF37), size: 18),
+                    const Icon(Icons.menu_book, color: Color(0xFFCCA236), size: 18),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
@@ -301,10 +301,10 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                     Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0F2C23),
+                        color: const Color(0xFF163024),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(Icons.keyboard_arrow_down, color: Color(0xFFD4AF37), size: 18),
+                      child: const Icon(Icons.keyboard_arrow_down, color: Color(0xFFCCA236), size: 18),
                     ),
                   ],
                 ),
@@ -323,9 +323,9 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF13382D),
+                      color: const Color(0xFF1B382C),
                       borderRadius: BorderRadius.circular(18),
-                      border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.3)),
+                      border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.3)),
                     ),
                     child: Column(
                       children: [
@@ -333,7 +333,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                           _selectedTasbeeh.arabicText,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.amiri(
-                            color: const Color(0xFFD4AF37),
+                            color: const Color(0xFFCCA236),
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                           ),
@@ -370,8 +370,8 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                                 child: CircularProgressIndicator(
                                   value: progress,
                                   strokeWidth: 8,
-                                  backgroundColor: const Color(0xFF13382D),
-                                  valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFD4AF37)),
+                                  backgroundColor: const Color(0xFF1B382C),
+                                  valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFCCA236)),
                                 ),
                               ),
                               Container(
@@ -380,13 +380,13 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   gradient: const LinearGradient(
-                                    colors: [Color(0xFF194C3D), Color(0xFF0F2C23)],
+                                    colors: [Color(0xFF1E4A39), Color(0xFF163024)],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color(0xFFD4AF37).withOpacity(0.2),
+                                      color: const Color(0xFFCCA236).withOpacity(0.2),
                                       blurRadius: 16,
                                       spreadRadius: 1,
                                     ),
@@ -406,7 +406,7 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                                     Text(
                                       '/ ${_selectedTasbeeh.targetCount}',
                                       style: GoogleFonts.poppins(
-                                        color: const Color(0xFFD4AF37),
+                                        color: const Color(0xFFCCA236),
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -436,14 +436,14 @@ class _TasbeehScreenState extends State<TasbeehScreen> with SingleTickerProvider
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0F2C23),
+                      color: const Color(0xFF163024),
                       borderRadius: BorderRadius.circular(30),
                       border: Border.all(color: Colors.white12),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.history, color: Color(0xFFD4AF37), size: 16),
+                        const Icon(Icons.history, color: Color(0xFFCCA236), size: 16),
                         const SizedBox(width: 8),
                         Text(
                           'Completed Laps: ${_selectedTasbeeh.completedLaps}',
