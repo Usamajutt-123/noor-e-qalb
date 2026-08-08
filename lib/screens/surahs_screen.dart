@@ -7,6 +7,8 @@ import '../data/quran_surahs_data.dart';
 import '../services/language_service.dart';
 import '../services/quran_api_service.dart';
 import '../widgets/ad_banner_widget.dart';
+import '../theme/noor_theme.dart';
+import '../widgets/noor_ui.dart';
 
 class SurahsScreen extends StatefulWidget {
   const SurahsScreen({super.key});
@@ -81,15 +83,15 @@ class _SurahsScreenState extends State<SurahsScreen> {
     final lang = Provider.of<LanguageService>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF082017),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF163024),
-        elevation: 0,
-        title: Text(
-          lang.isUrdu ? 'قرآن مجید (114 سورتیں)' : 'Holy Quran Surahs',
-          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
+      backgroundColor: NoorColors.background,
+      appBar: NoorPageHeader(
+        title: lang.isUrdu ? 'قرآن مجید' : 'Quran',
+        subtitle: lang.isUrdu ? '114 سورتیں' : 'Read, listen and reflect',
+        actions: const [
+          NoorIconButton(icon: Icons.search_rounded, tooltip: 'Search'),
+          NoorIconButton(icon: Icons.tune_rounded, tooltip: 'Display settings'),
+          SizedBox(width: 5),
+        ],
       ),
       body: Column(
         children: [
@@ -192,6 +194,26 @@ class _SurahsScreenState extends State<SurahsScreen> {
                   _searchQuery = val;
                 });
               },
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 2, 16, 4),
+            child: Row(
+              children: [
+                Expanded(child: Text("Juz'", style: GoogleFonts.poppins(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700))),
+                Text('See All', style: GoogleFonts.poppins(color: NoorColors.goldBright, fontSize: 9)),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 42,
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              scrollDirection: Axis.horizontal,
+              itemCount: 6,
+              separatorBuilder: (_, __) => const SizedBox(width: 7),
+              itemBuilder: (_, index) => SizedBox(width: 42, child: NoorPill(label: '${index + 1}', selected: index == 0)),
             ),
           ),
 

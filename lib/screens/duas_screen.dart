@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import '../models/dua_model.dart';
 import '../data/islamic_data.dart';
-import '../widgets/ad_banner_widget.dart';
+import '../models/dua_model.dart';
+import '../services/language_service.dart';
+import '../theme/noor_theme.dart';
+import '../widgets/noor_ui.dart';
 
 class DuasScreen extends StatefulWidget {
   const DuasScreen({super.key});
@@ -13,222 +16,142 @@ class DuasScreen extends StatefulWidget {
 }
 
 class _DuasScreenState extends State<DuasScreen> {
+  String _query = '';
   String _selectedCategory = 'All';
+  final Set<String> _favorites = <String>{};
 
-  List<String> get _categories {
-    final cats = IslamicData.defaultDuas.map((d) => d.category).toSet().toList();
-    return ['All', ...cats];
-  }
+  List<_DuaCategory> get _categories => const [
+        _DuaCategory('Morning', Icons.wb_twilight_rounded, 'Subah & Sham'),
+        _DuaCategory('Evening', Icons.nightlight_round, 'Subah & Sham'),
+        _DuaCategory('Prayer', Icons.mosque_outlined, 'Namaz Ke Baad'),
+        _DuaCategory('Travel', Icons.flight_takeoff_rounded, 'Safar & Ghar'),
+        _DuaCategory('Sleep', Icons.bedtime_outlined, 'Subah & Sham'),
+        _DuaCategory('Daily Life', Icons.favorite_outline_rounded, 'All'),
+      ];
 
   List<DuaModel> get _filteredDuas {
-    if (_selectedCategory == 'All') return IslamicData.defaultDuas;
-    return IslamicData.defaultDuas.where((d) => d.category == _selectedCategory).toList();
+    Iterable<DuaModel> result = IslamicData.defaultDuas;
+    if (_selectedCategory != 'All') {
+      result = result.where((dua) => dua.category.contains(_selectedCategory));
+    }
+    if (_query.trim().isNotEmpty) {
+      final query = _query.toLowerCase().trim();
+      result = result.where((dua) => dua.title.toLowerCase().contains(query) || dua.category.toLowerCase().contains(query) || dua.englishTranslation.toLowerCase().contains(query));
+    }
+    return result.toList();
   }
 
-  Future<void> _shareDua(DuaModel dua) async {
-    final text = '''
-🌟 ${dua.title} 🌟
-
-${dua.arabicText}
-
-Urdu: ${dua.urduTranslation}
-English: ${dua.englishTranslation}
-
-Reference: ${dua.reference}
----
-Shared from Noor-e-Qalb Islamic App
-''';
-    await SharePlus.instance.share(ShareParams(text: text));
+  Future<void> _share(DuaModel dua) async {
+    await SharePlus.instance.share(ShareParams(text: '${dua.title}\n\n${dua.arabicText}\n\n${dua.englishTranslation}\n\n${dua.reference}\n\nShared from Noor-e-Qalb'));
   }
 
   @override
   Widget build(BuildContext context) {
+    final isUrdu = context.watch<LanguageService>().isUrdu;
+    final duas = _filteredDuas;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF082017),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF163024),
-        elevation: 0,
-        title: Text(
-          'Masnoon Duas & Azkar',
-          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
+      backgroundColor: NoorColors.background,
+      appBar: NoorPageHeader(
+        title: isUrdu ? 'دعائیں' : 'Duas',
+        subtitle: isUrdu ? 'مسنون دعائیں اور اذکار' : 'Masnoon duas for everyday life',
+        actions: const [NoorIconButton(icon: Icons.bookmark_border_rounded, tooltip: 'Saved'), SizedBox(width: 5)],
       ),
-      body: Column(
+      body: ListView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(16, 2, 16, 24),
         children: [
-          // Category Horizontal Chips - use Wrap for proper wrapping
-          Container(
-            constraints: const BoxConstraints(maxHeight: 56),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: _categories.map((cat) {
-                  final isSelected = cat == _selectedCategory;
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: ChoiceChip(
-                      label: Text(
-                        cat,
-                        style: GoogleFonts.poppins(
-                          color: isSelected ? const Color(0xFF082017) : Colors.white,
-                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                          fontSize: 11,
-                        ),
-                      ),
-                      selected: isSelected,
-                      selectedColor: const Color(0xFFCCA236),
-                      backgroundColor: const Color(0xFF163024),
-                      visualDensity: VisualDensity.compact,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      onSelected: (selected) {
-                        if (selected) {
-                          setState(() {
-                            _selectedCategory = cat;
-                          });
-                        }
-                      },
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
+          NoorSearchField(hintText: isUrdu ? 'دعا تلاش کریں...' : 'Search Duas...', onChanged: (value) => setState(() => _query = value)),
+          const SizedBox(height: 18),
+          const NoorSectionTitle(title: 'Categories'),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _categories.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 8, mainAxisSpacing: 8, childAspectRatio: 1.12),
+            itemBuilder: (_, index) {
+              final category = _categories[index];
+              final selected = _selectedCategory == category.filter;
+              return NoorPanel(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                color: selected ? NoorColors.panelRaised : NoorColors.panel,
+                border: Border.all(color: selected ? NoorColors.gold : NoorColors.gold.withOpacity(0.2)),
+                onTap: () => setState(() => _selectedCategory = selected ? 'All' : category.filter),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(category.icon, color: NoorColors.goldBright, size: 20),
+                    const SizedBox(height: 5),
+                    Text(category.title, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis, style: GoogleFonts.poppins(color: NoorColors.text, fontSize: 9, fontWeight: FontWeight.w600)),
+                    const SizedBox(height: 2),
+                    Text(_countFor(category.filter).toString() + ' Duas', style: GoogleFonts.poppins(color: NoorColors.textFaint, fontSize: 7.5)),
+                  ],
+                ),
+              );
+            },
           ),
-
-          // Dua List
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-              itemCount: _filteredDuas.length,
-              itemBuilder: (ctx, idx) {
-                final dua = _filteredDuas[idx];
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 14),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF163024),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.2)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // Title & Share
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                dua.title,
-                                style: GoogleFonts.poppins(
-                                  color: const Color(0xFFCCA236),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 36,
-                              height: 36,
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: const Icon(Icons.share, color: Colors.white60, size: 18),
-                                onPressed: () => _shareDua(dua),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-
-                        // Arabic Text
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF1B382C),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            dua.arabicText,
-                            textAlign: TextAlign.right,
-                            style: GoogleFonts.amiri(
-                              color: Colors.white,
-                              fontSize: 24,
-                              height: 1.6,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-
-                        // Urdu Translation
-                        Text(
-                          dua.urduTranslation,
-                          textAlign: TextAlign.right,
-                          style: GoogleFonts.notoNastaliqUrdu(
-                            color: Colors.white70,
-                            fontSize: 14,
-                            height: 1.8,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-
-                        // English Translation
-                        Text(
-                          dua.englishTranslation,
-                          style: GoogleFonts.poppins(
-                            color: Colors.white54,
-                            fontSize: 12,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-
-                        // Reference & Virtue
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                dua.reference,
-                                style: GoogleFonts.poppins(
-                                  color: const Color(0xFFCCA236),
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            if (dua.virtue.isNotEmpty)
-                              Tooltip(
-                                message: dua.virtue,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: const [
-                                    Icon(Icons.info_outline, color: Colors.white54, size: 14),
-                                    SizedBox(width: 4),
-                                    Text(
-                                      'Virtue',
-                                      style: TextStyle(color: Colors.white54, fontSize: 11),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-
-          const AdBannerWidget(),
+          const SizedBox(height: 18),
+          NoorSectionTitle(title: _selectedCategory == 'All' ? 'Popular Duas' : _selectedCategory, action: '${duas.length} items'),
+          if (duas.isEmpty)
+            NoorPanel(child: Text('No duas found', style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 11)))
+          else
+            ...duas.map((dua) => _buildDuaCard(dua, isUrdu)),
         ],
       ),
     );
   }
+
+  int _countFor(String filter) {
+    if (filter == 'All') return IslamicData.defaultDuas.length;
+    return IslamicData.defaultDuas.where((dua) => dua.category.contains(filter)).length;
+  }
+
+  Widget _buildDuaCard(DuaModel dua, bool isUrdu) {
+    final favorite = _favorites.contains(dua.id);
+    return NoorPanel(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.fromLTRB(12, 11, 12, 12),
+      color: NoorColors.panelSoft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(child: Text(dua.title.split('/').first.trim(), maxLines: 1, overflow: TextOverflow.ellipsis, style: GoogleFonts.poppins(color: NoorColors.text, fontSize: 11, fontWeight: FontWeight.w700))),
+              IconButton(
+                onPressed: () => setState(() => favorite ? _favorites.remove(dua.id) : _favorites.add(dua.id)),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints.tightFor(width: 28, height: 28),
+                icon: Icon(favorite ? Icons.favorite_rounded : Icons.favorite_border_rounded, color: NoorColors.goldBright, size: 17),
+              ),
+              IconButton(
+                onPressed: () => _share(dua),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints.tightFor(width: 28, height: 28),
+                icon: const Icon(Icons.share_outlined, color: NoorColors.textMuted, size: 16),
+              ),
+            ],
+          ),
+          const SizedBox(height: 7),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(color: NoorColors.panel, borderRadius: BorderRadius.circular(10)),
+            child: Text(dua.arabicText, textAlign: TextAlign.right, style: GoogleFonts.amiri(color: NoorColors.goldBright, fontSize: 19, height: 1.7, fontWeight: FontWeight.bold)),
+          ),
+          const SizedBox(height: 7),
+          Text(isUrdu ? dua.urduTranslation : dua.englishTranslation, textAlign: isUrdu ? TextAlign.right : TextAlign.left, maxLines: 3, overflow: TextOverflow.ellipsis, style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 9.5, height: 1.5)),
+          const SizedBox(height: 7),
+          Text(dua.reference, style: GoogleFonts.poppins(color: NoorColors.gold, fontSize: 8.5, fontWeight: FontWeight.w600)),
+        ],
+      ),
+    );
+  }
+}
+
+class _DuaCategory {
+  final String title;
+  final IconData icon;
+  final String filter;
+
+  const _DuaCategory(this.title, this.icon, this.filter);
 }

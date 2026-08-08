@@ -6,6 +6,8 @@ import '../services/settings_service.dart';
 import '../services/language_service.dart';
 import '../services/prayer_service.dart';
 import '../services/premium_service.dart';
+import '../theme/noor_theme.dart';
+import '../widgets/noor_ui.dart';
 import 'pro_upgrade_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -26,16 +28,8 @@ class SettingsScreen extends StatelessWidget {
     final premium = Provider.of<PremiumService>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF082017),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF163024),
-        elevation: 0,
-        title: Text(
-          lang.isUrdu ? 'سیٹنگز' : 'Settings',
-          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
+      backgroundColor: NoorColors.background,
+      appBar: NoorPageHeader(title: lang.isUrdu ? 'سیٹنگز' : 'Settings', subtitle: lang.isUrdu ? 'اپنی ایپ کو اپنی مرضی کے مطابق بنائیں' : 'Make Noor-e-Qalb yours'),
       body: ListView(
         padding: const EdgeInsets.all(14),
         children: [

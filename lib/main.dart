@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'theme/noor_theme.dart';
 import 'services/admob_service.dart';
 import 'services/premium_service.dart';
 import 'services/prayer_service.dart';
@@ -44,17 +44,7 @@ class NoorEQalbApp extends StatelessWidget {
           title: langService.isUrdu ? 'نورِ قلب - اسلامی ساتھی' : 'Noor-e-Qalb - Islamic Companion',
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.dark,
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            scaffoldBackgroundColor: const Color(0xFF082017),
-            primaryColor: const Color(0xFF163024),
-            colorScheme: const ColorScheme.dark(
-              primary: Color(0xFFCCA236),
-              secondary: Color(0xFF1B382C),
-              surface: Color(0xFF163024),
-            ),
-            textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
-          ),
+          darkTheme: NoorTheme.dark(),
           home: const SplashScreen(),
         );
       },

@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../models/dua_model.dart';
-import '../data/islamic_data.dart';
-import '../services/premium_service.dart';
-import '../services/prayer_service.dart';
 import '../services/daily_task_service.dart';
 import '../services/language_service.dart';
+import '../services/prayer_service.dart';
 import '../widgets/ad_banner_widget.dart';
-import 'tasbeeh_screen.dart';
+import '../widgets/noor_ui.dart';
+import '../theme/noor_theme.dart';
+import 'assistant_screen.dart';
 import 'duas_screen.dart';
-import 'names_screen.dart';
-import 'pro_upgrade_screen.dart';
+import 'hadith_screen.dart';
+import 'more_screen.dart';
 import 'prayer_times_screen.dart';
-import 'daily_tasks_screen.dart';
+import 'qibla_screen.dart';
+import 'ramadan_screen.dart';
 import 'settings_screen.dart';
 import 'surahs_screen.dart';
-import 'qibla_screen.dart';
-import 'hadith_screen.dart';
-import 'qaza_tracker_screen.dart';
+import 'tasbeeh_screen.dart';
 import 'zakat_screen.dart';
-import 'ramadan_screen.dart';
-import 'daily_action_plan_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,674 +27,325 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Bottom navigation current index - fix to show all tabs
   int _bottomNavIndex = 0;
-
-  String _formatDuration(Duration d) {
-    if (d.isNegative) return '00h 00m 00s';
-    final int hours = d.inHours;
-    final int mins = d.inMinutes.remainder(60);
-    final int secs = d.inSeconds.remainder(60);
-    return '${hours.toString().padLeft(2, '0')}h ${mins.toString().padLeft(2, '0')}m ${secs.toString().padLeft(2, '0')}s';
-  }
 
   @override
   Widget build(BuildContext context) {
-    // Define bottom navigation pages - all wrapped to keep provider tree intact
-    final List<Widget> pages = [
+    final pages = <Widget>[
       _buildDashboard(context),
       const SurahsScreen(),
-      const TasbeehScreen(),
       const QiblaScreen(),
       const DuasScreen(),
+      const MoreScreen(),
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF082017),
-      body: IndexedStack(
-        index: _bottomNavIndex,
-        children: pages,
-      ),
-      // FIX: Restored Bottom Navigation - fixed type to show all tabs including last four that were missing
+      backgroundColor: NoorColors.background,
+      body: IndexedStack(index: _bottomNavIndex, children: pages),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavIndex,
-        onTap: (idx) {
-          setState(() {
-            _bottomNavIndex = idx;
-          });
-        },
-        backgroundColor: const Color(0xFF163024),
-        selectedItemColor: const Color(0xFFCCA236),
-        unselectedItemColor: Colors.white54,
-        type: BottomNavigationBarType.fixed,
-        showUnselectedLabels: true,
-        selectedLabelStyle: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600),
-        unselectedLabelStyle: GoogleFonts.poppins(fontSize: 10),
-        elevation: 12,
+        onTap: (index) => setState(() => _bottomNavIndex = index),
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_rounded),
-            label: 'Home',
-            tooltip: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.auto_stories),
-            label: 'Quran',
-            tooltip: 'Holy Quran Surahs',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.track_changes),
-            label: 'Tasbeeh',
-            tooltip: 'Tasbeeh Counter',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Qibla',
-            tooltip: 'Qibla Compass',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book),
-            label: 'Duas',
-            tooltip: 'Masnoon Duas',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.menu_book_rounded), label: 'Quran'),
+          BottomNavigationBarItem(icon: Icon(Icons.explore_rounded), label: 'Qibla'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite_outline_rounded), label: 'Duas'),
+          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: 'More'),
         ],
       ),
     );
   }
 
   Widget _buildDashboard(BuildContext context) {
-    final premiumService = Provider.of<PremiumService>(context);
-    final prayerService = Provider.of<PrayerService>(context);
-    final taskService = Provider.of<DailyTaskService>(context);
-    final langService = Provider.of<LanguageService>(context);
+    final language = context.watch<LanguageService>();
+    final prayerService = context.watch<PrayerService>();
+    final taskService = context.watch<DailyTaskService>();
     final schedule = prayerService.getSchedule(DateTime.now());
-    final DuaModel dailyDua = IslamicData.defaultDuas.first;
+    final completedPrayers = schedule.prayers.where((item) => item.isPassed).length.clamp(0, 5).toInt();
+    final isUrdu = language.isUrdu;
 
     return SafeArea(
-      child: Column(
-        children: [
-          // Header Bar with Settings Gear
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ',
-                          style: GoogleFonts.amiri(
-                            color: const Color(0xFFCCA236),
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        langService.isUrdu ? 'نورِ قلب' : 'Noor-e-Qalb',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+      child: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
+              child: Row(
+                children: [
+                  const Icon(Icons.menu_rounded, color: NoorColors.textMuted, size: 22),
+                  const SizedBox(width: 10),
+                  const NoorLogo(size: 36, showLabel: true),
+                  const Spacer(),
+                  NoorIconButton(
+                    icon: Icons.notifications_none_rounded,
+                    tooltip: 'Notifications',
+                    backgroundColor: NoorColors.panelSoft,
+                    onPressed: () => _showMessage(context, 'Prayer reminders are on'),
                   ),
-                ),
-                const SizedBox(width: 8),
+                  const SizedBox(width: 7),
+                  NoorIconButton(
+                    icon: Icons.settings_outlined,
+                    tooltip: 'Settings',
+                    backgroundColor: NoorColors.panelSoft,
+                    onPressed: () => _push(context, const SettingsScreen()),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 22),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
                 Row(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const DailyTasksScreen()),
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF1E4A39),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: const Color(0xFFCCA236)),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text('🔥', style: TextStyle(fontSize: 13)),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${taskService.streakCount}d',
-                              style: GoogleFonts.poppins(
-                                color: const Color(0xFFCCA236),
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            isUrdu ? 'السلام علیکم' : 'Assalamu Alaikum',
+                            style: GoogleFonts.poppins(color: NoorColors.text, fontSize: 19, fontWeight: FontWeight.w700),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            isUrdu ? 'اللہ آپ کے دن میں برکت دے' : 'May Allah bless your day',
+                            style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 10),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 4),
-                    SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: const Icon(Icons.settings, color: Color(0xFFCCA236), size: 22),
-                        tooltip: 'Settings',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const SettingsScreen()),
-                          );
-                        },
-                      ),
+                    Container(
+                      width: 34,
+                      height: 34,
+                      decoration: const BoxDecoration(color: NoorColors.panelRaised, shape: BoxShape.circle),
+                      child: const Icon(Icons.groups_rounded, color: NoorColors.goldBright, size: 18),
                     ),
                   ],
                 ),
+                const SizedBox(height: 16),
+                _buildPrayerTracker(
+                  context,
+                  completedPrayers: completedPrayers,
+                  streak: taskService.streakCount,
+                  nextPrayer: schedule.nextPrayer?.nameEnglish ?? 'Dhuhr',
+                  onTap: () => _push(context, const PrayerTimesScreen()),
+                ),
+                const SizedBox(height: 12),
+                _buildAyahCard(context),
+                const SizedBox(height: 16),
+                const NoorSectionTitle(title: 'Quick Access'),
+                _buildQuickAccess(context),
+                const SizedBox(height: 16),
+                _buildContinueReading(context),
+                const SizedBox(height: 12),
+                const AdBannerWidget(),
+                SizedBox(height: MediaQuery.of(context).padding.bottom + 10),
+              ]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPrayerTracker(
+    BuildContext context, {
+    required int completedPrayers,
+    required int streak,
+    required String nextPrayer,
+    required VoidCallback onTap,
+  }) {
+    final progress = completedPrayers / 5;
+    return NoorPanel(
+      onTap: onTap,
+      padding: const EdgeInsets.all(14),
+      gradient: const LinearGradient(
+        colors: [NoorColors.panelRaised, NoorColors.panel],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      border: Border.all(color: NoorColors.gold.withOpacity(0.52)),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.access_time_rounded, color: NoorColors.goldBright, size: 17),
+              const SizedBox(width: 7),
+              Expanded(child: Text('Prayer Tracker', style: GoogleFonts.poppins(color: NoorColors.text, fontSize: 12, fontWeight: FontWeight.w700))),
+              Text('$completedPrayers / 5', style: GoogleFonts.poppins(color: NoorColors.goldBright, fontSize: 14, fontWeight: FontWeight.w700)),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(child: NoorProgressBar(value: progress)),
+              const SizedBox(width: 12),
+              Text('$streak day streak', style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 9)),
+              const SizedBox(width: 4),
+              const Text('🔥', style: TextStyle(fontSize: 11)),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(child: Text('Next prayer: $nextPrayer', style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 9))),
+              const Icon(Icons.chevron_right_rounded, color: NoorColors.goldBright, size: 17),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAyahCard(BuildContext context) {
+    return NoorPanel(
+      padding: const EdgeInsets.fromLTRB(14, 12, 10, 10),
+      color: NoorColors.panelSoft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.auto_awesome_rounded, color: NoorColors.goldBright, size: 14),
+              const SizedBox(width: 6),
+              Expanded(child: Text('Ayah of the Day', style: GoogleFonts.poppins(color: NoorColors.text, fontSize: 11, fontWeight: FontWeight.w700))),
+              const Icon(Icons.more_horiz_rounded, color: NoorColors.textFaint, size: 17),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            'وَاذْكُرْ رَبَّكَ إِذَا نَسِيتَ',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.amiri(color: NoorColors.goldBright, fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'And remember your Lord when you forget.',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 10, fontStyle: FontStyle.italic),
+          ),
+          const SizedBox(height: 2),
+          Text('(Surah Al-Kahf 18:24)', textAlign: TextAlign.center, style: GoogleFonts.poppins(color: NoorColors.gold, fontSize: 9)),
+          const SizedBox(height: 9),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _smallAction(Icons.bookmark_border_rounded, 'Save', () => _showMessage(context, 'Ayah saved')),
+              _smallAction(Icons.chat_bubble_outline_rounded, 'Reflect', () => _showMessage(context, 'Take a moment to reflect')),
+              _smallAction(Icons.volume_up_outlined, 'Listen', () => _showMessage(context, 'Recitation will be available soon')),
+              _smallAction(Icons.share_outlined, 'Share', () => _showMessage(context, 'Ayah ready to share')),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _smallAction(IconData icon, String label, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+        child: Icon(icon, color: NoorColors.textMuted, size: 16),
+      ),
+    );
+  }
+
+  Widget _buildQuickAccess(BuildContext context) {
+    final items = <_QuickAccessItem>[
+      _QuickAccessItem('Qibla', Icons.explore_outlined, () => setState(() => _bottomNavIndex = 2)),
+      _QuickAccessItem('Quran', Icons.menu_book_outlined, () => setState(() => _bottomNavIndex = 1)),
+      _QuickAccessItem('Duas', Icons.favorite_outline_rounded, () => setState(() => _bottomNavIndex = 3)),
+      _QuickAccessItem('Tasbeeh', Icons.radio_button_checked_rounded, () => _push(context, const TasbeehScreen())),
+      _QuickAccessItem('Hadith', Icons.auto_stories_outlined, () => _push(context, const HadithScreen())),
+      _QuickAccessItem('Zakat', Icons.calculate_outlined, () => _push(context, const ZakatScreen())),
+      _QuickAccessItem('Ramadan', Icons.nightlight_outlined, () => _push(context, const RamadanScreen())),
+      _QuickAccessItem('AI Assistant', Icons.auto_awesome_outlined, () => _push(context, const AssistantScreen())),
+    ];
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: items.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        childAspectRatio: 0.95,
+      ),
+      itemBuilder: (_, index) {
+        final item = items[index];
+        return InkWell(
+          onTap: item.onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 8),
+            decoration: BoxDecoration(
+              color: NoorColors.panel,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: NoorColors.gold.withOpacity(0.22)),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(item.icon, color: NoorColors.goldBright, size: 21),
+                const SizedBox(height: 6),
+                Text(item.label, textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis, style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 8.5, fontWeight: FontWeight.w500)),
               ],
             ),
           ),
+        );
+      },
+    );
+  }
 
+  Widget _buildContinueReading(BuildContext context) {
+    return NoorPanel(
+      onTap: () => setState(() => _bottomNavIndex = 1),
+      padding: const EdgeInsets.all(13),
+      gradient: const LinearGradient(colors: [NoorColors.panelRaised, NoorColors.panelSoft]),
+      child: Row(
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(color: NoorColors.background, borderRadius: BorderRadius.circular(12), border: Border.all(color: NoorColors.gold.withOpacity(0.25))),
+            child: const Icon(Icons.menu_book_rounded, color: NoorColors.goldBright, size: 28),
+          ),
+          const SizedBox(width: 11),
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                  // NAMAZ TIME & REMAINING COUNTDOWN BANNER
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const PrayerTimesScreen()),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF1E4A39), Color(0xFF163024)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: const Color(0xFFCCA236), width: 1.5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFCCA236).withOpacity(0.15),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Icon(Icons.location_on, color: Color(0xFFCCA236), size: 14),
-                                    const SizedBox(width: 4),
-                                    Flexible(
-                                      child: Text(
-                                        '${schedule.location.cityName}, ${schedule.location.countryName}',
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.white70,
-                                          fontSize: 11,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 6),
-                                if (schedule.nextPrayer != null) ...[
-                                  Text(
-                                    'Next: ${schedule.nextPrayer!.nameEnglish}',
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    '${schedule.nextPrayer!.timeString} • ${_formatDuration(schedule.remainingTimeToNext)} left',
-                                    style: GoogleFonts.poppins(
-                                      color: const Color(0xFFCCA236),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          const Icon(Icons.mosque, color: Color(0xFFCCA236), size: 36),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 14),
-
-                  // RAMADAN 1448 AH HERO BANNER
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const RamadanScreen()),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF1E4A3C), Color(0xFF0E241C)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.6), width: 1.2),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFCCA236).withOpacity(0.1),
-                            blurRadius: 10,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFCCA236).withOpacity(0.15),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Text('🌙', style: TextStyle(fontSize: 24)),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  langService.isUrdu ? 'رمضان المبارک 1448 ہجری' : 'Ramadan 1448 AH Suite',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color(0xFFCCA236),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  langService.isUrdu
-                                      ? 'سحری، افطار، شبِ قدر اور 30 دن کا مکمل ٹائم ٹیبل'
-                                      : 'Suhoor, Iftar, Laylatul Qadr & full 30-day schedule',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white70,
-                                    fontSize: 11,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          const Icon(Icons.chevron_right, color: Color(0xFFCCA236), size: 22),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 14),
-
-                  // DAILY DUA CARD
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const DuasScreen()),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF163024), Color(0xFF0A201A)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: const Color(0xFFCCA236).withOpacity(0.3)),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFCCA236).withOpacity(0.12),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Icon(Icons.menu_book, color: Color(0xFFCCA236), size: 20),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  langService.isUrdu ? 'آج کی دعا' : 'Daily Dua',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color(0xFFCCA236),
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  dailyDua.arabicText,
-                                  style: GoogleFonts.amiri(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  dailyDua.title,
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white70,
-                                    fontSize: 11,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          const Icon(Icons.chevron_right, color: Colors.white38, size: 20),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 18),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2),
-                    child: Text(
-                      'Islamic Companion Features',
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-
-                  // Feature Grid - FIXED: ensure all 12 items including last four are visible
-                  GridView.count(
-                    crossAxisCount: 2,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 1.0,
-                    children: [
-                      _buildFeatureCard(
-                        context,
-                        title: 'Holy Quran',
-                        subtitle: 'Surahs & Recitation',
-                        icon: Icons.auto_stories,
-                        isHighlight: true,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const SurahsScreen()),
-                          );
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'Daily Tasks',
-                        subtitle: 'Streak & Rewards',
-                        icon: Icons.task_alt,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const DailyTasksScreen()),
-                          );
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'Namaz Times',
-                        subtitle: 'Countdown & Alarms',
-                        icon: Icons.access_time_filled,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const PrayerTimesScreen()),
-                          );
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'Qibla Compass',
-                        subtitle: 'Kaaba Direction',
-                        icon: Icons.explore,
-                        onTap: () {
-                          setState(() {
-                            _bottomNavIndex = 3; // Qibla tab
-                          });
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'Hadith',
-                        subtitle: 'Prophetic Wisdom',
-                        icon: Icons.brightness_3,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const HadithScreen()),
-                          );
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'Qaza Tracker',
-                        subtitle: 'Missed Prayers Log',
-                        icon: Icons.history_edu,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const QazaTrackerScreen()),
-                          );
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'Zakat',
-                        subtitle: '2.5% Nisab Calc',
-                        icon: Icons.calculate,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const ZakatScreen()),
-                          );
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'Tasbeeh',
-                        subtitle: 'Digital Counter',
-                        icon: Icons.track_changes,
-                        onTap: () {
-                          setState(() {
-                            _bottomNavIndex = 2; // Tasbeeh tab
-                          });
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'Masnoon Duas',
-                        subtitle: 'Morning & Evening',
-                        icon: Icons.menu_book,
-                        onTap: () {
-                          setState(() {
-                            _bottomNavIndex = 4; // Duas tab
-                          });
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: '99 Names',
-                        subtitle: 'Asma-ul-Husna',
-                        icon: Icons.auto_awesome,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const NamesScreen()),
-                          );
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: '6 Kalimas',
-                        subtitle: 'Pillars of Faith',
-                        icon: Icons.star_border,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const DuasScreen()),
-                          );
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'Namaz Guide',
-                        subtitle: 'Eid, Janazah',
-                        icon: Icons.book,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => const PrayerTimesScreen()),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 24),
-                  // Extra bottom padding to ensure last four menu options are not cut by system nav or ad
-                  SizedBox(height: MediaQuery.of(context).padding.bottom + 12),
-                ],
-              ),
+                Text('Continue Reading', style: GoogleFonts.poppins(color: NoorColors.text, fontSize: 11, fontWeight: FontWeight.w700)),
+                const SizedBox(height: 5),
+                Text('Surah Al-Baqarah', style: GoogleFonts.poppins(color: NoorColors.textMuted, fontSize: 10)),
+                Text('Verse 125', style: GoogleFonts.poppins(color: NoorColors.gold, fontSize: 9)),
+              ],
             ),
           ),
-            // Ad banner inside dashboard - above bottom nav
-            const AdBannerWidget(),
-          ],
-        ),
+          const Icon(Icons.arrow_forward_ios_rounded, color: NoorColors.goldBright, size: 14),
+        ],
       ),
     );
   }
 
-  Widget _buildFeatureCard(
-    BuildContext context, {
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required VoidCallback onTap,
-    bool isHighlight = false,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: isHighlight ? const Color(0xFF1E4A39) : const Color(0xFF163024),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(
-            color: isHighlight
-                ? const Color(0xFFCCA236)
-                : const Color(0xFFCCA236).withOpacity(0.15),
-            width: isHighlight ? 1.5 : 1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.15),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: const Color(0xFF082017),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(icon, color: const Color(0xFFCCA236), size: 22),
-            ),
-            const SizedBox(height: 6),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 1),
-                  Text(
-                    subtitle,
-                    style: GoogleFonts.poppins(
-                      color: Colors.white60,
-                      fontSize: 10,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  void _push(BuildContext context, Widget screen) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
   }
+
+  void _showMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+}
+
+class _QuickAccessItem {
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _QuickAccessItem(this.label, this.icon, this.onTap);
 }

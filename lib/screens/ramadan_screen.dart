@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/language_service.dart';
+import '../theme/noor_theme.dart';
+import '../widgets/noor_ui.dart';
 import 'zakat_screen.dart';
 
 class RamadanDua {
@@ -180,22 +182,13 @@ class _RamadanScreenState extends State<RamadanScreen> {
     int taraweehCompleted = _taraweehTracker.where((e) => e).length;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF082017),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF0E241C),
-        elevation: 0,
-        title: Text(
-          isUrdu ? 'رمضان المبارک 1448 ہجری' : 'Ramadan 1448 AH Suite',
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-        centerTitle: true,
+      backgroundColor: NoorColors.background,
+      appBar: NoorPageHeader(
+        title: isUrdu ? 'رمضان المبارک 1448 ہجری' : 'Ramadan 1448 AH',
+        subtitle: isUrdu ? 'روزہ، تراویح اور دعائیں' : 'Fasting, prayer and reflection',
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Color(0xFFCCA236)),
+          NoorIconButton(
+            icon: Icons.refresh_rounded,
             tooltip: isUrdu ? 'ری سیٹ کریں' : 'Reset Tracker',
             onPressed: () {
               setState(() {
@@ -205,6 +198,7 @@ class _RamadanScreenState extends State<RamadanScreen> {
               _saveTrackerState();
             },
           ),
+          const SizedBox(width: 5),
         ],
       ),
       body: SingleChildScrollView(
