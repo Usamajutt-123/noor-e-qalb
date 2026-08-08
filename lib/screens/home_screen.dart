@@ -11,6 +11,7 @@ import 'assistant_screen.dart';
 import 'duas_screen.dart';
 import 'hadith_screen.dart';
 import 'more_screen.dart';
+import 'names_screen.dart';
 import 'prayer_times_screen.dart';
 import 'qibla_screen.dart';
 import 'ramadan_screen.dart';
@@ -134,6 +135,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 12),
                 _buildAyahCard(context),
+                const SizedBox(height: 12),
+                buildFeatureCard(
+                  context,
+                  title: '99 Names of Allah',
+                  subtitle: 'Explore Asma-ul-Husna with meanings & benefits',
+                  icon: Icons.auto_awesome_rounded,
+                  onTap: () => _push(context, const NamesScreen()),
+                ),
                 const SizedBox(height: 16),
                 const NoorSectionTitle(title: 'Quick Access'),
                 _buildQuickAccess(context),

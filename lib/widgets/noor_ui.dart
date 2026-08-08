@@ -337,3 +337,91 @@ class NoorBottomDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const Divider(color: Color(0x22FFFFFF), height: 20);
 }
+
+class NoorFeatureCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final VoidCallback onTap;
+  final Color? iconColor;
+
+  const NoorFeatureCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.onTap,
+    this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return NoorPanel(
+      onTap: onTap,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      color: NoorColors.panelSoft,
+      border: Border.all(color: NoorColors.gold.withOpacity(0.35)),
+      child: Row(
+        children: [
+          Container(
+            width: 38,
+            height: 38,
+            decoration: BoxDecoration(
+              color: NoorColors.background,
+              shape: BoxShape.circle,
+              border: Border.all(color: NoorColors.gold.withOpacity(0.4)),
+            ),
+            child: Icon(icon, color: iconColor ?? NoorColors.goldBright, size: 20),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    color: NoorColors.text,
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  style: GoogleFonts.poppins(
+                    color: NoorColors.textMuted,
+                    fontSize: 9.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: NoorColors.goldBright,
+            size: 20,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Widget buildFeatureCard(
+  BuildContext context, {
+  required String title,
+  required String subtitle,
+  required IconData icon,
+  required VoidCallback onTap,
+  Color? iconColor,
+}) {
+  return NoorFeatureCard(
+    title: title,
+    subtitle: subtitle,
+    icon: icon,
+    onTap: onTap,
+    iconColor: iconColor,
+  );
+}
+
